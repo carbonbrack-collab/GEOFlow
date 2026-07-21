@@ -20,6 +20,7 @@ use App\Support\AdminWeb;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 use Throwable;
@@ -151,16 +152,20 @@ class TaskController extends Controller
 
         $payload = $this->validateTaskForm($request);
         $taskData = $this->buildTaskPayload($request, $payload);
+        $channelIds = $this->selectedDistributionChannelIds($request);
 
         try {
-            $createdTask = $this->taskLifecycleService->createTask($taskData);
-            $createdTaskId = (int) ($createdTask['id'] ?? 0);
-            if ($createdTaskId) {
-                $this->distributionOrchestrator->syncTaskChannels(
-                    Task::query()->whereKey((int) $createdTaskId)->firstOrFail(),
-                    $this->selectedDistributionChannelIds($request)
-                );
-            }
+            DB::transaction(function () use ($taskData, $channelIds): void {
+                $this->distributionOrchestrator->lockTaskChannelSelection(null, $channelIds);
+                $createdTask = $this->taskLifecycleService->createTask($taskData);
+                $createdTaskId = (int) ($createdTask['id'] ?? 0);
+                if ($createdTaskId) {
+                    $this->distributionOrchestrator->syncTaskChannels(
+                        Task::query()->whereKey($createdTaskId)->firstOrFail(),
+                        $channelIds
+                    );
+                }
+            });
         } catch (Throwable $e) {
             // 保留输入并回显服务层错误，便于在页面直接修正。
             return back()->withInput()->withErrors($e->getMessage());
@@ -234,11 +239,15 @@ class TaskController extends Controller
 
         $payload = $this->validateTaskForm($request);
         $taskData = $this->buildTaskPayload($request, $payload);
+        $channelIds = $this->selectedDistributionChannelIds($request);
 
         try {
-            $this->taskLifecycleService->updateTask($taskId, $taskData);
-            $task = Task::query()->whereKey($taskId)->firstOrFail();
-            $this->distributionOrchestrator->syncTaskChannels($task, $this->selectedDistributionChannelIds($request));
+            DB::transaction(function () use ($taskId, $taskData, $channelIds): void {
+                $this->distributionOrchestrator->lockTaskChannelSelection($taskId, $channelIds);
+                $this->taskLifecycleService->updateTask($taskId, $taskData);
+                $task = Task::query()->whereKey($taskId)->firstOrFail();
+                $this->distributionOrchestrator->syncTaskChannels($task, $channelIds);
+            });
         } catch (Throwable $e) {
             return back()->withInput()->withErrors($e->getMessage());
         }

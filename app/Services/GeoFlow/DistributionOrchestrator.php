@@ -20,6 +20,7 @@ class DistributionOrchestrator
         private readonly DistributionPublisherManager $publisherManager,
         private readonly TaskDistributionChannelSelector $channelSelector,
         private readonly ArticleRiskGate $articleRiskGate,
+        private readonly DistributionChannelOperationLeaseService $channelOperationLeaseService,
     ) {}
 
     /**
@@ -27,32 +28,79 @@ class DistributionOrchestrator
      */
     public function syncTaskChannels(Task $task, array $channelIds): void
     {
-        $activeIds = DistributionChannel::query()
-            ->whereIn('id', $channelIds)
-            ->where('status', 'active')
-            ->pluck('id')
-            ->mapWithKeys(static fn ($id): array => [(int) $id => true]);
+        DB::transaction(function () use ($task, $channelIds): void {
+            $this->lockTaskChannelSelection((int) $task->id, $channelIds);
+            $activeIds = DistributionChannel::query()
+                ->whereIn('id', $channelIds)
+                ->where('status', DistributionChannel::STATUS_ACTIVE)
+                ->pluck('id')
+                ->mapWithKeys(static fn ($id): array => [(int) $id => true]);
+            $lockedTask = Task::query()
+                ->whereKey((int) $task->id)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        $syncPayload = [];
-        $sortOrder = 0;
-        $seen = [];
-        foreach (array_values($channelIds) as $channelId) {
-            $id = (int) $channelId;
-            if ($id <= 0 || isset($seen[$id]) || ! isset($activeIds[$id])) {
-                continue;
+            $syncPayload = [];
+            $sortOrder = 0;
+            $seen = [];
+            foreach (array_values($channelIds) as $channelId) {
+                $id = (int) $channelId;
+                if ($id <= 0 || isset($seen[$id]) || ! isset($activeIds[$id])) {
+                    continue;
+                }
+                $seen[$id] = true;
+
+                $syncPayload[$id] = [
+                    'sort_order' => $sortOrder++,
+                    'trigger' => 'after_local_publish',
+                    'remote_status' => 'follow_local',
+                    'failure_policy' => 'ignore_distribution_failure',
+                    'max_attempts' => 3,
+                ];
             }
-            $seen[$id] = true;
 
-            $syncPayload[$id] = [
-                'sort_order' => $sortOrder++,
-                'trigger' => 'after_local_publish',
-                'remote_status' => 'follow_local',
-                'failure_policy' => 'ignore_distribution_failure',
-                'max_attempts' => 3,
-            ];
+            $lockedTask->distributionChannels()->sync($syncPayload);
+        });
+    }
+
+    /**
+     * @param  list<int>  $channelIds
+     */
+    public function lockTaskChannelSelection(?int $taskId, array $channelIds): void
+    {
+        if (DB::transactionLevel() === 0) {
+            throw new \LogicException('Task channel selection locks require an active database transaction.');
         }
 
-        $task->distributionChannels()->sync($syncPayload);
+        $requestedIds = collect($channelIds)
+            ->map(static fn ($id): int => (int) $id)
+            ->filter(static fn (int $id): bool => $id > 0)
+            ->unique()
+            ->values();
+        $existingIds = $taskId
+            ? DB::table('task_distribution_channels')
+                ->where('task_id', $taskId)
+                ->pluck('distribution_channel_id')
+                ->map(static fn ($id): int => (int) $id)
+            : collect();
+        $lockIds = $requestedIds->merge($existingIds)->unique()->sort()->values();
+        if ($lockIds->isEmpty()) {
+            return;
+        }
+
+        $lockedChannels = DistributionChannel::query()
+            ->whereIn('id', $lockIds->all())
+            ->orderBy('id')
+            ->lockForUpdate()
+            ->get(['id', 'status'])
+            ->keyBy('id');
+        $unavailableIds = $requestedIds->filter(
+            static fn (int $id): bool => ! isset($lockedChannels[$id])
+                || (string) $lockedChannels[$id]->status !== DistributionChannel::STATUS_ACTIVE
+        );
+        if ($unavailableIds->isNotEmpty()) {
+            throw new \RuntimeException(__('admin.distribution.delete.channel_unavailable_error'));
+        }
     }
 
     public function enqueueForArticle(int|Article $article, string $action = 'publish'): void
@@ -96,27 +144,37 @@ class DistributionOrchestrator
             $payloadHash = hash('sha256', json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '');
 
             foreach ($channels as $channel) {
-                $distribution = ArticleDistribution::query()->updateOrCreate(
-                    [
-                        'article_id' => (int) $articleModel->id,
-                        'distribution_channel_id' => (int) $channel->id,
-                        'action' => $action,
-                    ],
-                    [
-                        'status' => 'queued',
-                        'next_retry_at' => now(),
-                        'payload_hash' => $payloadHash,
-                        'idempotency_key' => $this->idempotencyKey((int) $articleModel->id, (int) $channel->id, $action),
-                    ]
-                );
+                DB::transaction(function () use ($channel, $articleModel, $action, $payloadHash): void {
+                    $lockedChannel = DistributionChannel::query()
+                        ->whereKey((int) $channel->id)
+                        ->lockForUpdate()
+                        ->first();
+                    if (! $lockedChannel || (string) $lockedChannel->status !== DistributionChannel::STATUS_ACTIVE) {
+                        return;
+                    }
 
-                $this->log('info', '文章已进入分发队列', $channel->id, $distribution->id, $articleModel->id, [
-                    'event' => 'distribution.queued',
-                    'strategy' => (string) ($articleModel->task?->distribution_strategy ?? TaskDistributionChannelSelector::STRATEGY_BROADCAST),
-                ]);
-                ProcessArticleDistributionJob::dispatch((int) $distribution->id)
-                    ->onQueue('distribution')
-                    ->afterCommit();
+                    $distribution = ArticleDistribution::query()->updateOrCreate(
+                        [
+                            'article_id' => (int) $articleModel->id,
+                            'distribution_channel_id' => (int) $lockedChannel->id,
+                            'action' => $action,
+                        ],
+                        [
+                            'status' => 'queued',
+                            'next_retry_at' => now(),
+                            'payload_hash' => $payloadHash,
+                            'idempotency_key' => $this->idempotencyKey((int) $articleModel->id, (int) $lockedChannel->id, $action),
+                        ]
+                    );
+
+                    $this->log('info', '文章已进入分发队列', $lockedChannel->id, $distribution->id, $articleModel->id, [
+                        'event' => 'distribution.queued',
+                        'strategy' => (string) ($articleModel->task?->distribution_strategy ?? TaskDistributionChannelSelector::STRATEGY_BROADCAST),
+                    ]);
+                    ProcessArticleDistributionJob::dispatch((int) $distribution->id)
+                        ->onQueue('distribution')
+                        ->afterCommit();
+                });
             }
         } catch (Throwable $e) {
             $this->log('error', '文章分发入队失败：'.$e->getMessage(), null, null, $article instanceof Article ? (int) $article->id : $article, [
@@ -130,31 +188,42 @@ class DistributionOrchestrator
      */
     public function healthCheck(DistributionChannel $channel): array
     {
-        return $this->publisherManager->forChannel($channel)->health($channel);
+        return $this->channelOperationLeaseService->run(
+            $channel,
+            'health_check',
+            fn (DistributionChannel $lockedChannel): array => $this->publisherManager
+                ->forChannel($lockedChannel)
+                ->health($lockedChannel),
+        );
     }
 
-    public function process(ArticleDistribution $distribution): void
+    public function process(ArticleDistribution $distribution): bool
     {
-        $distribution->loadMissing(['article', 'channel']);
-        $article = $distribution->article;
-        $channel = $distribution->channel;
-        if (! $article || ! $channel) {
-            throw new \RuntimeException('分发记录缺少文章或渠道');
+        $currentDistribution = ArticleDistribution::query()
+            ->with('article')
+            ->whereKey((int) $distribution->id)
+            ->first();
+        if (! $currentDistribution || ! $currentDistribution->article) {
+            return false;
         }
+        $article = $currentDistribution->article;
 
-        $payload = (string) $distribution->action === 'delete'
+        $payload = (string) $currentDistribution->action === 'delete'
             ? []
             : $this->buildVerifiedPayload($article, 'distribution_send');
-        if ((string) $distribution->action === 'update') {
+        if ((string) $currentDistribution->action === 'update') {
             $payload['event'] = 'article.update';
         }
 
-        $distribution->forceFill([
-            'status' => 'sending',
-            'attempt_count' => (int) $distribution->attempt_count + 1,
-            'last_attempt_at' => now(),
-            'last_error_message' => null,
-        ])->save();
+        $distribution = $this->claimForProcessing((int) $currentDistribution->id);
+        if (! $distribution) {
+            return false;
+        }
+        $distribution->loadMissing(['article', 'channel']);
+        $channel = $distribution->channel;
+        if (! $distribution->article || ! $channel) {
+            return false;
+        }
 
         $publisher = $this->publisherManager->forChannel($channel);
         $response = match ((string) $distribution->action) {
@@ -175,6 +244,53 @@ class DistributionOrchestrator
         ])->save();
 
         $this->log('info', '文章分发成功', $channel->id, $distribution->id, $article->id, $response);
+
+        return true;
+    }
+
+    public function claimForProcessing(int $distributionId): ?ArticleDistribution
+    {
+        $candidate = ArticleDistribution::query()
+            ->select(['id', 'distribution_channel_id'])
+            ->whereKey($distributionId)
+            ->first();
+        if (! $candidate) {
+            return null;
+        }
+
+        return DB::transaction(function () use ($candidate): ?ArticleDistribution {
+            $channel = DistributionChannel::query()
+                ->whereKey((int) $candidate->distribution_channel_id)
+                ->lockForUpdate()
+                ->first();
+            $distribution = ArticleDistribution::query()
+                ->whereKey((int) $candidate->id)
+                ->where('distribution_channel_id', (int) $candidate->distribution_channel_id)
+                ->lockForUpdate()
+                ->first();
+            if (! $distribution || (string) $distribution->status !== 'queued') {
+                return null;
+            }
+
+            if (! $channel || (string) $channel->status !== DistributionChannel::STATUS_ACTIVE) {
+                $distribution->forceFill([
+                    'status' => 'failed',
+                    'next_retry_at' => null,
+                    'last_error_message' => __('admin.distribution.delete.channel_unavailable_error'),
+                ])->save();
+
+                return null;
+            }
+
+            $distribution->forceFill([
+                'status' => 'sending',
+                'attempt_count' => (int) $distribution->attempt_count + 1,
+                'last_attempt_at' => now(),
+                'last_error_message' => null,
+            ])->save();
+
+            return $distribution;
+        });
     }
 
     public function updateRemoteArticle(ArticleDistribution $distribution): void
@@ -189,50 +305,57 @@ class DistributionOrchestrator
 
     public function enqueueChannelContentRefresh(DistributionChannel $channel): int
     {
-        $count = 0;
+        return DB::transaction(function () use ($channel): int {
+            $lockedChannel = DistributionChannel::query()
+                ->whereKey((int) $channel->id)
+                ->lockForUpdate()
+                ->first();
+            if (! $lockedChannel || (string) $lockedChannel->status !== DistributionChannel::STATUS_ACTIVE) {
+                return 0;
+            }
 
-        ArticleDistribution::query()
-            ->with('article:id,status')
-            ->where('distribution_channel_id', (int) $channel->id)
-            ->where('action', '!=', 'delete')
-            ->whereHas('article', function ($query): void {
-                $query->whereIn('status', ['published', 'private']);
-            })
-            ->orderBy('id')
-            ->chunkById(100, function ($distributions) use (&$count, $channel): void {
-                foreach ($distributions as $distribution) {
-                    if (! $distribution instanceof ArticleDistribution || ! $distribution->article) {
-                        continue;
+            $count = 0;
+            ArticleDistribution::query()
+                ->with('article:id,status')
+                ->where('distribution_channel_id', (int) $lockedChannel->id)
+                ->where('action', '!=', 'delete')
+                ->whereHas('article', function ($query): void {
+                    $query->whereIn('status', ['published', 'private']);
+                })
+                ->orderBy('id')
+                ->chunkById(100, function ($distributions) use (&$count, $lockedChannel): void {
+                    foreach ($distributions as $distribution) {
+                        if (! $distribution instanceof ArticleDistribution || ! $distribution->article) {
+                            continue;
+                        }
+
+                        $distribution->forceFill([
+                            'action' => 'update',
+                            'status' => 'queued',
+                            'last_error_message' => null,
+                            'next_retry_at' => now(),
+                            'idempotency_key' => $this->idempotencyKey((int) $distribution->article_id, (int) $lockedChannel->id, 'update'),
+                        ])->save();
+                        ProcessArticleDistributionJob::dispatch((int) $distribution->id)
+                            ->onQueue('distribution')
+                            ->afterCommit();
+                        $count++;
                     }
+                });
 
-                    $distribution->forceFill([
-                        'action' => 'update',
-                        'status' => 'queued',
-                        'last_error_message' => null,
-                        'next_retry_at' => now(),
-                        'idempotency_key' => $this->idempotencyKey((int) $distribution->article_id, (int) $channel->id, 'update'),
-                    ])->save();
+            if ($count > 0) {
+                $this->log(
+                    'info',
+                    '目标站点内容刷新已入队',
+                    (int) $lockedChannel->id,
+                    null,
+                    null,
+                    ['event' => 'target.content_refresh_queued', 'count' => $count]
+                );
+            }
 
-                    ProcessArticleDistributionJob::dispatch((int) $distribution->id)
-                        ->onQueue('distribution')
-                        ->afterCommit();
-
-                    $count++;
-                }
-            });
-
-        if ($count > 0) {
-            $this->log(
-                'info',
-                '目标站点内容刷新已入队',
-                (int) $channel->id,
-                null,
-                null,
-                ['event' => 'target.content_refresh_queued', 'count' => $count]
-            );
-        }
-
-        return $count;
+            return $count;
+        });
     }
 
     /**
@@ -274,15 +397,7 @@ class DistributionOrchestrator
             ? null
             : hash('sha256', json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '');
 
-        $distribution->forceFill([
-            'action' => $action,
-            'status' => 'sending',
-            'attempt_count' => (int) $distribution->attempt_count + 1,
-            'last_attempt_at' => now(),
-            'last_error_message' => null,
-            'payload_hash' => $payloadHash,
-            'idempotency_key' => $this->idempotencyKey((int) $article->id, (int) $channel->id, $action),
-        ])->save();
+        [$distribution, $channel] = $this->claimImmediateAction($distribution, $action, $payloadHash);
 
         $publisher = $this->publisherManager->forChannel($channel);
         $response = $action === 'delete'
@@ -309,6 +424,46 @@ class DistributionOrchestrator
             (int) $article->id,
             ['event' => 'article.'.$action, 'remote_result' => $response]
         );
+    }
+
+    /**
+     * @return array{ArticleDistribution,DistributionChannel}
+     */
+    private function claimImmediateAction(ArticleDistribution $candidate, string $action, ?string $payloadHash): array
+    {
+        return DB::transaction(function () use ($candidate, $action, $payloadHash): array {
+            $channel = DistributionChannel::query()
+                ->whereKey((int) $candidate->distribution_channel_id)
+                ->lockForUpdate()
+                ->first();
+            $distribution = ArticleDistribution::query()
+                ->whereKey((int) $candidate->id)
+                ->where('distribution_channel_id', (int) $candidate->distribution_channel_id)
+                ->lockForUpdate()
+                ->first();
+            if (! $channel || ! $distribution) {
+                throw new \RuntimeException('分发记录缺少文章或渠道');
+            }
+            if ((string) $channel->status !== DistributionChannel::STATUS_ACTIVE) {
+                $message = (string) $channel->status === DistributionChannel::STATUS_DELETING
+                    ? __('admin.distribution.delete.operation_blocked')
+                    : __('admin.distribution.delete.channel_unavailable_error');
+
+                throw new \RuntimeException($message);
+            }
+
+            $distribution->forceFill([
+                'action' => $action,
+                'status' => 'sending',
+                'attempt_count' => (int) $distribution->attempt_count + 1,
+                'last_attempt_at' => now(),
+                'last_error_message' => null,
+                'payload_hash' => $payloadHash,
+                'idempotency_key' => $this->idempotencyKey((int) $distribution->article_id, (int) $channel->id, $action),
+            ])->save();
+
+            return [$distribution, $channel];
+        });
     }
 
     /**
