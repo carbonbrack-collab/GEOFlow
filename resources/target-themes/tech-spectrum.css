@@ -1,0 +1,23 @@
+body.target-theme-tech-spectrum{background:#0f0f14;color:#f2f2f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-tech-spectrum .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-tech-spectrum h1,.target-theme-tech-spectrum h2,.target-theme-tech-spectrum .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#f2f2f7}
+.target-theme-tech-spectrum h2 a{color:#f2f2f7}
+.target-theme-tech-spectrum h2 a:hover,.target-theme-tech-spectrum .read,.target-theme-tech-spectrum .back{color:#ff0080}
+.target-theme-tech-spectrum .summary,.target-theme-tech-spectrum .meta,.target-theme-tech-spectrum .empty{color:#9a9aa8}
+.target-theme-tech-spectrum .content{color:#f2f2f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-tech-spectrum .content h2,.target-theme-tech-spectrum .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#f2f2f7}
+.target-theme-tech-spectrum .content a{color:#ff0080}
+.target-theme-tech-spectrum .content blockquote{border-left:3px solid #ff0080;color:#9a9aa8}
+.target-theme-tech-spectrum .chip{background:transparent;border:1px solid #ff0080;color:#ff0080}
+.target-theme-tech-spectrum .tags span{border:1px solid rgba(255,255,255,.14);color:#9a9aa8}
+.target-theme-tech-spectrum .detail{background:#1a1a22;border-radius:14px}
+.target-theme-tech-spectrum footer{border-top:1px solid rgba(255,255,255,.14);color:#9a9aa8}
+.target-theme-tech-spectrum nav a{color:#9a9aa8}
+.target-theme-tech-spectrum nav a:hover{color:#ff0080}
+.target-theme-tech-spectrum .homepage-module{background:#1a1a22;border:1px solid rgba(255,255,255,.14);border-radius:14px}
+.target-theme-tech-spectrum .module-action{background:#ff0080;border-radius:14px}
+.target-theme-tech-spectrum .module-kicker{color:#ff0080}
+.target-theme-tech-spectrum .card{background:#1a1a22;border:0;border-radius:14px;box-shadow:0 4px 20px rgba(15,23,42,.08)}
+.target-theme-tech-spectrum header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-tech-spectrum .brand{color:#f2f2f7}
+.target-theme-tech-spectrum .content pre{background:#000;color:#e6e6ef}
+.target-theme-tech-spectrum .content img{opacity:.94}

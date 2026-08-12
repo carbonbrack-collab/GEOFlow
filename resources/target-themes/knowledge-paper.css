@@ -1,0 +1,21 @@
+body.target-theme-knowledge-paper{background:#f7f5ee;color:#1d2119;font-family:"Iowan Old Style",Charter,Georgia,serif}
+.target-theme-knowledge-paper .brand{font-family:Georgia,"Times New Roman","Songti SC",serif;letter-spacing:-.01em}
+.target-theme-knowledge-paper h1,.target-theme-knowledge-paper h2,.target-theme-knowledge-paper .detail h1{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1d2119}
+.target-theme-knowledge-paper h2 a{color:#1d2119}
+.target-theme-knowledge-paper h2 a:hover,.target-theme-knowledge-paper .read,.target-theme-knowledge-paper .back{color:#2f6f4e}
+.target-theme-knowledge-paper .summary,.target-theme-knowledge-paper .meta,.target-theme-knowledge-paper .empty{color:#63695c}
+.target-theme-knowledge-paper .content{color:#1d2119;font-family:"Iowan Old Style",Charter,Georgia,serif}
+.target-theme-knowledge-paper .content h2,.target-theme-knowledge-paper .content h3{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1d2119}
+.target-theme-knowledge-paper .content a{color:#2f6f4e}
+.target-theme-knowledge-paper .content blockquote{border-left:3px solid #2f6f4e;color:#63695c}
+.target-theme-knowledge-paper .chip{background:transparent;border:1px solid #2f6f4e;color:#2f6f4e}
+.target-theme-knowledge-paper .tags span{border:1px solid rgba(0,0,0,.12);color:#63695c}
+.target-theme-knowledge-paper .detail{background:#fffefb;border-radius:2px}
+.target-theme-knowledge-paper footer{border-top:1px solid rgba(0,0,0,.12);color:#63695c}
+.target-theme-knowledge-paper nav a{color:#63695c}
+.target-theme-knowledge-paper nav a:hover{color:#2f6f4e}
+.target-theme-knowledge-paper .homepage-module{background:#fffefb;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-knowledge-paper .module-action{background:#2f6f4e;border-radius:4px}
+.target-theme-knowledge-paper .module-kicker{color:#2f6f4e}
+.target-theme-knowledge-paper .card{background:#fffefb;border:1px solid rgba(0,0,0,.10);border-radius:2px;box-shadow:none}
+.target-theme-knowledge-paper header{background:#fffefb;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-knowledge-paper .brand{color:#1d2119}

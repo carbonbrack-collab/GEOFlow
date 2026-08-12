@@ -1,0 +1,21 @@
+body.target-theme-tech-review{background:#fbf9f9;color:#171314;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-tech-review .brand{font-family:Georgia,"Times New Roman","Songti SC",serif;letter-spacing:-.01em}
+.target-theme-tech-review h1,.target-theme-tech-review h2,.target-theme-tech-review .detail h1{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#171314}
+.target-theme-tech-review h2 a{color:#171314}
+.target-theme-tech-review h2 a:hover,.target-theme-tech-review .read,.target-theme-tech-review .back{color:#a31f34}
+.target-theme-tech-review .summary,.target-theme-tech-review .meta,.target-theme-tech-review .empty{color:#665c5e}
+.target-theme-tech-review .content{color:#171314;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-tech-review .content h2,.target-theme-tech-review .content h3{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#171314}
+.target-theme-tech-review .content a{color:#a31f34}
+.target-theme-tech-review .content blockquote{border-left:3px solid #a31f34;color:#665c5e}
+.target-theme-tech-review .chip{background:transparent;border:1px solid #a31f34;color:#a31f34}
+.target-theme-tech-review .tags span{border:1px solid rgba(0,0,0,.12);color:#665c5e}
+.target-theme-tech-review .detail{background:#ffffff;border-radius:2px}
+.target-theme-tech-review footer{border-top:1px solid rgba(0,0,0,.12);color:#665c5e}
+.target-theme-tech-review nav a{color:#665c5e}
+.target-theme-tech-review nav a:hover{color:#a31f34}
+.target-theme-tech-review .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-tech-review .module-action{background:#a31f34;border-radius:4px}
+.target-theme-tech-review .module-kicker{color:#a31f34}
+.target-theme-tech-review .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-tech-review .list{gap:0}
+.target-theme-tech-review header{background:#ffffff;border-bottom:3px solid #a31f34}.target-theme-tech-review .brand{color:#171314}

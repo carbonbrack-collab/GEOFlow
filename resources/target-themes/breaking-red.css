@@ -1,0 +1,21 @@
+body.target-theme-breaking-red{background:#ffffff;color:#111111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-breaking-red .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-breaking-red h1,.target-theme-breaking-red h2,.target-theme-breaking-red .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#111111}
+.target-theme-breaking-red h2 a{color:#111111}
+.target-theme-breaking-red h2 a:hover,.target-theme-breaking-red .read,.target-theme-breaking-red .back{color:#cc0000}
+.target-theme-breaking-red .summary,.target-theme-breaking-red .meta,.target-theme-breaking-red .empty{color:#5f5f5f}
+.target-theme-breaking-red .content{color:#111111;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-breaking-red .content h2,.target-theme-breaking-red .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#111111}
+.target-theme-breaking-red .content a{color:#cc0000}
+.target-theme-breaking-red .content blockquote{border-left:3px solid #cc0000;color:#5f5f5f}
+.target-theme-breaking-red .chip{background:transparent;border:1px solid #cc0000;color:#cc0000}
+.target-theme-breaking-red .tags span{border:1px solid rgba(0,0,0,.12);color:#5f5f5f}
+.target-theme-breaking-red .detail{background:#fff7f7;border-radius:0px}
+.target-theme-breaking-red footer{border-top:1px solid rgba(0,0,0,.12);color:#5f5f5f}
+.target-theme-breaking-red nav a{color:#5f5f5f}
+.target-theme-breaking-red nav a:hover{color:#cc0000}
+.target-theme-breaking-red .homepage-module{background:#fff7f7;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-breaking-red .module-action{background:#cc0000;border-radius:4px}
+.target-theme-breaking-red .module-kicker{color:#cc0000}
+.target-theme-breaking-red .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-breaking-red .list{gap:0}
+.target-theme-breaking-red header{background:#fff7f7;border-bottom:3px solid #cc0000}.target-theme-breaking-red .brand{color:#111111}

@@ -1,0 +1,21 @@
+body.target-theme-red-opinion{background:#ffffff;color:#141414;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-red-opinion .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-red-opinion h1,.target-theme-red-opinion h2,.target-theme-red-opinion .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#141414}
+.target-theme-red-opinion h2 a{color:#141414}
+.target-theme-red-opinion h2 a:hover,.target-theme-red-opinion .read,.target-theme-red-opinion .back{color:#e3120b}
+.target-theme-red-opinion .summary,.target-theme-red-opinion .meta,.target-theme-red-opinion .empty{color:#666666}
+.target-theme-red-opinion .content{color:#141414;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-red-opinion .content h2,.target-theme-red-opinion .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#141414}
+.target-theme-red-opinion .content a{color:#e3120b}
+.target-theme-red-opinion .content blockquote{border-left:3px solid #e3120b;color:#666666}
+.target-theme-red-opinion .chip{background:transparent;border:1px solid #e3120b;color:#e3120b}
+.target-theme-red-opinion .tags span{border:1px solid rgba(0,0,0,.12);color:#666666}
+.target-theme-red-opinion .detail{background:#ffffff;border-radius:0px}
+.target-theme-red-opinion footer{border-top:1px solid rgba(0,0,0,.12);color:#666666}
+.target-theme-red-opinion nav a{color:#666666}
+.target-theme-red-opinion nav a:hover{color:#e3120b}
+.target-theme-red-opinion .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-red-opinion .module-action{background:#e3120b;border-radius:4px}
+.target-theme-red-opinion .module-kicker{color:#e3120b}
+.target-theme-red-opinion .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-red-opinion .list{gap:0}
+.target-theme-red-opinion header{background:#ffffff;border-bottom:3px solid #e3120b}.target-theme-red-opinion .brand{color:#141414}

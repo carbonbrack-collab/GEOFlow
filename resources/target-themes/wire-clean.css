@@ -1,0 +1,21 @@
+body.target-theme-wire-clean{background:#fcfcfa;color:#1b1b1a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-wire-clean .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-wire-clean h1,.target-theme-wire-clean h2,.target-theme-wire-clean .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1b1b1a}
+.target-theme-wire-clean h2 a{color:#1b1b1a}
+.target-theme-wire-clean h2 a:hover,.target-theme-wire-clean .read,.target-theme-wire-clean .back{color:#ff8000}
+.target-theme-wire-clean .summary,.target-theme-wire-clean .meta,.target-theme-wire-clean .empty{color:#6d6d68}
+.target-theme-wire-clean .content{color:#1b1b1a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-wire-clean .content h2,.target-theme-wire-clean .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1b1b1a}
+.target-theme-wire-clean .content a{color:#ff8000}
+.target-theme-wire-clean .content blockquote{border-left:3px solid #ff8000;color:#6d6d68}
+.target-theme-wire-clean .chip{background:transparent;border:1px solid #ff8000;color:#ff8000}
+.target-theme-wire-clean .tags span{border:1px solid rgba(0,0,0,.12);color:#6d6d68}
+.target-theme-wire-clean .detail{background:#ffffff;border-radius:4px}
+.target-theme-wire-clean footer{border-top:1px solid rgba(0,0,0,.12);color:#6d6d68}
+.target-theme-wire-clean nav a{color:#6d6d68}
+.target-theme-wire-clean nav a:hover{color:#ff8000}
+.target-theme-wire-clean .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:4px}
+.target-theme-wire-clean .module-action{background:#ff8000;border-radius:4px}
+.target-theme-wire-clean .module-kicker{color:#ff8000}
+.target-theme-wire-clean .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:4px;box-shadow:none}
+.target-theme-wire-clean header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-wire-clean .brand{color:#1b1b1a}

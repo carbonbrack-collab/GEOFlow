@@ -1,0 +1,21 @@
+body.target-theme-newsletter-letter{background:#fffaf5;color:#1a1613;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-newsletter-letter .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-newsletter-letter h1,.target-theme-newsletter-letter h2,.target-theme-newsletter-letter .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1a1613}
+.target-theme-newsletter-letter h2 a{color:#1a1613}
+.target-theme-newsletter-letter h2 a:hover,.target-theme-newsletter-letter .read,.target-theme-newsletter-letter .back{color:#ff6719}
+.target-theme-newsletter-letter .summary,.target-theme-newsletter-letter .meta,.target-theme-newsletter-letter .empty{color:#6f645c}
+.target-theme-newsletter-letter .content{color:#1a1613;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-newsletter-letter .content h2,.target-theme-newsletter-letter .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1a1613}
+.target-theme-newsletter-letter .content a{color:#ff6719}
+.target-theme-newsletter-letter .content blockquote{border-left:3px solid #ff6719;color:#6f645c}
+.target-theme-newsletter-letter .chip{background:transparent;border:1px solid #ff6719;color:#ff6719}
+.target-theme-newsletter-letter .tags span{border:1px solid rgba(0,0,0,.12);color:#6f645c}
+.target-theme-newsletter-letter .detail{background:#ffffff;border-radius:6px}
+.target-theme-newsletter-letter footer{border-top:1px solid rgba(0,0,0,.12);color:#6f645c}
+.target-theme-newsletter-letter nav a{color:#6f645c}
+.target-theme-newsletter-letter nav a:hover{color:#ff6719}
+.target-theme-newsletter-letter .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:6px}
+.target-theme-newsletter-letter .module-action{background:#ff6719;border-radius:6px}
+.target-theme-newsletter-letter .module-kicker{color:#ff6719}
+.target-theme-newsletter-letter .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:6px;box-shadow:none}
+.target-theme-newsletter-letter header{background:#ffffff;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-newsletter-letter .brand{color:#1a1613}

@@ -1,0 +1,21 @@
+body.target-theme-reading-medium{background:#ffffff;color:#191919;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-reading-medium .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-reading-medium h1,.target-theme-reading-medium h2,.target-theme-reading-medium .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#191919}
+.target-theme-reading-medium h2 a{color:#191919}
+.target-theme-reading-medium h2 a:hover,.target-theme-reading-medium .read,.target-theme-reading-medium .back{color:#1a8917}
+.target-theme-reading-medium .summary,.target-theme-reading-medium .meta,.target-theme-reading-medium .empty{color:#6b6b6b}
+.target-theme-reading-medium .content{color:#191919;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-reading-medium .content h2,.target-theme-reading-medium .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#191919}
+.target-theme-reading-medium .content a{color:#1a8917}
+.target-theme-reading-medium .content blockquote{border-left:3px solid #1a8917;color:#6b6b6b}
+.target-theme-reading-medium .chip{background:transparent;border:1px solid #1a8917;color:#1a8917}
+.target-theme-reading-medium .tags span{border:1px solid rgba(0,0,0,.12);color:#6b6b6b}
+.target-theme-reading-medium .detail{background:#ffffff;border-radius:0px}
+.target-theme-reading-medium footer{border-top:1px solid rgba(0,0,0,.12);color:#6b6b6b}
+.target-theme-reading-medium nav a{color:#6b6b6b}
+.target-theme-reading-medium nav a:hover{color:#1a8917}
+.target-theme-reading-medium .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-reading-medium .module-action{background:#1a8917;border-radius:4px}
+.target-theme-reading-medium .module-kicker{color:#1a8917}
+.target-theme-reading-medium .card{background:#ffffff;border:0;border-radius:0px;box-shadow:none}
+.target-theme-reading-medium header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-reading-medium .brand{color:#191919}

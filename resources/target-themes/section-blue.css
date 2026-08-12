@@ -1,0 +1,21 @@
+body.target-theme-section-blue{background:#fdfaf6;color:#121212;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-section-blue .brand{font-family:Georgia,"Times New Roman","Songti SC",serif;letter-spacing:-.01em}
+.target-theme-section-blue h1,.target-theme-section-blue h2,.target-theme-section-blue .detail h1{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#121212}
+.target-theme-section-blue h2 a{color:#121212}
+.target-theme-section-blue h2 a:hover,.target-theme-section-blue .read,.target-theme-section-blue .back{color:#052962}
+.target-theme-section-blue .summary,.target-theme-section-blue .meta,.target-theme-section-blue .empty{color:#5c5c5c}
+.target-theme-section-blue .content{color:#121212;font-family:Georgia,"Times New Roman","Songti SC",serif}
+.target-theme-section-blue .content h2,.target-theme-section-blue .content h3{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#121212}
+.target-theme-section-blue .content a{color:#052962}
+.target-theme-section-blue .content blockquote{border-left:3px solid #052962;color:#5c5c5c}
+.target-theme-section-blue .chip{background:transparent;border:1px solid #052962;color:#052962}
+.target-theme-section-blue .tags span{border:1px solid rgba(0,0,0,.12);color:#5c5c5c}
+.target-theme-section-blue .detail{background:#ffffff;border-radius:0px}
+.target-theme-section-blue footer{border-top:1px solid rgba(0,0,0,.12);color:#5c5c5c}
+.target-theme-section-blue nav a{color:#5c5c5c}
+.target-theme-section-blue nav a:hover{color:#052962}
+.target-theme-section-blue .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-section-blue .module-action{background:#052962;border-radius:4px}
+.target-theme-section-blue .module-kicker{color:#052962}
+.target-theme-section-blue .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-section-blue .list{gap:0}
+.target-theme-section-blue header{background:#052962;border-bottom:0}.target-theme-section-blue .brand{color:#fff}.target-theme-section-blue nav a{color:rgba(255,255,255,.86)}

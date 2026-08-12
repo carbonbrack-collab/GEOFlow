@@ -1,0 +1,21 @@
+body.target-theme-linear-system{background:#f7f8fa;color:#16181d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-linear-system .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-linear-system h1,.target-theme-linear-system h2,.target-theme-linear-system .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#16181d}
+.target-theme-linear-system h2 a{color:#16181d}
+.target-theme-linear-system h2 a:hover,.target-theme-linear-system .read,.target-theme-linear-system .back{color:#5e6ad2}
+.target-theme-linear-system .summary,.target-theme-linear-system .meta,.target-theme-linear-system .empty{color:#61656d}
+.target-theme-linear-system .content{color:#16181d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-linear-system .content h2,.target-theme-linear-system .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#16181d}
+.target-theme-linear-system .content a{color:#5e6ad2}
+.target-theme-linear-system .content blockquote{border-left:3px solid #5e6ad2;color:#61656d}
+.target-theme-linear-system .chip{background:transparent;border:1px solid #5e6ad2;color:#5e6ad2}
+.target-theme-linear-system .tags span{border:1px solid rgba(0,0,0,.12);color:#61656d}
+.target-theme-linear-system .detail{background:#ffffff;border-radius:8px}
+.target-theme-linear-system footer{border-top:1px solid rgba(0,0,0,.12);color:#61656d}
+.target-theme-linear-system nav a{color:#61656d}
+.target-theme-linear-system nav a:hover{color:#5e6ad2}
+.target-theme-linear-system .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:8px}
+.target-theme-linear-system .module-action{background:#5e6ad2;border-radius:8px}
+.target-theme-linear-system .module-kicker{color:#5e6ad2}
+.target-theme-linear-system .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:8px;box-shadow:none}
+.target-theme-linear-system header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-linear-system .brand{color:#16181d}

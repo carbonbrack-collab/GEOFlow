@@ -1,0 +1,21 @@
+body.target-theme-research-journal{background:#fbfbf8;color:#151a19;font-family:"Iowan Old Style",Charter,Georgia,serif}
+.target-theme-research-journal .brand{font-family:Georgia,"Times New Roman","Songti SC",serif;letter-spacing:-.01em}
+.target-theme-research-journal h1,.target-theme-research-journal h2,.target-theme-research-journal .detail h1{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#151a19}
+.target-theme-research-journal h2 a{color:#151a19}
+.target-theme-research-journal h2 a:hover,.target-theme-research-journal .read,.target-theme-research-journal .back{color:#14625c}
+.target-theme-research-journal .summary,.target-theme-research-journal .meta,.target-theme-research-journal .empty{color:#5f6866}
+.target-theme-research-journal .content{color:#151a19;font-family:"Iowan Old Style",Charter,Georgia,serif}
+.target-theme-research-journal .content h2,.target-theme-research-journal .content h3{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#151a19}
+.target-theme-research-journal .content a{color:#14625c}
+.target-theme-research-journal .content blockquote{border-left:3px solid #14625c;color:#5f6866}
+.target-theme-research-journal .chip{background:transparent;border:1px solid #14625c;color:#14625c}
+.target-theme-research-journal .tags span{border:1px solid rgba(0,0,0,.12);color:#5f6866}
+.target-theme-research-journal .detail{background:#ffffff;border-radius:0px}
+.target-theme-research-journal footer{border-top:1px solid rgba(0,0,0,.12);color:#5f6866}
+.target-theme-research-journal nav a{color:#5f6866}
+.target-theme-research-journal nav a:hover{color:#14625c}
+.target-theme-research-journal .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-research-journal .module-action{background:#14625c;border-radius:4px}
+.target-theme-research-journal .module-kicker{color:#14625c}
+.target-theme-research-journal .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:0px;box-shadow:none}
+.target-theme-research-journal header{background:#ffffff;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-research-journal .brand{color:#151a19}

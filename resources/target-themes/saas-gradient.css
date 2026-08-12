@@ -1,0 +1,21 @@
+body.target-theme-saas-gradient{background:#f7f6ff;color:#0a2540;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-saas-gradient .brand{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.01em}
+.target-theme-saas-gradient h1,.target-theme-saas-gradient h2,.target-theme-saas-gradient .detail h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#0a2540}
+.target-theme-saas-gradient h2 a{color:#0a2540}
+.target-theme-saas-gradient h2 a:hover,.target-theme-saas-gradient .read,.target-theme-saas-gradient .back{color:#635bff}
+.target-theme-saas-gradient .summary,.target-theme-saas-gradient .meta,.target-theme-saas-gradient .empty{color:#5d6b83}
+.target-theme-saas-gradient .content{color:#0a2540;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-saas-gradient .content h2,.target-theme-saas-gradient .content h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#0a2540}
+.target-theme-saas-gradient .content a{color:#635bff}
+.target-theme-saas-gradient .content blockquote{border-left:3px solid #635bff;color:#5d6b83}
+.target-theme-saas-gradient .chip{background:transparent;border:1px solid #635bff;color:#635bff}
+.target-theme-saas-gradient .tags span{border:1px solid rgba(0,0,0,.12);color:#5d6b83}
+.target-theme-saas-gradient .detail{background:#ffffff;border-radius:12px}
+.target-theme-saas-gradient footer{border-top:1px solid rgba(0,0,0,.12);color:#5d6b83}
+.target-theme-saas-gradient nav a{color:#5d6b83}
+.target-theme-saas-gradient nav a:hover{color:#635bff}
+.target-theme-saas-gradient .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:12px}
+.target-theme-saas-gradient .module-action{background:#635bff;border-radius:12px}
+.target-theme-saas-gradient .module-kicker{color:#635bff}
+.target-theme-saas-gradient .card{background:#ffffff;border:0;border-radius:12px;box-shadow:0 4px 20px rgba(15,23,42,.08)}
+.target-theme-saas-gradient header{background:#ffffff;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-saas-gradient .brand{color:#0a2540}

@@ -1,0 +1,21 @@
+body.target-theme-market-briefing{background:#fffdf7;color:#1c1a15;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-market-briefing .brand{font-family:Georgia,"Times New Roman","Songti SC",serif;letter-spacing:-.01em}
+.target-theme-market-briefing h1,.target-theme-market-briefing h2,.target-theme-market-briefing .detail h1{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1c1a15}
+.target-theme-market-briefing h2 a{color:#1c1a15}
+.target-theme-market-briefing h2 a:hover,.target-theme-market-briefing .read,.target-theme-market-briefing .back{color:#b8860b}
+.target-theme-market-briefing .summary,.target-theme-market-briefing .meta,.target-theme-market-briefing .empty{color:#6c6558}
+.target-theme-market-briefing .content{color:#1c1a15;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.target-theme-market-briefing .content h2,.target-theme-market-briefing .content h3{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1c1a15}
+.target-theme-market-briefing .content a{color:#b8860b}
+.target-theme-market-briefing .content blockquote{border-left:3px solid #b8860b;color:#6c6558}
+.target-theme-market-briefing .chip{background:transparent;border:1px solid #b8860b;color:#b8860b}
+.target-theme-market-briefing .tags span{border:1px solid rgba(0,0,0,.12);color:#6c6558}
+.target-theme-market-briefing .detail{background:#ffffff;border-radius:2px}
+.target-theme-market-briefing footer{border-top:1px solid rgba(0,0,0,.12);color:#6c6558}
+.target-theme-market-briefing nav a{color:#6c6558}
+.target-theme-market-briefing nav a:hover{color:#b8860b}
+.target-theme-market-briefing .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-market-briefing .module-action{background:#b8860b;border-radius:4px}
+.target-theme-market-briefing .module-kicker{color:#b8860b}
+.target-theme-market-briefing .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:2px;box-shadow:none}
+.target-theme-market-briefing header{background:#b8860b;border-bottom:0}.target-theme-market-briefing .brand{color:#fff}.target-theme-market-briefing nav a{color:rgba(255,255,255,.86)}
