@@ -185,17 +185,88 @@ class TitleAiGenerationService
      */
     private function parseGeneratedTitles(string $content): array
     {
+        $content = $this->stripReasoning($content);
+
         $titles = [];
         foreach (preg_split('/\R/u', $content) ?: [] as $line) {
-            $title = preg_replace('/^\d+[\.\)\-、\s]*/u', '', trim($line));
-            $title = trim((string) $title);
-            if ($title === '') {
+            $title = $this->cleanTitleLine($line);
+            if ($title === '' || $this->looksLikeCommentary($title)) {
                 continue;
             }
             $titles[] = $title;
         }
 
         return array_values(array_unique($titles));
+    }
+
+    /** 推理模型会输出 <think> 思考块，里面不是标题。 */
+    private function stripReasoning(string $content): string
+    {
+        $content = (string) preg_replace('/<think\b[^>]*>.*?<\/think>/isu', '', $content);
+
+        // 思考块被截断时只剩闭合标签，取其后的内容。
+        $pos = strripos($content, '</think>');
+        if ($pos !== false) {
+            $content = substr($content, $pos + 8);
+        }
+
+        // 开标签没有闭合：整段都是思考过程，取最后一段空行之后的内容。
+        if (stripos($content, '<think') !== false) {
+            $parts = preg_split('/\R{2,}/u', $content) ?: [];
+            $content = (string) end($parts);
+            $content = (string) preg_replace('/<think\b[^>]*>/iu', '', $content);
+        }
+
+        return trim($content);
+    }
+
+    private function cleanTitleLine(string $line): string
+    {
+        $title = trim($line);
+
+        // 列表符号、引用标记与序号
+        $title = (string) preg_replace('/^[\-\*\+>\s]+/u', '', $title);
+        $title = (string) preg_replace('/^\d+[\.\)\-、\s]*/u', '', $title);
+
+        // 「关键词 → 标题」「关键词 - 标题」这类回显，只取箭头后的部分
+        if (preg_match('/^.{1,80}?\s*(?:→|->|=>|：:)\s*(.+)$/u', $title, $m) === 1) {
+            $title = $m[1];
+        }
+
+        // 包裹用的引号、星号
+        $title = trim($title, " \t\n\r\0\x0B\"'`*《》“”‘’");
+
+        return trim($title);
+    }
+
+    /** 模型常在标题之间插入解说，这些不是标题。 */
+    private function looksLikeCommentary(string $title): bool
+    {
+        if (mb_strlen($title) < 8 || mb_strlen($title) > 200) {
+            return true;
+        }
+
+        if (str_ends_with($title, ':') || str_ends_with($title, '：')) {
+            return true;
+        }
+
+        if (preg_match('/^<\/?[a-z]/i', $title) === 1) {
+            return true;
+        }
+
+        $meta = [
+            'let me', 'here are', 'here is', 'sure,', 'okay,', 'i will', "i'll ",
+            'these titles', 'the following', 'as requested', 'note:', 'output:',
+            '以下是', '好的', '这些标题', '如下',
+        ];
+        $lower = mb_strtolower($title);
+        foreach ($meta as $needle) {
+            if (str_starts_with($lower, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
