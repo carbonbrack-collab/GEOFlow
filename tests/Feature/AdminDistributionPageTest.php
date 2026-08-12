@@ -2927,7 +2927,10 @@ class AdminDistributionPageTest extends TestCase
         $this->assertStringContainsString("renderArticleTextAds(\$settings, 'content_top')", $frontController);
         $this->assertStringContainsString("renderArticleTextAds(\$settings, 'content_bottom')", $frontController);
         $this->assertStringNotContainsString('function themeStyles', $frontController);
-        $this->assertStringContainsString('target-theme-toutiao', $frontController);
+        // 主题不再硬编码在目标站代码里，改由 config.php 的 theme_map 下发。
+        $this->assertStringNotContainsString("str_contains(\$theme, 'toutiao')", $frontController);
+        $this->assertStringContainsString("\$settings['theme_map']", $frontController);
+        $this->assertStringContainsString('target-theme-default', $frontController);
         $this->assertStringContainsString('activeTheme($settings)', $frontController);
         $this->assertStringContainsString("str_starts_with(\$path, '/index.php/')", $frontController);
         $this->assertStringContainsString('handleSiteSettingsUpdate', $frontController);
