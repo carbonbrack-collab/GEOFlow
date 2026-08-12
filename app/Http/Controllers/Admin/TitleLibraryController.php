@@ -173,7 +173,10 @@ class TitleLibraryController extends Controller
                 Title::query()->create([
                     'library_id' => $libraryId,
                     'title' => $title,
-                    'keyword' => $keywords->random(),
+                    'keyword' => \App\Services\GeoFlow\TitleAiGenerationService::matchKeywordForTitle(
+                        $title,
+                        $keywords->all(),
+                    ),
                     'is_ai_generated' => true,
                     'used_count' => 0,
                     'usage_count' => 0,

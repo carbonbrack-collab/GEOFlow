@@ -187,11 +187,47 @@ final class OpenAiRuntimeProvider
     /**
      * 兼容部分 OpenAI 兼容网关把 SSE chunk 原文透传到 text 字段的情况。
      */
+    /**
+     * 剥离推理模型（如 MiniMax M3、DeepSeek-R1）输出的思考块。
+     *
+     * 这些内容不是正文：直接入库会变成文章开头，还会被截进 SEO 描述。
+     * 兼容三种形态：成对标签、只剩闭合标签（前段被截断）、只剩开标签。
+     */
+    public static function stripReasoningBlocks(string $content): string
+    {
+        if ($content === '') {
+            return '';
+        }
+
+        $cleaned = (string) preg_replace('/<(think|thinking|reasoning)\b[^>]*>.*?<\/\1>/isu', '', $content);
+
+        foreach (['think', 'thinking', 'reasoning'] as $tag) {
+            $close = '</'.$tag.'>';
+            $pos = strripos($cleaned, $close);
+            if ($pos !== false) {
+                $cleaned = substr($cleaned, $pos + strlen($close));
+            }
+        }
+
+        // 只剩开标签：其后全是思考过程，无法判断正文起点时保留原文，
+        // 避免把整篇文章丢掉。
+        foreach (['<think', '<thinking', '<reasoning'] as $open) {
+            $pos = stripos($cleaned, $open);
+            if ($pos !== false) {
+                $head = trim(substr($cleaned, 0, $pos));
+
+                return $head !== '' ? $head : trim($cleaned);
+            }
+        }
+
+        return trim($cleaned);
+    }
+
     public static function normalizeGeneratedText(string $content): string
     {
         $trimmed = trim($content);
         if ($trimmed === '' || ! self::looksLikeSseCompletionPayload($trimmed)) {
-            return $trimmed;
+            return self::stripReasoningBlocks($trimmed);
         }
 
         $segments = [];

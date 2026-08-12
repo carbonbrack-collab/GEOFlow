@@ -228,8 +228,9 @@ class TitleAiGenerationService
         $title = (string) preg_replace('/^[\-\*\+>\s]+/u', '', $title);
         $title = (string) preg_replace('/^\d+[\.\)\-、\s]*/u', '', $title);
 
-        // 「关键词 → 标题」「关键词 - 标题」这类回显，只取箭头后的部分
-        if (preg_match('/^.{1,80}?\s*(?:→|->|=>|：:)\s*(.+)$/u', $title, $m) === 1) {
+        // 「关键词 → 标题」这类回显只取箭头后的部分。不处理冒号：
+        // 「Rummy Withdrawal: A Complete Guide」是合法标题，切掉会毁标题。
+        if (preg_match('/^.{1,80}?\s*(?:→|->|=>)\s*(.+)$/u', $title, $m) === 1) {
             $title = $m[1];
         }
 
@@ -282,6 +283,46 @@ class TitleAiGenerationService
     /**
      * @return list<string>
      */
+    /**
+     * 把生成的标题匹配回它真正对应的关键词。
+     *
+     * 一次请求会把多个关键词一起塞进提示词，模型逐条产出标题；若按随机分配
+     * 回填，标题与关键词就会错配（例如标题写 RummyVerse、关键词却是 PlayRummy），
+     * 正文随后会同时出现两个品牌，文章自相矛盾。
+     *
+     * @param  list<string>  $keywords
+     */
+    public static function matchKeywordForTitle(string $title, array $keywords): string
+    {
+        $keywords = array_values(array_filter(array_map('trim', $keywords), static fn (string $k): bool => $k !== ''));
+        if ($keywords === []) {
+            return '';
+        }
+
+        $haystack = mb_strtolower($title);
+        $best = '';
+        $bestScore = 0;
+
+        foreach ($keywords as $keyword) {
+            $score = 0;
+            foreach (preg_split('/[^\p{L}\p{N}]+/u', mb_strtolower($keyword)) ?: [] as $token) {
+                if (mb_strlen($token) < 3) {
+                    continue;
+                }
+                if (str_contains($haystack, $token)) {
+                    $score += mb_strlen($token);
+                }
+            }
+
+            if ($score > $bestScore || ($score === $bestScore && $score > 0 && mb_strlen($keyword) > mb_strlen($best))) {
+                $best = $keyword;
+                $bestScore = $score;
+            }
+        }
+
+        return $bestScore > 0 ? $best : $keywords[array_rand($keywords)];
+    }
+
     /** 关键词整体是否为英文：无汉字且含足够拉丁字母。 */
     private function keywordsAreEnglish(array $keywords): bool
     {

@@ -78,6 +78,44 @@ TXT);
         $this->assertSame(['印度拉米怎么玩', 'GEO 标题一', 'Rummy 提现要多久？'], $titles);
     }
 
+    public function test_title_is_matched_back_to_its_own_keyword(): void
+    {
+        // 随机回填会让标题写 RummyVerse、关键词却是 PlayRummy，
+        // 正文随后同时出现两个品牌。
+        $keywords = ['PlayRummy withdrawal', 'RummyVerse withdrawal limit', 'Taj Rummy KYC verification for withdrawal'];
+
+        $this->assertSame(
+            'RummyVerse withdrawal limit',
+            TitleAiGenerationService::matchKeywordForTitle(
+                'What Is the RummyVerse Withdrawal Limit You Should Know About?',
+                $keywords,
+            ),
+        );
+
+        $this->assertSame(
+            'Taj Rummy KYC verification for withdrawal',
+            TitleAiGenerationService::matchKeywordForTitle(
+                'What Are the KYC Verification Requirements for Taj Rummy Withdrawals?',
+                $keywords,
+            ),
+        );
+    }
+
+    public function test_unmatched_title_still_gets_a_keyword(): void
+    {
+        $keyword = TitleAiGenerationService::matchKeywordForTitle('Completely Unrelated Headline', ['rummy rules']);
+
+        $this->assertSame('rummy rules', $keyword);
+    }
+
+    public function test_colon_titles_are_kept_whole(): void
+    {
+        // 冒号在标题里是合法的，不能当成「关键词: 标题」的分隔符切掉。
+        $titles = $this->parse("Rummy Withdrawal: A Complete Guide\nKYC for Payouts: What You Need");
+
+        $this->assertSame(['Rummy Withdrawal: A Complete Guide', 'KYC for Payouts: What You Need'], $titles);
+    }
+
     public function test_plain_output_is_untouched(): void
     {
         $titles = $this->parse("How to Play Indian Rummy\nRummy Rules for Beginners");
