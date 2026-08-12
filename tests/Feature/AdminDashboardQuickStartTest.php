@@ -285,6 +285,9 @@ class AdminDashboardQuickStartTest extends TestCase
 
         $this->assertStringNotContainsString('github.com', $footer);
         $this->assertStringNotContainsString('x.com/yaojingang', $footer);
-        $this->assertStringContainsString(__('admin.footer.copyright'), $footer);
+        $this->assertStringContainsString(
+            __('admin.footer.copyright', ['year' => date('Y'), 'site' => \App\Support\AdminWeb::siteName()]),
+            $footer
+        );
     }
 }

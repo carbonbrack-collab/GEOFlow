@@ -971,10 +971,12 @@ class AdminArticlesPageTest extends TestCase
             'setting_value' => 'Public Frontend Name',
         ]);
 
+        // 后台品牌读配置（SITE_NAME / GEOFLOW_ADMIN_BRAND_NAME），
+        // 不跟随后台里改的前台站点名。
         $this->actingAs($admin, 'admin')
             ->get(route('admin.dashboard'))
             ->assertOk()
-            ->assertSee('GEOFlow')
+            ->assertSee(\App\Support\AdminWeb::siteName())
             ->assertDontSee('Public Frontend Name');
     }
 }

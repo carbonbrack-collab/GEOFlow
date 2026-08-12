@@ -92,15 +92,15 @@ class DistributionChannel extends Model
     public function resolvedSiteSettings(): array
     {
         $stored = is_array($this->site_settings) ? $this->site_settings : [];
-        $rawSiteName = $stored['site_name'] ?? $this->name ?? 'GEOFlow Target Site';
+        $rawSiteName = $stored['site_name'] ?? $this->name ?? '目标站点';
         $siteName = trim((string) $rawSiteName);
 
         return [
-            'site_name' => $siteName !== '' ? $siteName : 'GEOFlow Target Site',
+            'site_name' => $siteName !== '' ? $siteName : '目标站点',
             'site_subtitle' => trim((string) ($stored['site_subtitle'] ?? '')),
-            'site_description' => trim((string) ($stored['site_description'] ?? '由 GEOFlow 自动分发和管理的目标站点。')),
+            'site_description' => trim((string) ($stored['site_description'] ?? '自动分发和管理的内容站点。')),
             'site_keywords' => trim((string) ($stored['site_keywords'] ?? '')),
-            'copyright_info' => trim((string) ($stored['copyright_info'] ?? '© '.date('Y').' '.($siteName !== '' ? $siteName : 'GEOFlow Target Site'))),
+            'copyright_info' => trim((string) ($stored['copyright_info'] ?? '© '.date('Y').' '.($siteName !== '' ? $siteName : '目标站点'))),
             'site_logo' => trim((string) ($stored['site_logo'] ?? '')),
             'site_favicon' => trim((string) ($stored['site_favicon'] ?? '')),
             'seo_title_template' => trim((string) ($stored['seo_title_template'] ?? '{title} - {site_name}')),
