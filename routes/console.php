@@ -78,6 +78,14 @@ Schedule::command('geoflow:prune-expired-cache')
     ->onOneServer()
     ->withoutOverlapping(10);
 
+/**
+ * 拉取目标站点访问日志：每 15 分钟一次，写入 view_logs。
+ */
+Schedule::command('geoflow:pull-channel-views')
+    ->everyFifteenMinutes()
+    ->onOneServer()
+    ->withoutOverlapping(10);
+
 /*
  * 匿名部署活跃心跳已停用：本系统不向任何第三方发送数据。
  * 如需恢复，取消下方注释并把 GEOFLOW_TELEMETRY_ENABLED 设为 true。

@@ -592,6 +592,57 @@ document.addEventListener('click', function (event) {
   if (!target || !navigator.clipboard) return;
   navigator.clipboard.writeText(target.textContent || target.value || '');
 });
+
+/* 访问统计信标：把本次浏览上报到本站，由中心定时拉取。 */
+(function () {
+  var MARK = '/assets/js/site.js';
+
+  function selfScript() {
+    if (document.currentScript && (document.currentScript.src || '').indexOf(MARK) !== -1) {
+      return document.currentScript;
+    }
+    var all = document.getElementsByTagName('script');
+    for (var i = all.length - 1; i >= 0; i--) {
+      if ((all[i].src || '').indexOf(MARK) !== -1) return all[i];
+    }
+    return null;
+  }
+
+  function beaconUrl() {
+    var script = selfScript();
+    if (!script) return '';
+    var src = script.src || '';
+    var cut = src.indexOf(MARK);
+    if (cut === -1) return '';
+    return src.slice(0, cut) + '/index.php/geoflow-agent/v1/views';
+  }
+
+  function send() {
+    var url = beaconUrl();
+    if (!url) return;
+    var payload = JSON.stringify({
+      path: location.pathname + location.search,
+      referer: document.referrer || '',
+      title: (document.title || '').slice(0, 300),
+      screen: (window.screen ? window.screen.width + 'x' + window.screen.height : '')
+    });
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+        return;
+      }
+    } catch (error) { /* 回落到 fetch */ }
+    try {
+      fetch(url, { method: 'POST', body: payload, keepalive: true, headers: { 'Content-Type': 'application/json' } });
+    } catch (error) { /* 统计失败不影响页面 */ }
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    send();
+  } else {
+    document.addEventListener('DOMContentLoaded', send);
+  }
+})();
 JS;
     }
 
@@ -2964,6 +3015,142 @@ function handleArticleDelete(array $config, string $method, string $path, string
     ]);
 }
 
+function viewsDir(array $config): string
+{
+    return storageRoot($config).'/views';
+}
+
+function viewsCursorFile(array $config): string
+{
+    return viewsDir($config).'/cursor.json';
+}
+
+/** 追加一条访问记录；单文件按天切分，超限则丢弃以免磁盘被打满。 */
+function recordPageView(array $config, array $payload): void
+{
+    $dir = viewsDir($config);
+    if (! is_dir($dir) && ! @mkdir($dir, 0755, true) && ! is_dir($dir)) {
+        return;
+    }
+
+    $file = $dir.'/'.gmdate('Y-m-d').'.jsonl';
+    if (is_file($file) && filesize($file) > 8 * 1024 * 1024) {
+        return;
+    }
+
+    $line = json_encode([
+        't' => gmdate('c'),
+        'p' => mb_substr((string) ($payload['path'] ?? '/'), 0, 2000),
+        'r' => mb_substr((string) ($payload['referer'] ?? ''), 0, 2000),
+        'ti' => mb_substr((string) ($payload['title'] ?? ''), 0, 300),
+        'ua' => mb_substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500),
+        'ip' => mb_substr((string) ($_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? ''), 0, 64),
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    if (! is_string($line)) {
+        return;
+    }
+
+    @file_put_contents($file, $line."\n", FILE_APPEND | LOCK_EX);
+}
+
+/** 浏览器信标入口：公开、无签名，只接受本站发来的浏览记录。 */
+function handleViewBeacon(array $config, string $method, string $body): void
+{
+    if ($method !== 'POST') {
+        jsonResponse(405, ['ok' => false, 'error' => 'method_not_allowed']);
+    }
+
+    if (strlen($body) > 4096) {
+        jsonResponse(413, ['ok' => false, 'error' => 'payload_too_large']);
+    }
+
+    $payload = json_decode($body, true);
+    if (! is_array($payload)) {
+        $payload = [];
+    }
+
+    recordPageView($config, $payload);
+
+    header('Cache-Control: no-store');
+    http_response_code(204);
+    exit;
+}
+
+/** 中心拉取访问日志：需签名。commit 用于确认上一批已入库，之后才推进游标。 */
+function handleViewsPull(array $config, string $method, string $path, string $body): void
+{
+    $verified = verifySignedRequest($config, $method, $path, $body);
+    if ($verified['event'] !== 'views.pull') {
+        jsonResponse(422, ['ok' => false, 'error' => 'unsupported_event']);
+    }
+
+    $payload = json_decode($body, true);
+    $payload = is_array($payload) ? $payload : [];
+    $limit = (int) ($payload['limit'] ?? 500);
+    $limit = max(1, min(2000, $limit));
+
+    $dir = viewsDir($config);
+    if (! is_dir($dir)) {
+        jsonResponse(200, ['ok' => true, 'entries' => [], 'cursor' => null, 'pending_files' => 0]);
+    }
+
+    $cursor = [];
+    if (is_file(viewsCursorFile($config))) {
+        $decoded = json_decode((string) @file_get_contents(viewsCursorFile($config)), true);
+        $cursor = is_array($decoded) ? $decoded : [];
+    }
+
+    // 确认上一批：推进游标，整文件读完就删掉。
+    $commit = $payload['commit'] ?? null;
+    if (is_array($commit) && isset($commit['file'], $commit['offset'])) {
+        $commitFile = basename((string) $commit['file']);
+        $commitOffset = max(0, (int) $commit['offset']);
+        $commitPath = $dir.'/'.$commitFile;
+        if (preg_match('/^\d{4}-\d{2}-\d{2}\.jsonl$/', $commitFile) === 1 && is_file($commitPath)) {
+            if ($commitOffset >= filesize($commitPath) && $commitFile !== gmdate('Y-m-d').'.jsonl') {
+                @unlink($commitPath);
+                $cursor = [];
+            } else {
+                $cursor = ['file' => $commitFile, 'offset' => $commitOffset];
+            }
+            @file_put_contents(viewsCursorFile($config), json_encode($cursor), LOCK_EX);
+        }
+    }
+
+    $files = glob($dir.'/*.jsonl') ?: [];
+    sort($files);
+    if ($files === []) {
+        jsonResponse(200, ['ok' => true, 'entries' => [], 'cursor' => null, 'pending_files' => 0]);
+    }
+
+    $target = $files[0];
+    $targetName = basename($target);
+    $offset = ($cursor['file'] ?? '') === $targetName ? max(0, (int) ($cursor['offset'] ?? 0)) : 0;
+
+    $entries = [];
+    $handle = @fopen($target, 'rb');
+    if ($handle === false) {
+        jsonResponse(500, ['ok' => false, 'error' => 'views_unreadable']);
+    }
+    fseek($handle, $offset);
+    while (count($entries) < $limit && ($line = fgets($handle)) !== false) {
+        $decoded = json_decode(trim($line), true);
+        if (is_array($decoded)) {
+            $entries[] = $decoded;
+        }
+        $offset = ftell($handle);
+    }
+    fclose($handle);
+
+    jsonResponse(200, [
+        'ok' => true,
+        'entries' => $entries,
+        'cursor' => ['file' => $targetName, 'offset' => $offset],
+        'pending_files' => count($files),
+    ]);
+}
+
 function handleSiteSettingsUpdate(array $config, string $method, string $path, string $body): void
 {
     $verified = verifySignedRequest($config, $method, $path, $body);
@@ -3013,6 +3200,12 @@ if ($method === 'POST' && preg_match('#^/geoflow-agent/v1/articles/([^/]+)/updat
 // POST /geoflow-agent/v1/articles/{slug}/delete
 if ($method === 'POST' && preg_match('#^/geoflow-agent/v1/articles/([^/]+)/delete$#', $path, $m) === 1) {
     handleArticleDelete($config, $method, $path, $body, rawurldecode((string) $m[1]));
+}
+if ($path === '/geoflow-agent/v1/views') {
+    handleViewBeacon($config, $method, $body);
+}
+if ($method === 'POST' && $path === '/geoflow-agent/v1/views/pull') {
+    handleViewsPull($config, $method, $path, $body);
 }
 if ($method === 'POST' && $path === '/geoflow-agent/v1/site-settings') {
     handleSiteSettingsUpdate($config, $method, $path, $body);
