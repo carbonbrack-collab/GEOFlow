@@ -177,6 +177,8 @@ class AdminDashboardQuickStartTest extends TestCase
 
     public function test_welcome_modal_dismiss_url_is_relative_when_app_url_differs_from_origin(): void
     {
+        $this->markTestSkipped('项目说明弹窗已移除（GEOFlow 品牌文案 + 外链），该场景不再存在。');
+
         config(['app.url' => 'https://configured.example']);
 
         $admin = Admin::query()->create([
@@ -203,6 +205,8 @@ class AdminDashboardQuickStartTest extends TestCase
 
     public function test_welcome_modal_dismiss_url_keeps_configured_subdirectory_without_absolute_host(): void
     {
+        $this->markTestSkipped('项目说明弹窗已移除（GEOFlow 品牌文案 + 外链），该场景不再存在。');
+
         config(['app.url' => 'https://configured.example/geoflow']);
 
         $admin = Admin::query()->create([
@@ -230,6 +234,8 @@ class AdminDashboardQuickStartTest extends TestCase
 
     public function test_project_intro_auto_opens_once_and_footer_link_remains_available(): void
     {
+        $this->markTestSkipped('项目说明弹窗与页脚入口已移除（GEOFlow 品牌文案 + 外链）。');
+
         $admin = Admin::query()->create([
             'username' => 'dashboard_project_intro_admin',
             'password' => 'secret-123',
@@ -258,14 +264,12 @@ class AdminDashboardQuickStartTest extends TestCase
 
         $this->assertStringContainsString('data-open-admin-welcome', $secondHtml);
         $this->assertStringContainsString('"shouldAutoOpen":false', $secondHtml);
-        $this->assertStringContainsString(__('admin.footer.project_intro_link'), $secondHtml);
+        // 页脚不再放项目说明入口（属于 GEOFlow 品牌文案）。
+        $this->assertStringNotContainsString(__('admin.footer.project_intro_link'), $secondHtml);
     }
 
-    public function test_admin_footer_links_to_locale_specific_help_docs(): void
+    public function test_admin_footer_has_no_outbound_links(): void
     {
-        // 后台默认只开放简体中文；这里打开英文以验证按语言切换帮助文档链接。
-        config(['geoflow.admin_locales' => 'zh_CN,en']);
-
         $admin = Admin::query()->create([
             'username' => 'dashboard_help_docs_admin',
             'password' => 'secret-123',
@@ -275,23 +279,18 @@ class AdminDashboardQuickStartTest extends TestCase
             'status' => 'active',
         ]);
 
-        $zhHtml = $this->actingAs($admin, 'admin')
+        $html = $this->actingAs($admin, 'admin')
             ->get(route('admin.dashboard'))
             ->assertOk()
             ->getContent();
 
-        $this->assertStringContainsString(__('admin.footer.help_docs_link'), $zhHtml);
-        $this->assertStringContainsString('https://github.com/yaojingang/GEOFlow/wiki', $zhHtml);
-        $this->assertStringNotContainsString('https://github.com/yaojingang/GEOFlow/wiki/Home-English', $zhHtml);
+        // 后台页脚只保留版权和版本号，不再外链到 GitHub、文档或作者主页。
+        $footerStart = strpos($html, '<footer');
+        $this->assertNotFalse($footerStart, '未找到后台页脚。');
+        $footer = substr($html, $footerStart);
 
-        session(['locale' => 'en']);
-
-        $enHtml = $this->actingAs($admin->fresh(), 'admin')
-            ->get(route('admin.dashboard'))
-            ->assertOk()
-            ->getContent();
-
-        $this->assertStringContainsString('Help docs', $enHtml);
-        $this->assertStringContainsString('https://github.com/yaojingang/GEOFlow/wiki/Home-English', $enHtml);
+        $this->assertStringNotContainsString('github.com', $footer);
+        $this->assertStringNotContainsString('x.com/yaojingang', $footer);
+        $this->assertStringContainsString(__('admin.footer.copyright'), $footer);
     }
 }

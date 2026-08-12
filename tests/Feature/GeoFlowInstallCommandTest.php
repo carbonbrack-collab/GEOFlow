@@ -21,17 +21,6 @@ class GeoFlowInstallCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const BAIDU_ANALYTICS_EXAMPLE = <<<'HTML'
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?1743638f313788caa4cb55e299444a87";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-HTML;
 
     public function test_install_command_seeds_empty_database_once_and_writes_marker(): void
     {
@@ -53,16 +42,17 @@ HTML;
             'geoflow-template-21-enterprise-signature',
             SiteSetting::query()->where('setting_key', 'active_theme')->value('setting_value'),
         );
+        // 统计代码默认留空：安装不再写入任何第三方统计脚本。
         $this->assertSame(
-            self::BAIDU_ANALYTICS_EXAMPLE,
-            SiteSetting::query()->where('setting_key', 'analytics_code')->value('setting_value'),
+            '',
+            (string) SiteSetting::query()->where('setting_key', 'analytics_code')->value('setting_value'),
         );
         $response = $this->get(route('site.home'))
             ->assertOk()
-            ->assertSee('https://hm.baidu.com/hm.js?1743638f313788caa4cb55e299444a87', false);
+            ->assertDontSee('hm.baidu.com', false);
         $this->assertSame(
-            1,
-            substr_count($response->getContent(), 'https://hm.baidu.com/hm.js?1743638f313788caa4cb55e299444a87'),
+            0,
+            substr_count($response->getContent(), 'hm.baidu.com'),
         );
 
         $state = SystemState::query()->where('key', GeoFlowInstallCommand::INSTALLATION_STATE_KEY)->first();
@@ -223,9 +213,10 @@ HTML;
             'geoflow-template-21-enterprise-signature',
             SiteSetting::query()->where('setting_key', 'active_theme')->value('setting_value'),
         );
+        // 统计代码默认留空：安装不再写入任何第三方统计脚本。
         $this->assertSame(
-            self::BAIDU_ANALYTICS_EXAMPLE,
-            SiteSetting::query()->where('setting_key', 'analytics_code')->value('setting_value'),
+            '',
+            (string) SiteSetting::query()->where('setting_key', 'analytics_code')->value('setting_value'),
         );
 
         $state = SystemState::query()->where('key', GeoFlowInstallCommand::INSTALLATION_STATE_KEY)->firstOrFail();

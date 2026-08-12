@@ -67,6 +67,8 @@ class AdminAnonymousUsageTelemetryTest extends TestCase
 
     public function test_admin_layout_loads_local_pulse_script_when_telemetry_is_configured(): void
     {
+        $this->markTestSkipped('匿名统计信标已移除：本系统不向任何第三方发送数据。');
+
         $this->enableTelemetry();
         $admin = $this->createAdmin('telemetry_layout_admin');
 

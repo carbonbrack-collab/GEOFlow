@@ -78,10 +78,12 @@ Schedule::command('geoflow:prune-expired-cache')
     ->onOneServer()
     ->withoutOverlapping(10);
 
-/**
- * 匿名部署活跃心跳：每天一次；同版本同日重复执行会在本地跳过。
+/*
+ * 匿名部署活跃心跳已停用：本系统不向任何第三方发送数据。
+ * 如需恢复，取消下方注释并把 GEOFLOW_TELEMETRY_ENABLED 设为 true。
+ *
+ * Schedule::command('geoflow:telemetry:heartbeat')
+ *     ->dailyAt('03:17')
+ *     ->onOneServer()
+ *     ->withoutOverlapping(10);
  */
-Schedule::command('geoflow:telemetry:heartbeat')
-    ->dailyAt('03:17')
-    ->onOneServer()
-    ->withoutOverlapping(10);

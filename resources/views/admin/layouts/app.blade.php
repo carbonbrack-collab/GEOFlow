@@ -43,11 +43,9 @@
         @yield('content')
     </main>
 @include('admin.partials.footer')
-@include('admin.partials.welcome-modal')
+{{-- 项目说明弹窗已停用：属于 GEOFlow 品牌文案，且内含外链。 --}}
+{{-- 匿名统计信标已移除：本系统不向任何第三方发送数据。 --}}
 @vite('resources/js/app.js')
-@if (is_array($anonymousUsageTelemetryPayload ?? null))
-    <script src="{{ asset('js/geoflow-pulse.js') }}" defer></script>
-@endif
 @stack('scripts')
 </body>
 </html>

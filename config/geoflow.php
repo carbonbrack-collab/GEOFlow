@@ -16,17 +16,8 @@ $versionManifest = is_file($versionManifestPath)
     : [];
 $appVersion = is_array($versionManifest) ? trim((string) ($versionManifest['version'] ?? '')) : '';
 $appVersion = $appVersion !== '' ? $appVersion : '0.0.0-dev';
-$defaultAnalyticsCode = <<<'HTML'
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?1743638f313788caa4cb55e299444a87";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-HTML;
+// 统计代码默认留空，不向任何第三方发送访问数据；需要时在后台「站点设置 → 统计代码」自行填写。
+$defaultAnalyticsCode = '';
 
 return [
 
@@ -67,18 +58,18 @@ return [
     // 欢迎弹窗「介绍」文案版本：变更后所有管理员会再次看到介绍弹窗
     'welcome_intro_version' => env('GEOFLOW_WELCOME_INTRO_VERSION', '2.1'),
     // 匿名使用统计：服务端发送随机实例 ID、版本和生命周期事件，后台 Pulse 额外发送管理员匿名摘要。
-    'telemetry_enabled' => filter_var(env('GEOFLOW_TELEMETRY_ENABLED', env('APP_ENV') === 'production'), FILTER_VALIDATE_BOOLEAN),
+    'telemetry_enabled' => filter_var(env('GEOFLOW_TELEMETRY_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
     'telemetry_endpoint' => trim((string) env(
         'GEOFLOW_TELEMETRY_ENDPOINT',
         'https://geoflow-telemetry-gateway.pages.dev/api/pulse',
     )),
     'telemetry_interval_seconds' => max(3600, (int) env('GEOFLOW_TELEMETRY_INTERVAL_SECONDS', 86400)),
     // GitHub version.json 地址；默认每天检查一次，可通过 GEOFLOW_UPDATE_CHECK_ENABLED=false 关闭
-    'update_check_enabled' => filter_var(env('GEOFLOW_UPDATE_CHECK_ENABLED', env('APP_ENV') !== 'testing'), FILTER_VALIDATE_BOOLEAN),
+    'update_check_enabled' => filter_var(env('GEOFLOW_UPDATE_CHECK_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
     'update_metadata_url' => $updateMetadataUrl,
     'update_metadata_cache_ttl_seconds' => (int) env('GEOFLOW_UPDATE_METADATA_CACHE_TTL', 86400),
     // 后台系统更新中心：默认可查看和备份，真正执行代码更新默认关闭。
-    'update_center_enabled' => filter_var(env('GEOFLOW_UPDATE_CENTER_ENABLED', true), FILTER_VALIDATE_BOOLEAN),
+    'update_center_enabled' => filter_var(env('GEOFLOW_UPDATE_CENTER_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
     'update_execution_enabled' => filter_var(env('GEOFLOW_UPDATE_EXECUTION_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
     'update_rollback_enabled' => filter_var(env('GEOFLOW_UPDATE_ROLLBACK_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
     'update_backup_keep' => max(1, (int) env('GEOFLOW_UPDATE_BACKUP_KEEP', 10)),
