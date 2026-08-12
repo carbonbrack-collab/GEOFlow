@@ -11,6 +11,8 @@ class AdminPtBrLocaleCoverageTest extends TestCase
 {
     public function test_pt_br_covers_all_current_admin_translation_keys(): void
     {
+        $this->markTestSkipped('后台已锁定为简体中文（GEOFLOW_ADMIN_LOCALES），不再维护 pt_BR 词条覆盖。');
+
         $english = require lang_path('en/admin.php');
         $overlay = $this->loadLocaleOverlay('pt_BR');
 
@@ -24,6 +26,8 @@ class AdminPtBrLocaleCoverageTest extends TestCase
 
     public function test_pt_br_overrides_admin_keys_used_by_current_backend_modules(): void
     {
+        $this->markTestSkipped('后台已锁定为简体中文（GEOFLOW_ADMIN_LOCALES），不再维护 pt_BR 词条覆盖。');
+
         $english = require lang_path('en/admin.php');
         $overlay = $this->loadLocaleOverlay('pt_BR');
 

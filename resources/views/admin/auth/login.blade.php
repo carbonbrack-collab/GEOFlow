@@ -28,6 +28,7 @@
     </style>
 </head>
 <body class="overflow-hidden">
+@if (count(\App\Support\AdminWeb::supportedLocales()) > 1)
 <div class="fixed right-4 top-4 z-50">
     <select onchange="window.location.href=this.value" class="rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-600 shadow-sm">
         @foreach (\App\Support\AdminWeb::supportedLocales() as $localeCode => $localeLabel)
@@ -37,6 +38,7 @@
         @endforeach
     </select>
 </div>
+@endif
 <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md px-4">
     <div class="rounded-2xl p-8 login-form">
         <div class="text-center mb-8">

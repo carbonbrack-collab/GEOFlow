@@ -263,6 +263,9 @@ class AdminDashboardQuickStartTest extends TestCase
 
     public function test_admin_footer_links_to_locale_specific_help_docs(): void
     {
+        // 后台默认只开放简体中文；这里打开英文以验证按语言切换帮助文档链接。
+        config(['geoflow.admin_locales' => 'zh_CN,en']);
+
         $admin = Admin::query()->create([
             'username' => 'dashboard_help_docs_admin',
             'password' => 'secret-123',

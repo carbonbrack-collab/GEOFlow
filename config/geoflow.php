@@ -59,6 +59,8 @@ return [
     'app_version' => $appVersion,
     // 首次部署登录页初始管理员提示；只展示账号与初始化日志指引，永远不展示密码。
     'initial_admin_hint_enabled' => filter_var(env('GEOFLOW_INITIAL_ADMIN_HINT_ENABLED', true), FILTER_VALIDATE_BOOLEAN),
+    // 后台可选语言，逗号分隔。默认只开放简体中文；需要多语言时改为 zh_CN,en,ja,es,ru,pt_BR
+    'admin_locales' => trim((string) env('GEOFLOW_ADMIN_LOCALES', 'zh_CN')) ?: 'zh_CN',
     'initial_admin_username' => trim((string) env('GEOFLOW_ADMIN_USERNAME', 'admin')) ?: 'admin',
     'initial_admin_email' => trim((string) env('GEOFLOW_ADMIN_EMAIL', 'admin@example.com')) ?: 'admin@example.com',
     'initial_admin_password' => (string) env('GEOFLOW_ADMIN_PASSWORD', ''),

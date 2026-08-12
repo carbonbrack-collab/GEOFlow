@@ -11,6 +11,17 @@ class AdminLocaleSwitchTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * 后台默认只开放简体中文，多语言能力仍保留在配置里，
+     * 这里显式打开全部语言以继续验证切换逻辑。
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config(['geoflow.admin_locales' => 'zh_CN,en,ja,es,ru,pt_BR']);
+    }
+
     public function test_admin_supported_locales_include_new_languages(): void
     {
         $this->assertSame([

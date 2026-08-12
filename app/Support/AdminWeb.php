@@ -95,9 +95,13 @@ final class AdminWeb
         return rtrim($appPrefix, '/').(str_starts_with($path, '/') ? $path : '/'.$path);
     }
 
+    /**
+     * 后台可选语言。默认只开放简体中文；
+     * 需要多语言时用 GEOFLOW_ADMIN_LOCALES 按逗号列出，例如 zh_CN,en,ja。
+     */
     public static function supportedLocales(): array
     {
-        return [
+        $all = [
             'zh_CN' => '简体中文',
             'en' => 'English',
             'ja' => '日本語',
@@ -105,6 +109,15 @@ final class AdminWeb
             'ru' => 'Русский',
             'pt_BR' => 'Português (BR)',
         ];
+
+        $enabled = array_values(array_filter(array_map(
+            'trim',
+            explode(',', (string) config('geoflow.admin_locales', 'zh_CN'))
+        )));
+
+        $selected = array_intersect_key($all, array_flip($enabled));
+
+        return $selected === [] ? ['zh_CN' => $all['zh_CN']] : $selected;
     }
 
     public static function isSupportedLocale(string $locale): bool
