@@ -1786,7 +1786,7 @@ class DistributionController extends Controller
             'key_id' => $keyId,
             'secret_ciphertext' => $this->apiKeyCrypto->encrypt($plainSecret),
             'status' => 'active',
-            'scopes' => ['article.publish', 'article.update', 'article.delete', 'site.settings.update', 'health.check', 'frontend.capabilities'],
+            'scopes' => ['article.publish', 'article.update', 'article.delete', 'site.settings.update', 'health.check', 'frontend.capabilities', 'views.pull'],
         ]);
 
         return [
