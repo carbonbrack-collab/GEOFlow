@@ -138,7 +138,7 @@ class TaskLifecycleService
         try {
             return $this->taskMonitoringQueryService->getTaskMonitoringDetail($taskId);
         } catch (ModelNotFoundException) {
-            throw new ApiException('task_not_found', '任务不存在', 404);
+            throw new ApiException('task_not_found', __('admin.runtime.task.missing'), 404);
         }
     }
 
@@ -157,7 +157,7 @@ class TaskLifecycleService
         $this->ensureTaskExists($taskId);
         $normalized = $this->normalizeTaskInput($data, true);
         if (empty($normalized)) {
-            throw new ApiException('validation_failed', '没有可更新的字段', 422);
+            throw new ApiException('validation_failed', __('admin.runtime.article.no_fields'), 422);
         }
 
         $status = $normalized['status'] ?? null;
@@ -198,7 +198,7 @@ class TaskLifecycleService
     {
         $task = Task::query()->whereKey($taskId)->first(['id', 'name']);
         if (! $task) {
-            throw new ApiException('task_not_found', '任务不存在', 404);
+            throw new ApiException('task_not_found', __('admin.runtime.task.missing'), 404);
         }
 
         $taskName = (string) $task->name;
@@ -318,16 +318,16 @@ class TaskLifecycleService
     {
         $task = Task::query()->find($taskId, ['id', 'status', 'schedule_enabled']);
         if (! $task) {
-            throw new ApiException('task_not_found', '任务不存在', 404);
+            throw new ApiException('task_not_found', __('admin.runtime.task.missing'), 404);
         }
 
         if (($task->status ?? 'paused') !== 'active' || (int) ($task->schedule_enabled ?? 1) !== 1) {
-            throw new ApiException('task_not_active', '任务未启用，无法入队', 409);
+            throw new ApiException('task_not_active', __('admin.runtime.task.disabled'), 409);
         }
 
         $jobId = $this->queueService->enqueueTaskJob($taskId, $jobType, $payload);
         if ($jobId === null) {
-            throw new ApiException('job_already_exists', '任务已处于排队或执行中', 409);
+            throw new ApiException('job_already_exists', __('admin.runtime.task.already_queued'), 409);
         }
 
         return [
@@ -375,7 +375,7 @@ class TaskLifecycleService
     {
         $run = TaskRun::query()->find($jobId);
         if (! $run) {
-            throw new ApiException('job_not_found', 'Job 不存在', 404);
+            throw new ApiException('job_not_found', __('admin.runtime.task.job_missing'), 404);
         }
         $meta = is_array($run->meta) ? $run->meta : [];
         $payload = is_array($meta['payload'] ?? null) ? $meta['payload'] : [];
@@ -605,7 +605,7 @@ class TaskLifecycleService
         }
 
         if (! empty($fieldErrors)) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
                 'field_errors' => $fieldErrors,
             ]);
         }
@@ -667,7 +667,7 @@ class TaskLifecycleService
     private function ensureTaskExists(int $taskId): void
     {
         if (! Task::query()->whereKey($taskId)->exists()) {
-            throw new ApiException('task_not_found', '任务不存在', 404);
+            throw new ApiException('task_not_found', __('admin.runtime.task.missing'), 404);
         }
     }
 

@@ -150,7 +150,7 @@ class WordPressRestPublisher implements DistributionPublisherInterface
     private function channel(ArticleDistribution $distribution): DistributionChannel
     {
         if (! $distribution->channel instanceof DistributionChannel) {
-            throw new RuntimeException('分发记录缺少 WordPress 渠道。');
+            throw new RuntimeException(__('admin.runtime.wp.channel_missing'));
         }
 
         return $distribution->channel;
@@ -162,7 +162,7 @@ class WordPressRestPublisher implements DistributionPublisherInterface
             return;
         }
 
-        throw new RuntimeException($operation.'失败：HTTP '.$response->status());
+        throw new RuntimeException(__('admin.runtime.api.http_failed', ['operation' => $operation, 'status' => $response->status()]));
     }
 
     /**
@@ -172,7 +172,7 @@ class WordPressRestPublisher implements DistributionPublisherInterface
     {
         $json = $response->json();
         if (! is_array($json)) {
-            throw new RuntimeException('WordPress 返回内容不是有效 JSON。');
+            throw new RuntimeException(__('admin.runtime.wp.non_json'));
         }
 
         $postId = (int) ($json['id'] ?? 0);

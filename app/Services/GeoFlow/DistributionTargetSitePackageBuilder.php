@@ -16,13 +16,13 @@ class DistributionTargetSitePackageBuilder
         $filename = 'geoflow-target-site-'.$this->slug((string) ($channel->domain ?: $channel->name)).'.zip';
         $directory = storage_path('app/tmp/distribution-packages');
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
-            throw new RuntimeException('目标站点包临时目录创建失败');
+            throw new RuntimeException(__('admin.runtime.dist.tmp_dir_failed'));
         }
 
         $path = $directory.'/'.uniqid('package-', true).'-'.$filename;
         $zip = new ZipArchive;
         if ($zip->open($path, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
-            throw new RuntimeException('目标站点包 ZIP 创建失败');
+            throw new RuntimeException(__('admin.runtime.dist.zip_failed'));
         }
 
         $zip->addFromString('.htaccess', $this->rootHtaccess());

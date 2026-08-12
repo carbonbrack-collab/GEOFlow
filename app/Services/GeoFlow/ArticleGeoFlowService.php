@@ -140,7 +140,7 @@ class ArticleGeoFlowService
             ->with(['task:id,name', 'author:id,name', 'category:id,name'])
             ->find($articleId);
         if (! $article) {
-            throw new ApiException('article_not_found', '文章不存在', 404);
+            throw new ApiException('article_not_found', __('admin.runtime.article.missing'), 404);
         }
 
         $images = ArticleImage::query()
@@ -186,7 +186,7 @@ class ArticleGeoFlowService
         $existing = $this->getArticleRecord($articleId);
         $normalized = $this->normalizeUpdateInput($data, $existing);
         if (empty($normalized)) {
-            throw new ApiException('validation_failed', '没有可更新的字段', 422);
+            throw new ApiException('validation_failed', __('admin.runtime.article.no_fields'), 422);
         }
 
         foreach ($normalized as $field => $value) {
@@ -233,12 +233,12 @@ class ArticleGeoFlowService
         $reviewStatus = trim($reviewStatus);
         $riskOverrideReason = trim($riskOverrideReason);
         if (! in_array($reviewStatus, ['pending', 'approved', 'rejected', 'auto_approved'], true)) {
-            throw new ApiException('validation_failed', '审核状态无效', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.article.bad_status'), 422, [
                 'field_errors' => ['review_status' => '审核状态无效'],
             ]);
         }
         if (mb_strlen($riskOverrideReason, 'UTF-8') > 1000) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
                 'field_errors' => ['risk_override_reason' => '风险放行原因不能超过 1000 个字符'],
             ]);
         }
@@ -325,12 +325,12 @@ class ArticleGeoFlowService
     {
         $article = Article::query()->whereKey($articleId)->first();
         if ($article === null) {
-            throw new ApiException('article_not_found', '文章不存在', 404);
+            throw new ApiException('article_not_found', __('admin.runtime.article.missing'), 404);
         }
 
         $reviewStatus = (string) ($article->review_status ?? 'pending');
         if (! in_array($reviewStatus, ['approved', 'auto_approved'], true)) {
-            throw new ApiException('article_not_publishable', '当前文章状态不允许直接发布', 409);
+            throw new ApiException('article_not_publishable', __('admin.runtime.article.cannot_publish'), 409);
         }
 
         try {
@@ -344,7 +344,7 @@ class ArticleGeoFlowService
                 ArticleWorkflow::normalizeState('draft', 'pending'),
                 static function (Article $lockedArticle) use ($reviewStatus): void {
                     if ((string) $lockedArticle->review_status !== $reviewStatus) {
-                        throw new ApiException('article_not_publishable', '当前文章状态不允许直接发布', 409);
+                        throw new ApiException('article_not_publishable', __('admin.runtime.article.cannot_publish'), 409);
                     }
                 },
             );
@@ -359,7 +359,7 @@ class ArticleGeoFlowService
     {
         $article = Article::query()->whereKey($articleId)->first();
         if (! $article) {
-            throw new ApiException('article_not_found', '文章不存在', 404);
+            throw new ApiException('article_not_found', __('admin.runtime.article.missing'), 404);
         }
 
         $article->delete();
@@ -402,7 +402,7 @@ class ArticleGeoFlowService
             $errors['risk_override_reason'] = '风险放行原因不能超过 1000 个字符';
         }
         if ($errors !== []) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, ['field_errors' => $errors]);
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, ['field_errors' => $errors]);
         }
 
         $normalized = [
@@ -500,7 +500,7 @@ class ArticleGeoFlowService
         }
 
         if (! empty($fieldErrors)) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, ['field_errors' => $fieldErrors]);
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, ['field_errors' => $fieldErrors]);
         }
 
         return $normalized;
@@ -513,7 +513,7 @@ class ArticleGeoFlowService
     {
         $article = Article::query()->whereKey($articleId)->first();
         if (! $article) {
-            throw new ApiException('article_not_found', '文章不存在', 404);
+            throw new ApiException('article_not_found', __('admin.runtime.article.missing'), 404);
         }
 
         return $article->getAttributes();
@@ -528,7 +528,7 @@ class ArticleGeoFlowService
     {
         if ($value === null || $value === '' || (int) $value <= 0) {
             if ($required) {
-                throw new ApiException('validation_failed', '参数校验失败', 422, [
+                throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
                     'field_errors' => [$field => $this->requiredReferenceMessage($field)],
                 ]);
             }
@@ -538,7 +538,7 @@ class ArticleGeoFlowService
 
         $id = (int) $value;
         if (! $modelClass::query()->whereKey($id)->exists()) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
                 'field_errors' => [$field => "{$field} 对应资源不存在"],
             ]);
         }
@@ -558,7 +558,7 @@ class ArticleGeoFlowService
     private function ensureSlugAvailable(string $slug, ?int $excludeId = null): void
     {
         if (! $this->isSlugAvailable($slug, $excludeId)) {
-            throw new ApiException('validation_failed', '参数校验失败', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
                 'field_errors' => ['slug' => 'slug 已存在'],
             ]);
         }
@@ -597,7 +597,7 @@ class ArticleGeoFlowService
 
     private function riskBlockedException(Article $article, ArticleRiskGateException $exception): ApiException
     {
-        return new ApiException('article_risk_blocked', '文章风险检查未通过', 409, [
+        return new ApiException('article_risk_blocked', __('admin.runtime.article.risk_blocked'), 409, [
             'article_id' => (int) $article->getKey(),
             'risk_status' => $exception->riskStatus,
             'match_count' => (int) $exception->scan->match_count,

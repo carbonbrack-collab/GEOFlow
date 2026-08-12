@@ -19,7 +19,7 @@ class DistributionPublisherManager
             'geoflow_agent' => $this->geoFlowAgentPublisher,
             'wordpress_rest' => $this->wordPressRestPublisher,
             'generic_http_api' => $this->genericHttpApiPublisher,
-            default => throw new RuntimeException('不支持的分发渠道类型：'.(string) $channel->channel_type),
+            default => throw new RuntimeException(__('admin.runtime.dist.unsupported_type', ['type' => (string) $channel->channel_type])),
         };
     }
 }

@@ -442,7 +442,7 @@ class DistributionOrchestrator
         $article = $distribution->article;
         $channel = $distribution->channel;
         if (! $article || ! $channel) {
-            throw new \RuntimeException('分发记录缺少文章或渠道');
+            throw new \RuntimeException(__('admin.runtime.dist.record_incomplete'));
         }
 
         $payload = $action === 'delete' ? [] : $this->buildVerifiedPayload($article, 'distribution_send');
@@ -504,7 +504,7 @@ class DistributionOrchestrator
                 ->lockForUpdate()
                 ->first();
             if (! $channel || ! $distribution) {
-                throw new \RuntimeException('分发记录缺少文章或渠道');
+                throw new \RuntimeException(__('admin.runtime.dist.record_incomplete'));
             }
             if ((string) $channel->status !== DistributionChannel::STATUS_ACTIVE) {
                 $message = (string) $channel->status === DistributionChannel::STATUS_DELETING
@@ -548,7 +548,7 @@ class DistributionOrchestrator
                 'articleImages.image',
             ]);
             if (! $this->isDistributableSnapshot($lockedArticle)) {
-                throw new \RuntimeException('文章当前状态不允许分发');
+                throw new \RuntimeException(__('admin.runtime.dist.article_state'));
             }
 
             try {

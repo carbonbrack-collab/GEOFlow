@@ -90,7 +90,7 @@ class MaterialLibraryService
         $type = $this->normalizeType($type);
         $row = $this->buildListQuery($type)->whereKey($id)->first();
         if (! $row) {
-            throw new ApiException('material_not_found', '素材不存在', 404);
+            throw new ApiException('material_not_found', __('admin.runtime.material.missing'), 404);
         }
 
         return [
@@ -240,7 +240,7 @@ class MaterialLibraryService
         try {
             return $this->managedImages->withExistingPathLock($submittedPath, fn (): mixed => $callback());
         } catch (\InvalidArgumentException) {
-            $this->validationError('file_path', '图片 file_path 必须指向已存在的受管图片文件');
+            $this->validationError('file_path', __('admin.runtime.material.bad_image_path'));
         }
     }
 
@@ -248,7 +248,7 @@ class MaterialLibraryService
     {
         $type = $this->normalizeWritableItemType($type);
         if ($type !== 'image-libraries') {
-            $this->validationError('image', '仅图片库支持图片上传');
+            $this->validationError('image', __('admin.runtime.material.image_only'));
         }
 
         return $this->managedImages->withUploadedImagePathLock($image, $callback);
@@ -261,7 +261,7 @@ class MaterialLibraryService
     {
         $type = $this->normalizeWritableItemType($type);
         if ($type !== 'image-libraries') {
-            $this->validationError('image', '仅图片库支持图片上传');
+            $this->validationError('image', __('admin.runtime.material.image_only'));
         }
         $this->findMaterial($type, $parentId);
         $stored = $this->managedImages->storeUploadedImage($image);
@@ -305,7 +305,7 @@ class MaterialLibraryService
         $this->findMaterial($type, $parentId);
         $ids = $this->extractIds($data);
         if ($ids === []) {
-            throw new ApiException('validation_failed', '请选择要删除的素材条目', 422, [
+            throw new ApiException('validation_failed', __('admin.runtime.material.select_items'), 422, [
                 'field_errors' => ['ids' => '请选择要删除的素材条目'],
             ]);
         }
@@ -347,7 +347,7 @@ class MaterialLibraryService
         ];
         $normalized = $aliases[$type] ?? $type;
         if (! in_array($normalized, self::MATERIAL_TYPES, true)) {
-            throw new ApiException('unsupported_material_type', '不支持的素材类型', 404);
+            throw new ApiException('unsupported_material_type', __('admin.runtime.material.bad_type'), 404);
         }
 
         return $normalized;
@@ -357,7 +357,7 @@ class MaterialLibraryService
     {
         $type = $this->normalizeType($type);
         if (! in_array($type, self::ITEM_TYPES, true)) {
-            throw new ApiException('unsupported_material_items', '该素材类型没有条目接口', 422);
+            throw new ApiException('unsupported_material_items', __('admin.runtime.material.no_item_api'), 422);
         }
 
         return $type;
@@ -367,7 +367,7 @@ class MaterialLibraryService
     {
         $type = $this->normalizeItemType($type);
         if ($type === 'knowledge-bases') {
-            throw new ApiException('unsupported_material_items', '知识库条目由正文自动切块生成', 422);
+            throw new ApiException('unsupported_material_items', __('admin.runtime.material.kb_auto'), 422);
         }
 
         return $type;
@@ -496,7 +496,7 @@ class MaterialLibraryService
     {
         $row = $this->buildListQuery($type)->whereKey($id)->first();
         if (! $row) {
-            throw new ApiException('material_not_found', '素材不存在', 404);
+            throw new ApiException('material_not_found', __('admin.runtime.material.missing'), 404);
         }
 
         return $row;
@@ -772,7 +772,7 @@ class MaterialLibraryService
         if (array_key_exists('content', $data)) {
             $content = $this->requiredString($data, 'content', '知识库正文不能为空', 0);
             if (strlen($content) > 8 * 1024 * 1024) {
-                $this->validationError('content', '知识库正文不能超过 8MB');
+                $this->validationError('content', __('admin.runtime.material.kb_too_large'));
             }
             $payload['content'] = $content;
             $payload['character_count'] = mb_strlen($content, 'UTF-8');
@@ -780,7 +780,7 @@ class MaterialLibraryService
         } elseif (! $isUpdate) {
             $content = $this->requiredString($data, 'content', '知识库正文不能为空', 0);
             if (strlen($content) > 8 * 1024 * 1024) {
-                $this->validationError('content', '知识库正文不能超过 8MB');
+                $this->validationError('content', __('admin.runtime.material.kb_too_large'));
             }
             $payload['content'] = $content;
             $payload['character_count'] = mb_strlen($content, 'UTF-8');
@@ -789,7 +789,7 @@ class MaterialLibraryService
         if (array_key_exists('file_type', $data) || ! $isUpdate) {
             $fileType = trim((string) ($data['file_type'] ?? 'markdown'));
             if (! in_array($fileType, ['markdown', 'word', 'text'], true)) {
-                $this->validationError('file_type', '知识库文件类型无效');
+                $this->validationError('file_type', __('admin.runtime.material.kb_bad_file'));
             }
             $payload['file_type'] = $fileType;
         }
@@ -810,7 +810,7 @@ class MaterialLibraryService
     {
         $keyword = $this->requiredString($data, 'keyword', '关键词不能为空', 200);
         if (Keyword::query()->where('library_id', $parentId)->where('keyword', $keyword)->exists()) {
-            throw new ApiException('material_item_exists', '关键词已存在', 409);
+            throw new ApiException('material_item_exists', __('admin.runtime.material.keyword_exists'), 409);
         }
 
         $row = Keyword::query()->create([
@@ -828,7 +828,7 @@ class MaterialLibraryService
     {
         $title = $this->requiredString($data, 'title', '标题不能为空', 500);
         if (Title::query()->where('library_id', $parentId)->where('title', $title)->exists()) {
-            throw new ApiException('material_item_exists', '标题已存在', 409);
+            throw new ApiException('material_item_exists', __('admin.runtime.material.title_exists'), 409);
         }
 
         $row = Title::query()->create([
@@ -847,7 +847,7 @@ class MaterialLibraryService
     private function createImageItem(int $parentId, array $data): Image
     {
         if (! (bool) config('geoflow.legacy_image_path_input', false)) {
-            $this->validationError('file_path', '直接提交图片路径已禁用，请上传图片文件');
+            $this->validationError('file_path', __('admin.runtime.material.path_disabled'));
         }
 
         $submittedPath = $this->requiredString($data, 'file_path', '图片 file_path 不能为空', 500);
@@ -878,7 +878,7 @@ class MaterialLibraryService
                 });
             });
         } catch (\InvalidArgumentException) {
-            $this->validationError('file_path', '图片 file_path 必须指向已存在的受管图片文件');
+            $this->validationError('file_path', __('admin.runtime.material.bad_image_path'));
         }
     }
 
@@ -943,7 +943,7 @@ class MaterialLibraryService
     {
         $count = Article::query()->where('category_id', $id)->count();
         if ($count > 0) {
-            throw new ApiException('material_in_use', '分类仍有关联文章，无法删除', 409, ['article_count' => $count]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.category_in_use'), 409, ['article_count' => $count]);
         }
         Category::query()->whereKey($id)->delete();
     }
@@ -952,11 +952,11 @@ class MaterialLibraryService
     {
         $visibleCount = Article::query()->where('author_id', $id)->whereNull('deleted_at')->count();
         if ($visibleCount > 0) {
-            throw new ApiException('material_in_use', '作者仍有关联文章，无法删除', 409, ['article_count' => $visibleCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.author_in_use'), 409, ['article_count' => $visibleCount]);
         }
         $trashedCount = Article::query()->where('author_id', $id)->whereNotNull('deleted_at')->count();
         if ($trashedCount > 0) {
-            throw new ApiException('material_in_use', '作者仍有关联回收站文章，无法删除', 409, ['trashed_count' => $trashedCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.author_trash_in_use'), 409, ['trashed_count' => $trashedCount]);
         }
         Author::query()->whereKey($id)->delete();
     }
@@ -965,7 +965,7 @@ class MaterialLibraryService
     {
         $titleLibraryCount = TitleLibrary::query()->where('keyword_library_id', $id)->count();
         if ($titleLibraryCount > 0) {
-            throw new ApiException('material_in_use', '关键词库仍被标题库引用，无法删除', 409, ['title_library_count' => $titleLibraryCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.keyword_lib_in_use'), 409, ['title_library_count' => $titleLibraryCount]);
         }
         Keyword::query()->where('library_id', $id)->delete();
         KeywordLibrary::query()->whereKey($id)->delete();
@@ -975,7 +975,7 @@ class MaterialLibraryService
     {
         $taskCount = Task::query()->where('title_library_id', $id)->count();
         if ($taskCount > 0) {
-            throw new ApiException('material_in_use', '标题库仍被任务引用，无法删除', 409, ['task_count' => $taskCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.title_lib_in_use'), 409, ['task_count' => $taskCount]);
         }
         Title::query()->where('library_id', $id)->delete();
         TitleLibrary::query()->whereKey($id)->delete();
@@ -985,7 +985,7 @@ class MaterialLibraryService
     {
         $taskCount = Task::query()->where('image_library_id', $id)->count();
         if ($taskCount > 0) {
-            throw new ApiException('material_in_use', '图片库仍被任务引用，无法删除', 409, ['task_count' => $taskCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.image_lib_in_use'), 409, ['task_count' => $taskCount]);
         }
         $filePaths = Image::query()->where('library_id', $id)->pluck('file_path')->filter()->values()->all();
         $imageIds = Image::query()->where('library_id', $id)->pluck('id')->all();
@@ -1001,7 +1001,7 @@ class MaterialLibraryService
         $id = (int) $row->id;
         $taskCount = $this->knowledgeBaseTaskCount($id);
         if ($taskCount > 0) {
-            throw new ApiException('material_in_use', '知识库仍被任务引用，无法删除', 409, ['task_count' => $taskCount]);
+            throw new ApiException('material_in_use', __('admin.runtime.material.kb_in_use'), 409, ['task_count' => $taskCount]);
         }
         KnowledgeChunk::query()->where('knowledge_base_id', $id)->delete();
         KnowledgeBase::query()->whereKey($id)->delete();
@@ -1061,7 +1061,7 @@ class MaterialLibraryService
             $this->validationError($field, $message);
         }
         if ($maxLength > 0 && mb_strlen($value, 'UTF-8') > $maxLength) {
-            $this->validationError($field, $field.' 长度不能超过 '.$maxLength.' 个字符');
+            $this->validationError($field, __('admin.runtime.material.too_long', ['field' => $field, 'max' => $maxLength]));
         }
 
         return $value;
@@ -1071,7 +1071,7 @@ class MaterialLibraryService
     {
         $value = trim((string) ($data[$field] ?? ''));
         if ($maxLength > 0 && mb_strlen($value, 'UTF-8') > $maxLength) {
-            $this->validationError($field, $field.' 长度不能超过 '.$maxLength.' 个字符');
+            $this->validationError($field, __('admin.runtime.material.too_long', ['field' => $field, 'max' => $maxLength]));
         }
 
         return $value;
@@ -1079,7 +1079,7 @@ class MaterialLibraryService
 
     private function validationError(string $field, string $message): never
     {
-        throw new ApiException('validation_failed', '参数校验失败', 422, [
+        throw new ApiException('validation_failed', __('admin.runtime.article.validation_failed'), 422, [
             'field_errors' => [$field => $message],
         ]);
     }
@@ -1090,7 +1090,7 @@ class MaterialLibraryService
     private function ensureHasUpdates(array $updates): void
     {
         if ($updates === []) {
-            throw new ApiException('validation_failed', '没有可更新的字段', 422);
+            throw new ApiException('validation_failed', __('admin.runtime.article.no_fields'), 422);
         }
     }
 
@@ -1101,7 +1101,7 @@ class MaterialLibraryService
             $query->where('id', '!=', $excludeId);
         }
         if ($query->exists()) {
-            throw new ApiException('material_exists', '分类名称已存在', 409);
+            throw new ApiException('material_exists', __('admin.runtime.material.category_exists'), 409);
         }
     }
 

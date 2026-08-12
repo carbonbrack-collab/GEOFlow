@@ -295,7 +295,7 @@ class DistributionController extends Controller
                 return redirect()
                     ->route('admin.distribution.show', ['channelId' => (int) $channel->id])
                     ->with('message', $message)
-                    ->withErrors('设置已保存。同步前需要先通过前台体验预览确认风险。');
+                    ->withErrors(__('admin.runtime.sync.saved_needs_preview'));
             }
 
             try {
@@ -948,7 +948,7 @@ class DistributionController extends Controller
 
         return (string) ($result['status'] ?? '') === 'ok'
             ? back()->with('message', $message)
-            : back()->with('message', $message)->withErrors((string) ($result['message'] ?? '远端前台能力刷新失败。'));
+            : back()->with('message', $message)->withErrors((string) ($result['message'] ?? __('admin.runtime.sync.refresh_failed')));
     }
 
     public function previewSyncSettings(int $channelId): View|RedirectResponse
@@ -1011,7 +1011,7 @@ class DistributionController extends Controller
         if (! $request->boolean('frontend_sync_confirmed') && $this->frontendExperienceInspector->requiresSyncConfirmation($channel)) {
             return redirect()
                 ->route('admin.distribution.sync-settings.preview', ['channelId' => (int) $channel->id])
-                ->withErrors('同步前需要先确认前台体验风险。');
+                ->withErrors(__('admin.runtime.sync.confirm_required'));
         }
 
         try {
@@ -1038,7 +1038,7 @@ class DistributionController extends Controller
             && (bool) $this->frontendExperienceInspector->syncPreviewForChannels($channels)['requires_confirmation']) {
             return redirect()
                 ->route('admin.distribution.sync-settings-all.preview')
-                ->withErrors('同步前需要先确认前台体验风险。');
+                ->withErrors(__('admin.runtime.sync.confirm_required'));
         }
 
         $synced = 0;
@@ -1084,7 +1084,7 @@ class DistributionController extends Controller
 
         if (! $request->boolean('frontend_sync_confirmed')
             && (bool) $this->frontendExperienceInspector->syncPreviewForChannels($channels)['requires_confirmation']) {
-            return back()->withErrors('同步前需要先通过预览页确认前台体验风险。');
+            return back()->withErrors(__('admin.runtime.sync.preview_required'));
         }
 
         $synced = 0;

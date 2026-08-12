@@ -31,8 +31,8 @@
                     <i data-lucide="arrow-left" class="mr-2 h-4 w-4"></i>
                     返回渠道列表
                 </a>
-                <h1 class="mt-3 text-2xl font-bold text-gray-900">前台体验同步预览</h1>
-                <p class="mt-1 text-sm leading-6 text-gray-600">确认远端能力缓存、同步差异和 settings JSON 后再执行同步。</p>
+                <h1 class="mt-3 text-2xl font-bold text-gray-900">{{ __('admin.runtime.sync.preview_title') }}</h1>
+                <p class="mt-1 text-sm leading-6 text-gray-600">{{ __('admin.runtime.sync.preview_desc') }}</p>
             </div>
             <div class="rounded-lg border {{ $requiresConfirmation ? 'border-amber-200 bg-amber-50 text-amber-900' : 'border-emerald-200 bg-emerald-50 text-emerald-900' }} px-4 py-3 text-sm">
                 <div class="font-semibold">{{ $requiresConfirmation ? '需要确认后同步' : '未发现阻断风险' }}</div>
@@ -69,7 +69,7 @@
                                         <h2 class="text-lg font-semibold text-gray-900">{{ $channel['name'] ?? '未命名渠道' }}</h2>
                                         <span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-medium {{ $remoteStatusInfo['class'] }}">{{ $remoteStatusInfo['label'] }}</span>
                                         @if (! empty($remote['is_stale']))
-                                            <span class="inline-flex rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800">缓存可能过期</span>
+                                            <span class="inline-flex rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800">{{ __('admin.runtime.sync.cache_stale') }}</span>
                                         @endif
                                     </div>
                                     <p class="mt-1 break-all text-sm text-gray-500">{{ $channel['domain'] ?? '' }} · {{ $channel['endpoint_url'] ?? '' }}</p>
@@ -88,18 +88,18 @@
 
                         <div class="grid grid-cols-1 gap-0 lg:grid-cols-3">
                             <div class="border-b border-gray-200 px-6 py-5 lg:border-b-0 lg:border-r">
-                                <h3 class="text-sm font-semibold text-gray-900">同步摘要</h3>
+                                <h3 class="text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.summary') }}</h3>
                                 <dl class="mt-4 space-y-3 text-sm">
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">体验模式</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.display_mode') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ $summary['frontend_experience_mode'] ?? '' }}</dd>
                                     </div>
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">主题 / front_mode</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.theme_front_mode') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ ($summary['active_theme'] ?? '') !== '' ? $summary['active_theme'] : '默认主题' }} / {{ $summary['front_mode'] ?? '' }}</dd>
                                     </div>
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">模块 / 轮播 / 文字广告</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.modules_carousel_ads') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ (int) ($summary['homepage_modules_count'] ?? 0) }} / {{ (int) ($summary['home_carousel_slides_count'] ?? 0) }} / {{ (int) ($summary['article_text_ads_count'] ?? 0) }}</dd>
                                     </div>
                                 </dl>
@@ -111,22 +111,22 @@
                             </div>
 
                             <div class="border-b border-gray-200 px-6 py-5 lg:border-b-0 lg:border-r">
-                                <h3 class="text-sm font-semibold text-gray-900">远端能力缓存</h3>
+                                <h3 class="text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.remote_caps') }}</h3>
                                 <dl class="mt-4 space-y-3 text-sm">
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">最后检查</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.last_checked') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ ($remote['checked_at'] ?? '') !== '' ? $remote['checked_at'] : '未检查' }}</dd>
                                     </div>
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">能力 / 包版本</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.caps_version') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ ($remote['capability_version'] ?? '') !== '' ? $remote['capability_version'] : '-' }} / {{ ($remote['package_version'] ?? '') !== '' ? $remote['package_version'] : '-' }}</dd>
                                     </div>
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">远端主题 / front_mode</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.remote_theme_mode') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ ($remote['active_theme'] ?? '') !== '' ? $remote['active_theme'] : '-' }} / {{ ($remote['front_mode'] ?? '') !== '' ? $remote['front_mode'] : '-' }}</dd>
                                     </div>
                                     <div class="flex justify-between gap-4">
-                                        <dt class="text-gray-500">模块 / 路由</dt>
+                                        <dt class="text-gray-500">{{ __('admin.runtime.sync.modules_routes') }}</dt>
                                         <dd class="font-medium text-gray-900">{{ count($supportedModules) }} / {{ count($supportedRoutes) }}</dd>
                                     </div>
                                 </dl>
@@ -140,7 +140,7 @@
                             </div>
 
                             <div class="px-6 py-5">
-                                <h3 class="text-sm font-semibold text-gray-900">风险提示</h3>
+                                <h3 class="text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.risk_notes') }}</h3>
                                 @if ($warnings === [])
                                     <div class="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-3 text-sm text-emerald-800">
                                         未发现需要确认的同步风险。
@@ -159,7 +159,7 @@
                         </div>
 
                         <div class="border-t border-gray-200 px-6 py-5">
-                            <label class="block text-sm font-semibold text-gray-900">即将发送的 settings JSON</label>
+                            <label class="block text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.outgoing_settings') }}</label>
                             <textarea readonly rows="12" class="mt-3 block w-full rounded-md border-gray-300 bg-gray-50 font-mono text-xs text-gray-800 shadow-sm">{{ $preview['settings_payload_json'] ?? '' }}</textarea>
                         </div>
                     </section>
@@ -182,7 +182,7 @@
                                 @endif
                             @endforeach
                         @endif
-                        <a href="{{ route('admin.distribution.index') }}" class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">取消</a>
+                        <a href="{{ route('admin.distribution.index') }}" class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">{{ __('admin.runtime.sync.cancel') }}</a>
                         <button type="submit" class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
                             <i data-lucide="check-circle" class="mr-2 h-4 w-4"></i>
                             确认并同步

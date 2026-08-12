@@ -36,7 +36,7 @@ class DistributionHttpClient
         $distribution->loadMissing('article');
         $slug = (string) ($distribution->article?->slug ?? '');
         if ($slug === '') {
-            throw new RuntimeException('分发文章缺少 slug，无法更新目标站。');
+            throw new RuntimeException(__('admin.runtime.dist.slug_missing_update'));
         }
 
         $path = '/geoflow-agent/v1/articles/'.rawurlencode($slug).'/update';
@@ -52,7 +52,7 @@ class DistributionHttpClient
         $distribution->loadMissing('article');
         $slug = (string) ($distribution->article?->slug ?? '');
         if ($slug === '') {
-            throw new RuntimeException('分发文章缺少 slug，无法删除目标站副本。');
+            throw new RuntimeException(__('admin.runtime.dist.slug_missing_delete'));
         }
 
         $path = '/geoflow-agent/v1/articles/'.rawurlencode($slug).'/delete';
@@ -79,7 +79,7 @@ class DistributionHttpClient
         $channel = $distribution->channel;
         $secret = $channel?->activeSecret;
         if (! $channel || ! $secret) {
-            throw new RuntimeException('分发渠道或有效密钥不存在');
+            throw new RuntimeException(__('admin.runtime.dist.channel_or_secret_missing'));
         }
 
         return $this->sendChannelSignedJson($channel, $secret, $path, $event, $idempotencyKey, $payload, $operation);
@@ -136,7 +136,7 @@ class DistributionHttpClient
         $channel->loadMissing('activeSecret');
         $secret = $channel->activeSecret;
         if (! $secret) {
-            throw new RuntimeException('分发渠道有效密钥不存在');
+            throw new RuntimeException(__('admin.runtime.dist.secret_missing'));
         }
 
         $path = '/geoflow-agent/v1/frontend-capabilities';
@@ -159,7 +159,7 @@ class DistributionHttpClient
         $channel->loadMissing('activeSecret');
         $secret = $channel->activeSecret;
         if (! $secret) {
-            throw new RuntimeException('分发渠道有效密钥不存在');
+            throw new RuntimeException(__('admin.runtime.dist.secret_missing'));
         }
 
         $path = '/geoflow-agent/v1/site-settings';
@@ -177,7 +177,7 @@ class DistributionHttpClient
     {
         $body = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         if (! is_string($body)) {
-            throw new RuntimeException($operation.'载荷 JSON 编码失败');
+            throw new RuntimeException(__('admin.runtime.dist.encode_failed', ['operation' => $operation]));
         }
 
         $endpoint = $this->endpoint($channel, $path);

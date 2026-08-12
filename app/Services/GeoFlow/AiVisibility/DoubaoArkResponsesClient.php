@@ -22,12 +22,12 @@ final class DoubaoArkResponsesClient
     {
         $prompt = trim($prompt);
         if ($prompt === '') {
-            throw new RuntimeException('豆包 Ark Responses 查询提示词为空');
+            throw new RuntimeException(__('admin.runtime.ark.prompt_empty'));
         }
 
         $modelId = trim((string) ($model->model_id ?? ''));
         if ($modelId === '') {
-            throw new RuntimeException('豆包 Ark 模型 ID 为空');
+            throw new RuntimeException(__('admin.runtime.ark.model_empty'));
         }
 
         $endpoint = $this->responsesEndpoint($model);
@@ -52,7 +52,7 @@ final class DoubaoArkResponsesClient
 
         $json = $response->json();
         if (! is_array($json)) {
-            throw new RuntimeException('豆包 Ark Responses 返回了非 JSON 结构');
+            throw new RuntimeException(__('admin.runtime.ark.non_json'));
         }
 
         return $this->normalizer->normalizeArkResponses($json, [
@@ -104,7 +104,7 @@ final class DoubaoArkResponsesClient
     {
         $baseUrl = OpenAiRuntimeProvider::resolveChatBaseUrl((string) ($model->api_url ?? ''));
         if ($baseUrl === '') {
-            throw new RuntimeException('豆包 Ark API 地址为空');
+            throw new RuntimeException(__('admin.runtime.ark.url_empty'));
         }
 
         $path = trim((string) config('geoflow.ai_visibility.ark_responses_path', '/responses'));
@@ -117,7 +117,7 @@ final class DoubaoArkResponsesClient
     {
         $apiKey = $this->apiKeyCrypto->decrypt((string) ($model->getRawOriginal('api_key') ?? ''));
         if ($apiKey === '') {
-            throw new RuntimeException('豆包 Ark API Key 为空');
+            throw new RuntimeException(__('admin.runtime.ark.key_empty'));
         }
 
         return $apiKey;

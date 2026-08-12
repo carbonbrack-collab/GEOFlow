@@ -256,7 +256,7 @@ class GenericHttpApiPublisher implements DistributionPublisherInterface
             return;
         }
 
-        throw new RuntimeException($operationLabel.'失败：HTTP '.$response->status());
+        throw new RuntimeException(__('admin.runtime.api.http_failed', ['operation' => $operationLabel, 'status' => $response->status()]));
     }
 
     /**
@@ -304,7 +304,7 @@ class GenericHttpApiPublisher implements DistributionPublisherInterface
     private function channel(ArticleDistribution $distribution): DistributionChannel
     {
         if (! $distribution->channel instanceof DistributionChannel) {
-            throw new RuntimeException('分发记录缺少通用 API 渠道。');
+            throw new RuntimeException(__('admin.runtime.api.channel_missing'));
         }
 
         return $distribution->channel;

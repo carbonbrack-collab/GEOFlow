@@ -231,7 +231,7 @@ class AiSourceProviderController extends Controller
             $this->assertProviderReady($provider);
             $reservation = $this->usageQuota->reserveProvider($provider);
             if ($reservation === null) {
-                throw new RuntimeException('搜索源已达到每日调用上限');
+                throw new RuntimeException(__('admin.runtime.visibility.source_limit'));
             }
             $result = $this->doubaoSearchCustomClient->search($provider, $query, $this->providerOptions($provider));
             $this->usageQuota->recordProviderSuccess($reservation);
@@ -276,7 +276,7 @@ class AiSourceProviderController extends Controller
             }
             $reservation = $this->usageQuota->reserveModel($model);
             if ($reservation === null) {
-                throw new RuntimeException('模型已达到每日调用上限');
+                throw new RuntimeException(__('admin.runtime.visibility.model_limit'));
             }
 
             $result = $bindingType === 'ark'

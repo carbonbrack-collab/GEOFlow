@@ -256,8 +256,8 @@
         <div class="rounded-lg bg-white p-6 shadow">
             <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
-                    <h2 class="text-lg font-medium text-gray-900">前台体验状态</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-600">展示当前将同步到目标站的前台配置，以及最近一次缓存的远端能力。</p>
+                    <h2 class="text-lg font-medium text-gray-900">{{ __('admin.runtime.sync.frontend_status') }}</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">{{ __('admin.runtime.sync.status_desc') }}</p>
                 </div>
                 <a href="{{ route('admin.distribution.sync-settings.preview', ['channelId' => (int) $channel->id]) }}" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
                     <i data-lucide="scan-search" class="mr-2 h-4 w-4"></i>
@@ -266,17 +266,17 @@
             </div>
             <div class="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-4">
-                    <div class="text-xs font-medium text-gray-500">体验模式</div>
+                    <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.display_mode') }}</div>
                     <div class="mt-1 text-sm font-semibold text-gray-900">{{ $frontendSummary['frontend_experience_mode'] ?? $channel->frontendExperienceMode() }}</div>
                     <div class="mt-2 text-xs leading-5 text-gray-500">{{ ($frontendSummary['active_theme'] ?? '') !== '' ? $frontendSummary['active_theme'] : '默认主题' }} · {{ $frontendSummary['front_mode'] ?? $channel->frontMode() }}</div>
                 </div>
                 <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-4">
-                    <div class="text-xs font-medium text-gray-500">模块 / 轮播 / 文字广告</div>
+                    <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.modules_carousel_ads') }}</div>
                     <div class="mt-1 text-sm font-semibold text-gray-900">{{ (int) ($frontendSummary['homepage_modules_count'] ?? 0) }} / {{ (int) ($frontendSummary['home_carousel_slides_count'] ?? 0) }} / {{ (int) ($frontendSummary['article_text_ads_count'] ?? 0) }}</div>
                     <div class="mt-2 text-xs leading-5 text-gray-500">样式 token {{ count($frontendSummary['homepage_style_keys'] ?? []) }} 个</div>
                 </div>
                 <div class="rounded-lg border {{ $remoteStatusCopy['class'] }} px-4 py-4">
-                    <div class="text-xs font-medium opacity-75">远端能力缓存</div>
+                    <div class="text-xs font-medium opacity-75">{{ __('admin.runtime.sync.remote_caps') }}</div>
                     <div class="mt-1 text-sm font-semibold">{{ $remoteStatusCopy['label'] }}</div>
                     <div class="mt-2 text-xs leading-5">
                         {{ ($remoteTarget['checked_at'] ?? '') !== '' ? '最后检查 '.$remoteTarget['checked_at'] : '尚未检查远端能力' }}
@@ -284,7 +284,7 @@
                     @if ($remoteStatus === 'ok')
                         <div class="mt-2 text-xs leading-5">能力 {{ $remoteTarget['capability_version'] ?: '-' }} · 包 {{ $remoteTarget['package_version'] ?: '-' }}</div>
                     @elseif ($remoteStatus === 'unsupported_or_not_found')
-                        <div class="mt-2 text-xs leading-5">建议重新下载并覆盖目标站点包。</div>
+                        <div class="mt-2 text-xs leading-5">{{ __('admin.runtime.sync.repackage_hint') }}</div>
                     @endif
                 </div>
             </div>

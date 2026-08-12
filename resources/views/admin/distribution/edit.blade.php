@@ -182,7 +182,7 @@
                                 </div>
                                 <div>
                                     <label for="wordpress_fixed_category" class="block text-sm font-medium text-gray-700">{{ __('admin.distribution.wordpress.fixed_category') }}</label>
-                                    <input id="wordpress_fixed_category" name="wordpress_fixed_category" type="text" value="{{ old('wordpress_fixed_category', $channelConfig['wordpress_fixed_category']) }}" class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="1 或 News">
+                                    <input id="wordpress_fixed_category" name="wordpress_fixed_category" type="text" value="{{ old('wordpress_fixed_category', $channelConfig['wordpress_fixed_category']) }}" class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="{{ __('admin.runtime.sync.category_example') }}">
                                 </div>
                                 <div>
                                     <label for="wordpress_tag_strategy" class="block text-sm font-medium text-gray-700">{{ __('admin.distribution.wordpress.tag_strategy') }}</label>
@@ -428,8 +428,8 @@
                             <div class="mt-6 border-t border-gray-200 pt-5">
                                 <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                                     <div>
-                                        <h3 class="text-sm font-semibold text-gray-900">前台体验</h3>
-                                        <p class="mt-1 text-sm leading-6 text-gray-600">管理这个 GeoFlow Agent 目标站点的首页模块、样式、轮播与默认站同步关系。</p>
+                                        <h3 class="text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.frontend') }}</h3>
+                                        <p class="mt-1 text-sm leading-6 text-gray-600">{{ __('admin.runtime.sync.manage_desc') }}</p>
                                     </div>
                                     <div class="flex flex-wrap gap-2 text-xs">
                                         <span class="rounded-full bg-blue-50 px-2.5 py-1 font-medium text-blue-700">能力版本 {{ $targetPackageCapabilities['capability_version'] ?? '1.1' }}</span>
@@ -439,23 +439,23 @@
 
                                 <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
                                     <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                                        <div class="text-xs font-medium text-gray-500">当前模式</div>
+                                        <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.current_mode') }}</div>
                                         <div class="mt-1 text-sm font-semibold text-gray-900">{{ $frontendExperienceMode }}</div>
                                     </div>
                                     <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                                        <div class="text-xs font-medium text-gray-500">首页模块</div>
+                                        <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.home_modules') }}</div>
                                         <div class="mt-1 text-sm font-semibold text-gray-900">{{ (int) ($frontendSyncSummary['homepage_modules_count'] ?? 0) }} 个</div>
                                     </div>
                                     <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                                        <div class="text-xs font-medium text-gray-500">轮播</div>
+                                        <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.carousel') }}</div>
                                         <div class="mt-1 text-sm font-semibold text-gray-900">{{ (int) ($frontendSyncSummary['home_carousel_slides_count'] ?? 0) }} 张</div>
                                     </div>
                                     <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                                        <div class="text-xs font-medium text-gray-500">样式 token</div>
+                                        <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.style_tokens') }}</div>
                                         <div class="mt-1 text-sm font-semibold text-gray-900">{{ count($frontendSyncSummary['homepage_style_keys'] ?? []) }} 个</div>
                                     </div>
                                     <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                                        <div class="text-xs font-medium text-gray-500">文字广告</div>
+                                        <div class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.text_ads') }}</div>
                                         <div class="mt-1 text-sm font-semibold text-gray-900">{{ (int) ($frontendSyncSummary['article_text_ads_count'] ?? 0) }} 个</div>
                                     </div>
                                 </div>
@@ -486,11 +486,11 @@
                                         @if ($remoteStatus === 'ok')
                                             <dl class="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
                                                 <div>
-                                                    <dt class="text-xs font-medium opacity-70">远端主题</dt>
+                                                    <dt class="text-xs font-medium opacity-70">{{ __('admin.runtime.sync.remote_theme') }}</dt>
                                                     <dd class="mt-0.5 font-semibold">{{ $remoteTargetCapabilities['active_theme'] ?: '默认主题' }}</dd>
                                                 </div>
                                                 <div>
-                                                    <dt class="text-xs font-medium opacity-70">远端 front_mode</dt>
+                                                    <dt class="text-xs font-medium opacity-70">{{ __('admin.runtime.sync.remote_front_mode') }}</dt>
                                                     <dd class="mt-0.5 font-semibold">{{ $remoteTargetCapabilities['front_mode'] ?: '未声明' }}</dd>
                                                 </div>
                                             </dl>
@@ -498,10 +498,10 @@
                                     </div>
 
                                     <div class="rounded-lg border border-gray-200 bg-white px-4 py-3">
-                                        <div class="text-sm font-semibold text-gray-900">同步前差异摘要</div>
+                                        <div class="text-sm font-semibold text-gray-900">{{ __('admin.runtime.sync.diff_summary') }}</div>
                                         <dl class="mt-3 grid grid-cols-1 gap-2 text-sm text-gray-700 sm:grid-cols-2">
                                             <div>
-                                                <dt class="text-xs font-medium text-gray-500">主题</dt>
+                                                <dt class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.theme') }}</dt>
                                                 <dd class="mt-0.5 font-semibold text-gray-900">{{ ($frontendSyncSummary['active_theme'] ?? '') !== '' ? $frontendSyncSummary['active_theme'] : '默认主题' }}</dd>
                                             </div>
                                             <div>
@@ -509,11 +509,11 @@
                                                 <dd class="mt-0.5 font-semibold text-gray-900">{{ $frontendSyncSummary['front_mode'] ?? $frontMode }}</dd>
                                             </div>
                                             <div>
-                                                <dt class="text-xs font-medium text-gray-500">首页模块/轮播</dt>
+                                                <dt class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.modules_carousel') }}</dt>
                                                 <dd class="mt-0.5 font-semibold text-gray-900">{{ (int) ($frontendSyncSummary['homepage_modules_count'] ?? 0) }} / {{ (int) ($frontendSyncSummary['home_carousel_slides_count'] ?? 0) }}</dd>
                                             </div>
                                             <div>
-                                                <dt class="text-xs font-medium text-gray-500">文字广告</dt>
+                                                <dt class="text-xs font-medium text-gray-500">{{ __('admin.runtime.sync.text_ads') }}</dt>
                                                 <dd class="mt-0.5 font-semibold text-gray-900">{{ (int) ($frontendSyncSummary['article_text_ads_count'] ?? 0) }}</dd>
                                             </div>
                                         </dl>
@@ -537,7 +537,7 @@
                                 @endif
 
                                 <fieldset class="mt-4">
-                                    <legend class="sr-only">前台体验模式</legend>
+                                    <legend class="sr-only">{{ __('admin.runtime.sync.frontend_mode') }}</legend>
                                     <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
                                         @foreach ($frontendExperienceModes as $mode)
                                             @php
@@ -564,15 +564,15 @@
 
                                 <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
                                     <div>
-                                        <label for="homepage_style_json" class="block text-sm font-medium text-gray-700">首页样式 JSON</label>
+                                        <label for="homepage_style_json" class="block text-sm font-medium text-gray-700">{{ __('admin.runtime.sync.home_style_json') }}</label>
                                         <textarea id="homepage_style_json" name="homepage_style_json" rows="10" class="mt-1 block w-full rounded-md border-gray-300 font-mono text-xs shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ $homepageStyleJson }}</textarea>
                                     </div>
                                     <div>
-                                        <label for="home_carousel_slides_json" class="block text-sm font-medium text-gray-700">首页轮播 JSON</label>
+                                        <label for="home_carousel_slides_json" class="block text-sm font-medium text-gray-700">{{ __('admin.runtime.sync.home_carousel_json') }}</label>
                                         <textarea id="home_carousel_slides_json" name="home_carousel_slides_json" rows="10" class="mt-1 block w-full rounded-md border-gray-300 font-mono text-xs shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ $homeCarouselSlidesJson }}</textarea>
                                     </div>
                                     <div class="xl:col-span-2">
-                                        <label for="homepage_modules_json" class="block text-sm font-medium text-gray-700">首页模块 JSON</label>
+                                        <label for="homepage_modules_json" class="block text-sm font-medium text-gray-700">{{ __('admin.runtime.sync.home_modules_json') }}</label>
                                         <textarea id="homepage_modules_json" name="homepage_modules_json" rows="16" class="mt-1 block w-full rounded-md border-gray-300 font-mono text-xs shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ $homepageModulesJson }}</textarea>
                                     </div>
                                 </div>

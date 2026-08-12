@@ -122,7 +122,7 @@ final class AiStructuredOutputHealthCheck
 
         $json = $response->json();
         if (! is_array($json)) {
-            throw new RuntimeException($label.' 结构化输出测试返回了非 JSON 响应');
+            throw new RuntimeException(__('admin.runtime.ai_health.non_json', ['label' => $label]));
         }
 
         return [
@@ -136,7 +136,7 @@ final class AiStructuredOutputHealthCheck
     {
         $baseUrl = OpenAiRuntimeProvider::resolveChatBaseUrl((string) ($model->api_url ?? ''));
         if ($baseUrl === '') {
-            throw new RuntimeException($label.' API 地址为空');
+            throw new RuntimeException(__('admin.runtime.ai_health.url_empty', ['label' => $label]));
         }
 
         return rtrim($baseUrl, '/').'/chat/completions';
@@ -146,7 +146,7 @@ final class AiStructuredOutputHealthCheck
     {
         $baseUrl = OpenAiRuntimeProvider::resolveChatBaseUrl((string) ($model->api_url ?? ''));
         if ($baseUrl === '') {
-            throw new RuntimeException('豆包 Ark API 地址为空');
+            throw new RuntimeException(__('admin.runtime.ark.url_empty'));
         }
 
         $baseUrl = rtrim($baseUrl, '/');
@@ -164,7 +164,7 @@ final class AiStructuredOutputHealthCheck
     {
         $modelId = trim((string) ($model->model_id ?? ''));
         if ($modelId === '') {
-            throw new RuntimeException($label.' 模型 ID 为空');
+            throw new RuntimeException(__('admin.runtime.ai_health.model_empty', ['label' => $label]));
         }
 
         return $modelId;
@@ -174,7 +174,7 @@ final class AiStructuredOutputHealthCheck
     {
         $apiKey = $this->apiKeyCrypto->decrypt((string) ($model->getRawOriginal('api_key') ?? ''));
         if ($apiKey === '') {
-            throw new RuntimeException($label.' API Key 为空');
+            throw new RuntimeException(__('admin.runtime.ai_health.key_empty', ['label' => $label]));
         }
 
         return $apiKey;
@@ -247,22 +247,22 @@ final class AiStructuredOutputHealthCheck
     {
         $jsonText = $this->extractJsonObject($content);
         if ($jsonText === '') {
-            throw new RuntimeException($label.' 未返回可解析的 JSON 对象');
+            throw new RuntimeException(__('admin.runtime.ai_health.no_json_object', ['label' => $label]));
         }
 
         $decoded = json_decode($jsonText, true);
         if (! is_array($decoded)) {
-            throw new RuntimeException($label.' 返回的结构化 JSON 无法解析：'.json_last_error_msg());
+            throw new RuntimeException(__('admin.runtime.ai_health.json_parse_failed', ['label' => $label, 'error' => json_last_error_msg()]));
         }
 
         foreach (['keyword', 'intent', 'source_actions', 'confidence'] as $key) {
             if (! array_key_exists($key, $decoded)) {
-                throw new RuntimeException($label.' 结构化 JSON 缺少字段：'.$key);
+                throw new RuntimeException(__('admin.runtime.ai_health.missing_field', ['label' => $label, 'field' => $key]));
             }
         }
 
         if (! is_array($decoded['source_actions']) || ! is_numeric($decoded['confidence'])) {
-            throw new RuntimeException($label.' 结构化 JSON 字段类型不符合预期');
+            throw new RuntimeException(__('admin.runtime.ai_health.bad_field_type', ['label' => $label]));
         }
 
         return $decoded;

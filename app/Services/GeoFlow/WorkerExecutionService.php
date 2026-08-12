@@ -50,11 +50,11 @@ class WorkerExecutionService
         /** @var Task|null $task */
         $task = Task::query()->find($taskId);
         if (! $task) {
-            throw new RuntimeException('任务不存在');
+            throw new RuntimeException(__('admin.runtime.task.missing'));
         }
 
         if (($task->status ?? 'paused') !== 'active' || (int) ($task->schedule_enabled ?? 1) !== 1) {
-            throw new RuntimeException('任务未激活');
+            throw new RuntimeException(__('admin.runtime.task.inactive'));
         }
 
         $publishResult = $this->publishDueDraftArticle($task);
@@ -105,7 +105,7 @@ class WorkerExecutionService
                 ->lockForUpdate()
                 ->first(['id', 'status', 'schedule_enabled', 'created_count', 'draft_limit', 'article_limit', 'publish_interval', 'next_publish_at']);
             if (! $freshTask || ($freshTask->status ?? 'paused') !== 'active' || (int) ($freshTask->schedule_enabled ?? 1) !== 1) {
-                throw new RuntimeException('任务未激活');
+                throw new RuntimeException(__('admin.runtime.task.inactive'));
             }
             $generationBlockReason = $this->getGenerationBlockReason($freshTask, true);
             if ($generationBlockReason !== null) {
@@ -217,7 +217,7 @@ class WorkerExecutionService
                 ->lockForUpdate()
                 ->first(['id', 'status', 'schedule_enabled', 'publish_interval', 'next_publish_at', 'publish_scope']);
             if (! $freshTask || ($freshTask->status ?? 'paused') !== 'active' || (int) ($freshTask->schedule_enabled ?? 1) !== 1) {
-                throw new RuntimeException('任务未激活');
+                throw new RuntimeException(__('admin.runtime.task.inactive'));
             }
 
             if ($freshTask->next_publish_at !== null && $freshTask->next_publish_at->greaterThan(now())) {
@@ -314,7 +314,7 @@ class WorkerExecutionService
     {
         $aiModel = $this->resolveConfiguredAiModel($task);
         if (($aiModel->status ?? 'inactive') !== 'active') {
-            throw new RuntimeException('任务 AI 模型不可用');
+            throw new RuntimeException(__('admin.runtime.task.model_unavailable'));
         }
 
         return $aiModel;
@@ -327,7 +327,7 @@ class WorkerExecutionService
     {
         $aiModelId = (int) ($task->ai_model_id ?? 0);
         if ($aiModelId <= 0) {
-            throw new RuntimeException('任务未配置 AI 模型');
+            throw new RuntimeException(__('admin.runtime.task.model_missing'));
         }
 
         $aiModel = AiModel::query()
@@ -340,7 +340,7 @@ class WorkerExecutionService
             ->first();
 
         if (! $aiModel) {
-            throw new RuntimeException('任务 AI 模型不可用');
+            throw new RuntimeException(__('admin.runtime.task.model_unavailable'));
         }
 
         return $aiModel;
@@ -392,7 +392,7 @@ class WorkerExecutionService
             throw new RuntimeException($this->buildFailoverErrorMessage($attempts, $lastMessage));
         }
 
-        throw new RuntimeException('AI模型不可用或已达每日限制');
+        throw new RuntimeException(__('admin.runtime.task.model_limit'));
     }
 
     /**
@@ -461,7 +461,7 @@ class WorkerExecutionService
     {
         $libraryId = (int) ($task->title_library_id ?? 0);
         if ($libraryId <= 0) {
-            throw new RuntimeException('任务未配置标题库');
+            throw new RuntimeException(__('admin.runtime.task.title_lib_missing'));
         }
 
         $query = Title::query()->where('library_id', $libraryId);
@@ -478,7 +478,7 @@ class WorkerExecutionService
             ->first();
 
         if (! $title) {
-            throw new RuntimeException((int) ($task->is_loop ?? 0) === 1 ? '没有可用的标题' : '标题库已用尽');
+            throw new RuntimeException((int) ($task->is_loop ?? 0) === 1 ? __('admin.runtime.task.no_titles') : __('admin.runtime.task.titles_exhausted'));
         }
 
         return $title;
@@ -809,10 +809,10 @@ class WorkerExecutionService
         $content = OpenAiRuntimeProvider::normalizeGeneratedText($rawContent);
         if ($content === '') {
             if (OpenAiRuntimeProvider::looksLikeSseCompletionPayload($rawContent)) {
-                throw new RuntimeException('AI 返回空流式响应，未生成正文内容，请重试或检查模型流式输出兼容性');
+                throw new RuntimeException(__('admin.runtime.gen.empty_stream'));
             }
 
-            throw new RuntimeException('AI返回空正文');
+            throw new RuntimeException(__('admin.runtime.gen.empty_body'));
         }
 
         $this->warnIfContentLooksTruncated($content, $aiModel, $response);

@@ -24,12 +24,12 @@ class WordPressRestRequestFactory
         $username = (string) $config['wordpress_username'];
         $secret = $channel->activeSecret;
         if (! $secret instanceof DistributionChannelSecret || $username === '') {
-            throw new RuntimeException('WordPress 渠道缺少用户名或 Application Password。');
+            throw new RuntimeException(__('admin.runtime.wp.creds_missing'));
         }
 
         $applicationPassword = $this->apiKeyCrypto->decrypt((string) $secret->secret_ciphertext);
         if ($applicationPassword === '') {
-            throw new RuntimeException('WordPress Application Password 解密失败。');
+            throw new RuntimeException(__('admin.runtime.wp.decrypt_failed'));
         }
 
         $request = Http::timeout($timeout)

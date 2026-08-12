@@ -24,7 +24,7 @@ class DistributionSigningService
     ): array {
         $plainSecret = $this->apiKeyCrypto->decrypt((string) $secret->secret_ciphertext);
         if ($plainSecret === '') {
-            throw new RuntimeException('分发渠道密钥无法解密');
+            throw new RuntimeException(__('admin.runtime.dist.decrypt_failed'));
         }
 
         $method = mb_strtoupper($method, 'UTF-8');

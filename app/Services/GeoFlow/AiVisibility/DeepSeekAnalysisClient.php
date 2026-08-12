@@ -27,22 +27,22 @@ final class DeepSeekAnalysisClient
     {
         $prompt = trim($prompt);
         if ($prompt === '') {
-            throw new RuntimeException('DeepSeek 分析提示词为空');
+            throw new RuntimeException(__('admin.runtime.deepseek.prompt_empty'));
         }
 
         $modelId = trim((string) ($model->model_id ?? ''));
         if ($modelId === '') {
-            throw new RuntimeException('DeepSeek 模型 ID 为空');
+            throw new RuntimeException(__('admin.runtime.deepseek.model_empty'));
         }
 
         $providerUrl = OpenAiRuntimeProvider::resolveChatBaseUrl((string) ($model->api_url ?? ''));
         if ($providerUrl === '') {
-            throw new RuntimeException('DeepSeek API 地址为空');
+            throw new RuntimeException(__('admin.runtime.deepseek.url_empty'));
         }
 
         $apiKey = $this->apiKeyCrypto->decrypt((string) ($model->getRawOriginal('api_key') ?? ''));
         if ($apiKey === '') {
-            throw new RuntimeException('DeepSeek API Key 为空');
+            throw new RuntimeException(__('admin.runtime.deepseek.key_empty'));
         }
 
         $driver = OpenAiRuntimeProvider::resolveChatDriver($providerUrl, $modelId);
@@ -67,14 +67,14 @@ final class DeepSeekAnalysisClient
         try {
             $response = $agent->prompt($fullPrompt, [], $providerName, $modelId);
         } catch (Throwable $exception) {
-            throw new RuntimeException('DeepSeek 分析失败: '.OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl), 0, $exception);
+            throw new RuntimeException(__('admin.runtime.deepseek.failed', ['message' => OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl)]), 0, $exception);
         }
         $latencyMs = (int) round((hrtime(true) - $startedAt) / 1_000_000);
 
         $rawText = (string) ($response->text ?? '');
         $answerText = OpenAiRuntimeProvider::normalizeGeneratedText($rawText);
         if ($answerText === '') {
-            throw new RuntimeException('DeepSeek 分析返回空内容');
+            throw new RuntimeException(__('admin.runtime.deepseek.empty'));
         }
 
         $usage = $this->extractUsage($response);

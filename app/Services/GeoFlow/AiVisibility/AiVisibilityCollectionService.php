@@ -21,7 +21,7 @@ final class AiVisibilityCollectionService
     {
         $keyword = trim($keyword);
         if ($keyword === '') {
-            throw new RuntimeException('AI 可见性关键词为空');
+            throw new RuntimeException(__('admin.runtime.visibility.keyword_empty'));
         }
 
         $provider = $this->configuration->searchProvider();
@@ -57,6 +57,6 @@ final class AiVisibilityCollectionService
             ];
         }
 
-        throw new RuntimeException('没有可用的 AI 可见性模型或搜索源');
+        throw new RuntimeException(__('admin.runtime.visibility.no_source'));
     }
 }

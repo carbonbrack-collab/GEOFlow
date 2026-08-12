@@ -101,7 +101,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('admin.url_import.field.content_language') }}</label>
                             <select name="content_language" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 <option value="">{{ __('admin.url_import.option.auto_detect') }}</option>
-                                <option value="zh-CN">中文</option>
+                                <option value="zh-CN">{{ __('admin.runtime.sync.lang_zh') }}</option>
                                 <option value="en">English</option>
                             </select>
                         </div>

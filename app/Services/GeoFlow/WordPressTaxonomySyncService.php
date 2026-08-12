@@ -132,6 +132,6 @@ class WordPressTaxonomySyncService
             return;
         }
 
-        throw new RuntimeException($operation.'失败：HTTP '.$response->status());
+        throw new RuntimeException(__('admin.runtime.api.http_failed', ['operation' => $operation, 'status' => $response->status()]));
     }
 }

@@ -21,7 +21,7 @@ final class DoubaoSearchCustomClient
     {
         $query = trim($query);
         if ($query === '') {
-            throw new RuntimeException('豆包 Search Custom 查询词为空');
+            throw new RuntimeException(__('admin.runtime.ark.search_query_empty'));
         }
 
         $endpoint = $this->endpoint($provider);
@@ -44,7 +44,7 @@ final class DoubaoSearchCustomClient
 
         $json = $response->json();
         if (! is_array($json)) {
-            throw new RuntimeException('豆包 Search Custom 返回了非 JSON 结构');
+            throw new RuntimeException(__('admin.runtime.ark.search_non_json'));
         }
 
         return $this->normalizer->normalizeDoubaoSearchCustom($json, [
@@ -86,7 +86,7 @@ final class DoubaoSearchCustomClient
         }
 
         if ($endpoint === '') {
-            throw new RuntimeException('豆包 Search Custom Endpoint 为空');
+            throw new RuntimeException(__('admin.runtime.ark.search_endpoint_empty'));
         }
 
         return $endpoint;
@@ -96,7 +96,7 @@ final class DoubaoSearchCustomClient
     {
         $apiKey = $this->apiKeyCrypto->decrypt((string) ($provider->getRawOriginal('api_key') ?? ''));
         if ($apiKey === '') {
-            throw new RuntimeException('豆包 Search Custom API Key 为空');
+            throw new RuntimeException(__('admin.runtime.ark.search_key_empty'));
         }
 
         return $apiKey;

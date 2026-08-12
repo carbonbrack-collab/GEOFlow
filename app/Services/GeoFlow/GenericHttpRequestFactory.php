@@ -54,7 +54,7 @@ class GenericHttpRequestFactory
             'basic' => $this->withBasicAuth($request, (string) $config['generic_basic_username'], $secret),
             'header_key' => $request->withHeaders([(string) $config['generic_header_name'] => $secret]),
             'hmac' => $request->withHeaders($this->hmacHeaders($config, $keyId, $secret, $method, $endpoint, $body)),
-            default => throw new RuntimeException('不支持的通用 API 鉴权方式：'.$authType),
+            default => throw new RuntimeException(__('admin.runtime.api.unsupported_auth', ['type' => $authType])),
         };
 
         return $this->safeRequest($request);
@@ -77,12 +77,12 @@ class GenericHttpRequestFactory
         $channel->loadMissing('activeSecret');
         $secret = $channel->activeSecret;
         if (! $secret instanceof DistributionChannelSecret) {
-            throw new RuntimeException('通用 API 渠道缺少有效密钥。');
+            throw new RuntimeException(__('admin.runtime.api.secret_missing'));
         }
 
         $plainSecret = $this->apiKeyCrypto->decrypt((string) $secret->secret_ciphertext);
         if ($plainSecret === '') {
-            throw new RuntimeException('通用 API 密钥解密失败。');
+            throw new RuntimeException(__('admin.runtime.api.decrypt_failed'));
         }
 
         return [(string) $secret->key_id, $plainSecret];
@@ -91,7 +91,7 @@ class GenericHttpRequestFactory
     private function withBasicAuth(PendingRequest $request, string $username, string $secret): PendingRequest
     {
         if (trim($username) === '') {
-            throw new RuntimeException('通用 API Basic 鉴权缺少用户名。');
+            throw new RuntimeException(__('admin.runtime.api.basic_user_missing'));
         }
 
         return $request->withBasicAuth($username, $secret);

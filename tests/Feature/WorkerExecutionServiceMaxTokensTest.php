@@ -62,7 +62,7 @@ class WorkerExecutionServiceMaxTokensTest extends TestCase
             $this->generateContent($model, '写一篇文章。');
             $this->fail('Expected empty content to fail.');
         } catch (\RuntimeException $exception) {
-            $this->assertSame('AI返回空正文', $exception->getMessage());
+            $this->assertSame('AI 返回空正文', $exception->getMessage());
         }
 
         $this->assertSame(0, (int) $model->fresh()->used_today);

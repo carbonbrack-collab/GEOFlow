@@ -12,7 +12,7 @@ class GenericHttpEndpointResolver
     {
         $path = trim($path);
         if ($path === '') {
-            throw new RuntimeException('通用 API 请求路径不能为空。');
+            throw new RuntimeException(__('admin.runtime.api.path_empty'));
         }
 
         $distribution->loadMissing('article');
@@ -27,14 +27,14 @@ class GenericHttpEndpointResolver
 
         foreach ($replacements as $token => $value) {
             if (str_contains($path, $token) && $value === '') {
-                throw new RuntimeException('通用 API 请求路径缺少变量 '.$token.' 的可用值。');
+                throw new RuntimeException(__('admin.runtime.api.var_missing', ['token' => $token]));
             }
         }
 
         $resolvedPath = strtr($path, $replacements);
         $baseUrl = rtrim((string) $channel->endpoint_url, '/');
         if ($baseUrl === '') {
-            throw new RuntimeException('通用 API 基础地址不能为空。');
+            throw new RuntimeException(__('admin.runtime.api.base_empty'));
         }
 
         return $baseUrl.(str_starts_with($resolvedPath, '/') ? $resolvedPath : '/'.$resolvedPath);
@@ -44,19 +44,19 @@ class GenericHttpEndpointResolver
     {
         $path = trim($path);
         if ($path === '') {
-            throw new RuntimeException('通用 API 请求路径不能为空。');
+            throw new RuntimeException(__('admin.runtime.api.path_empty'));
         }
 
         $resolvedPath = strtr($path, [
             '{channel_id}' => (string) $channel->id,
         ]);
         if (preg_match('/\{[^}]+\}/', $resolvedPath) === 1) {
-            throw new RuntimeException('通用 API 渠道级请求路径不能包含文章变量。');
+            throw new RuntimeException(__('admin.runtime.api.no_article_var'));
         }
 
         $baseUrl = rtrim((string) $channel->endpoint_url, '/');
         if ($baseUrl === '') {
-            throw new RuntimeException('通用 API 基础地址不能为空。');
+            throw new RuntimeException(__('admin.runtime.api.base_empty'));
         }
 
         return $baseUrl.(str_starts_with($resolvedPath, '/') ? $resolvedPath : '/'.$resolvedPath);

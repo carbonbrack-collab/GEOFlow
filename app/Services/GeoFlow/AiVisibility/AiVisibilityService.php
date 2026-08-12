@@ -44,7 +44,7 @@ final class AiVisibilityService
             $this->assertAiModelEnabled($model, 'ark', '豆包 Ark 模型');
             $reservation = $this->usageQuota->reserveModel($model);
             if ($reservation === null) {
-                throw new RuntimeException('豆包 Ark 模型已达到每日调用上限');
+                throw new RuntimeException(__('admin.runtime.ark.model_limit'));
             }
             $result = $this->doubaoArkResponsesClient->answerWithWebSearch($model, $prompt, $options);
 
@@ -78,7 +78,7 @@ final class AiVisibilityService
             $this->assertSourceProviderEnabled($provider, '豆包 Search Custom 信源供应商');
             $reservation = $this->usageQuota->reserveProvider($provider);
             if ($reservation === null) {
-                throw new RuntimeException('豆包 Search Custom 信源供应商已达到每日调用上限');
+                throw new RuntimeException(__('admin.runtime.ark.search_limit'));
             }
             $result = $this->doubaoSearchCustomClient->search(
                 $provider,
@@ -118,7 +118,7 @@ final class AiVisibilityService
             $this->assertAiModelEnabled($model, 'deepseek', 'DeepSeek 分析模型');
             $reservation = $this->usageQuota->reserveModel($model);
             if ($reservation === null) {
-                throw new RuntimeException('DeepSeek 分析模型已达到每日调用上限');
+                throw new RuntimeException(__('admin.runtime.deepseek.limit'));
             }
             $result = $this->deepSeekAnalysisClient->analyze($model, $prompt, $sources, $options);
 
@@ -226,7 +226,7 @@ final class AiVisibilityService
         if (($model->status ?? 'inactive') !== 'active'
             || ($modelType !== '' && $modelType !== 'chat')
             || ! $this->endpointPolicy->acceptsModelApi($bindingType, (string) ($model->api_url ?? ''))) {
-            throw new RuntimeException($label.'不可用或已停用');
+            throw new RuntimeException(__('admin.runtime.visibility.unavailable', ['label' => $label]));
         }
     }
 
@@ -234,7 +234,7 @@ final class AiVisibilityService
     {
         if (($provider->status ?? 'inactive') !== 'active'
             || ! $this->endpointPolicy->acceptsSearchApi((string) ($provider->endpoint_url ?? ''))) {
-            throw new RuntimeException($label.'不可用或已停用');
+            throw new RuntimeException(__('admin.runtime.visibility.unavailable', ['label' => $label]));
         }
     }
 
@@ -242,7 +242,7 @@ final class AiVisibilityService
     {
         $keyword = trim($keyword);
         if ($keyword === '') {
-            throw new RuntimeException('AI 可见性关键词为空');
+            throw new RuntimeException(__('admin.runtime.visibility.keyword_empty'));
         }
 
         return $keyword;

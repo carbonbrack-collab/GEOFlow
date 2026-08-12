@@ -25,7 +25,7 @@ final class ArticleContentGenerationService
 
         $reservation = $this->reserveDailyUsage($aiModel);
         if ($reservation === null) {
-            throw new RuntimeException('AI 模型不可用或已达到今日调用上限');
+            throw new RuntimeException(__('admin.runtime.gen.model_unavailable'));
         }
 
         try {
@@ -34,7 +34,7 @@ final class ArticleContentGenerationService
             $this->releaseDailyUsage($reservation);
 
             throw new RuntimeException(
-                'AI 生成失败: '.OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl),
+                __('admin.runtime.gen.failed', ['message' => OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl)]),
                 0,
                 $exception,
             );
@@ -57,7 +57,7 @@ final class ArticleContentGenerationService
 
         $reservation = $this->reserveDailyUsage($aiModel);
         if ($reservation === null) {
-            throw new RuntimeException('AI 模型不可用或已达到今日调用上限');
+            throw new RuntimeException(__('admin.runtime.gen.model_unavailable'));
         }
 
         try {
@@ -66,7 +66,7 @@ final class ArticleContentGenerationService
             $this->releaseDailyUsage($reservation);
 
             throw new RuntimeException(
-                'AI 生成失败: '.OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl),
+                __('admin.runtime.gen.failed', ['message' => OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl)]),
                 0,
                 $exception,
             );
@@ -85,7 +85,7 @@ final class ArticleContentGenerationService
                     $completed = true;
                 } catch (Throwable $exception) {
                     throw new RuntimeException(
-                        'AI 生成失败: '.OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl),
+                        __('admin.runtime.gen.failed', ['message' => OpenAiRuntimeProvider::normalizeApiException($exception, $providerUrl)]),
                         0,
                         $exception,
                     );
@@ -152,17 +152,17 @@ final class ArticleContentGenerationService
     {
         $providerUrl = OpenAiRuntimeProvider::resolveChatBaseUrl((string) ($aiModel->api_url ?? ''));
         if ($providerUrl === '') {
-            throw new RuntimeException('AI 模型 API 地址为空');
+            throw new RuntimeException(__('admin.runtime.gen.url_empty'));
         }
 
         $apiKey = $this->apiKeyCrypto->decrypt((string) ($aiModel->getRawOriginal('api_key') ?? ''));
         if ($apiKey === '') {
-            throw new RuntimeException('AI 模型密钥为空');
+            throw new RuntimeException(__('admin.runtime.gen.key_empty'));
         }
 
         $modelId = trim((string) ($aiModel->model_id ?? ''));
         if ($modelId === '') {
-            throw new RuntimeException('AI 模型标识为空');
+            throw new RuntimeException(__('admin.runtime.gen.model_empty'));
         }
 
         $driver = OpenAiRuntimeProvider::resolveChatDriver($providerUrl, $modelId);
