@@ -1137,6 +1137,10 @@ function normalizeSiteSettings(array $settings, array $config = []): array
             : 'custom',
         'article_text_ads' => normalizeArticleTextAds($settings['article_text_ads'] ?? $config['article_text_ads'] ?? []),
         'active_theme' => trim((string) ($settings['active_theme'] ?? $config['active_theme'] ?? '')),
+        // 主题映射与站点语言只来自 config.php，同步下来的设置里没有，
+        // 归一化时必须显式带上，否则主题解析拿不到映射表只能回落 default。
+        'theme_map' => is_array($config['theme_map'] ?? null) ? $config['theme_map'] : [],
+        'site_locale' => trim((string) ($config['site_locale'] ?? 'en')) ?: 'en',
         'front_mode' => $frontMode,
     ];
 }

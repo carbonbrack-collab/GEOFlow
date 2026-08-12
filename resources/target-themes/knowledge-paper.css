@@ -17,5 +17,13 @@ body.target-theme-knowledge-paper{background:#f7f5ee;color:#1d2119;font-family:"
 .target-theme-knowledge-paper .homepage-module{background:#fffefb;border:1px solid rgba(0,0,0,.12);border-radius:2px}
 .target-theme-knowledge-paper .module-action{background:#2f6f4e;border-radius:4px}
 .target-theme-knowledge-paper .module-kicker{color:#2f6f4e}
+.target-theme-knowledge-paper .metric-item,.target-theme-knowledge-paper .feature-item,.target-theme-knowledge-paper .chart-row,.target-theme-knowledge-paper .homepage-article-card{background:#fffefb;border:1px solid rgba(0,0,0,.12);color:#1d2119}
+.target-theme-knowledge-paper .metric-item span,.target-theme-knowledge-paper .chart-row span,.target-theme-knowledge-paper .homepage-article-card p,.target-theme-knowledge-paper .feature-item p{color:#63695c}
+.target-theme-knowledge-paper .feature-item h3 a,.target-theme-knowledge-paper .homepage-article-card h3 a{color:#1d2119}
+.target-theme-knowledge-paper .feature-item h3 a:hover,.target-theme-knowledge-paper .homepage-article-card h3 a:hover{color:#2f6f4e}
+.target-theme-knowledge-paper .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-knowledge-paper .chart-bar i{background:#2f6f4e}
+.target-theme-knowledge-paper .homepage-slide{background:#fffefb;border:1px solid rgba(0,0,0,.12)}
+.target-theme-knowledge-paper .homepage-slide-copy a{color:#1d2119}
 .target-theme-knowledge-paper .card{background:#fffefb;border:1px solid rgba(0,0,0,.10);border-radius:2px;box-shadow:none}
 .target-theme-knowledge-paper header{background:#fffefb;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-knowledge-paper .brand{color:#1d2119}

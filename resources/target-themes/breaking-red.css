@@ -17,5 +17,13 @@ body.target-theme-breaking-red{background:#ffffff;color:#111111;font-family:-app
 .target-theme-breaking-red .homepage-module{background:#fff7f7;border:1px solid rgba(0,0,0,.12);border-radius:0px}
 .target-theme-breaking-red .module-action{background:#cc0000;border-radius:4px}
 .target-theme-breaking-red .module-kicker{color:#cc0000}
+.target-theme-breaking-red .metric-item,.target-theme-breaking-red .feature-item,.target-theme-breaking-red .chart-row,.target-theme-breaking-red .homepage-article-card{background:#fff7f7;border:1px solid rgba(0,0,0,.12);color:#111111}
+.target-theme-breaking-red .metric-item span,.target-theme-breaking-red .chart-row span,.target-theme-breaking-red .homepage-article-card p,.target-theme-breaking-red .feature-item p{color:#5f5f5f}
+.target-theme-breaking-red .feature-item h3 a,.target-theme-breaking-red .homepage-article-card h3 a{color:#111111}
+.target-theme-breaking-red .feature-item h3 a:hover,.target-theme-breaking-red .homepage-article-card h3 a:hover{color:#cc0000}
+.target-theme-breaking-red .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-breaking-red .chart-bar i{background:#cc0000}
+.target-theme-breaking-red .homepage-slide{background:#fff7f7;border:1px solid rgba(0,0,0,.12)}
+.target-theme-breaking-red .homepage-slide-copy a{color:#111111}
 .target-theme-breaking-red .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-breaking-red .list{gap:0}
 .target-theme-breaking-red header{background:#fff7f7;border-bottom:3px solid #cc0000}.target-theme-breaking-red .brand{color:#111111}

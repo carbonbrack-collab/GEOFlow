@@ -17,5 +17,13 @@ body.target-theme-ink-editorial{background:#faf8f5;color:#1a1614;font-family:Geo
 .target-theme-ink-editorial .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
 .target-theme-ink-editorial .module-action{background:#8b1e1e;border-radius:4px}
 .target-theme-ink-editorial .module-kicker{color:#8b1e1e}
+.target-theme-ink-editorial .metric-item,.target-theme-ink-editorial .feature-item,.target-theme-ink-editorial .chart-row,.target-theme-ink-editorial .homepage-article-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);color:#1a1614}
+.target-theme-ink-editorial .metric-item span,.target-theme-ink-editorial .chart-row span,.target-theme-ink-editorial .homepage-article-card p,.target-theme-ink-editorial .feature-item p{color:#6b625c}
+.target-theme-ink-editorial .feature-item h3 a,.target-theme-ink-editorial .homepage-article-card h3 a{color:#1a1614}
+.target-theme-ink-editorial .feature-item h3 a:hover,.target-theme-ink-editorial .homepage-article-card h3 a:hover{color:#8b1e1e}
+.target-theme-ink-editorial .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-ink-editorial .chart-bar i{background:#8b1e1e}
+.target-theme-ink-editorial .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-ink-editorial .homepage-slide-copy a{color:#1a1614}
 .target-theme-ink-editorial .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-ink-editorial .list{gap:0}
 .target-theme-ink-editorial header{background:#ffffff;border-bottom:3px solid #8b1e1e}.target-theme-ink-editorial .brand{color:#1a1614}

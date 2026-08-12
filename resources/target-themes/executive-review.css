@@ -17,5 +17,13 @@ body.target-theme-executive-review{background:#f9f7f4;color:#17141a;font-family:
 .target-theme-executive-review .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
 .target-theme-executive-review .module-action{background:#a41034;border-radius:4px}
 .target-theme-executive-review .module-kicker{color:#a41034}
+.target-theme-executive-review .metric-item,.target-theme-executive-review .feature-item,.target-theme-executive-review .chart-row,.target-theme-executive-review .homepage-article-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);color:#17141a}
+.target-theme-executive-review .metric-item span,.target-theme-executive-review .chart-row span,.target-theme-executive-review .homepage-article-card p,.target-theme-executive-review .feature-item p{color:#635c66}
+.target-theme-executive-review .feature-item h3 a,.target-theme-executive-review .homepage-article-card h3 a{color:#17141a}
+.target-theme-executive-review .feature-item h3 a:hover,.target-theme-executive-review .homepage-article-card h3 a:hover{color:#a41034}
+.target-theme-executive-review .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-executive-review .chart-bar i{background:#a41034}
+.target-theme-executive-review .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-executive-review .homepage-slide-copy a{color:#17141a}
 .target-theme-executive-review .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-executive-review .list{gap:0}
 .target-theme-executive-review header{background:#a41034;border-bottom:0}.target-theme-executive-review .brand{color:#fff}.target-theme-executive-review nav a{color:rgba(255,255,255,.86)}

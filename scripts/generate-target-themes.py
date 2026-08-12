@@ -95,6 +95,19 @@ def build(k, spec):
         f'.target-theme-{k} .homepage-module{{background:{surface};border:1px solid {line};border-radius:{radius}px}}',
         f'.target-theme-{k} .module-action{{background:{accent};border-radius:{max(radius, 4)}px}}',
         f'.target-theme-{k} .module-kicker{{color:{accent}}}',
+        # 首页模块内部元素在基础样式里写死了浅色，必须逐个覆盖，
+        # 否则深色主题上会出现白色卡片。
+        f'.target-theme-{k} .metric-item,.target-theme-{k} .feature-item,'
+        f'.target-theme-{k} .chart-row,.target-theme-{k} .homepage-article-card'
+        f'{{background:{surface};border:1px solid {line};color:{ink}}}',
+        f'.target-theme-{k} .metric-item span,.target-theme-{k} .chart-row span,'
+        f'.target-theme-{k} .homepage-article-card p,.target-theme-{k} .feature-item p{{color:{muted}}}',
+        f'.target-theme-{k} .feature-item h3 a,.target-theme-{k} .homepage-article-card h3 a{{color:{ink}}}',
+        f'.target-theme-{k} .feature-item h3 a:hover,.target-theme-{k} .homepage-article-card h3 a:hover{{color:{accent}}}',
+        f'.target-theme-{k} .chart-bar{{background:{line}}}',
+        f'.target-theme-{k} .chart-bar i{{background:{accent}}}',
+        f'.target-theme-{k} .homepage-slide{{background:{surface};border:1px solid {line}}}',
+        f'.target-theme-{k} .homepage-slide-copy a{{color:{ink}}}',
         card_css(k, card, surface, radius, accent, muted),
         header_css(k, header, accent, surface, ink),
     ]

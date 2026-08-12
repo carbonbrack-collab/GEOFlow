@@ -2819,6 +2819,10 @@ class AdminDistributionPageTest extends TestCase
         $this->assertStringContainsString('Remote custom heading', $staticIndex);
         // 目标站点面向英文市场，界面文案为英文。
         $this->assertStringContainsString('No articles yet.', $staticIndex);
+        // 主题必须真正落到 body 上：normalizeSiteSettings 曾把 theme_map 过滤掉，
+        // 导致所有目标站点无论选哪套模板都回落 target-theme-default。
+        $this->assertStringContainsString('target-theme-toutiao', $staticIndex);
+        $this->assertStringContainsString("'theme_map' =>", (string) $zip->getFromName('config.php'));
         $this->assertDoesNotMatchRegularExpression('/[\x{4e00}-\x{9fa5}]/u', preg_replace('/远程门户|远程站点描述/u', '', $staticIndex));
         $this->assertStringContainsString('assets/css/site.css', $staticIndex);
         $this->assertStringContainsString('class="target-theme-toutiao"', $staticIndex);

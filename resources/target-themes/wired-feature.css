@@ -17,5 +17,13 @@ body.target-theme-wired-feature{background:#ffffff;color:#101418;font-family:-ap
 .target-theme-wired-feature .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
 .target-theme-wired-feature .module-action{background:#1f6feb;border-radius:4px}
 .target-theme-wired-feature .module-kicker{color:#1f6feb}
+.target-theme-wired-feature .metric-item,.target-theme-wired-feature .feature-item,.target-theme-wired-feature .chart-row,.target-theme-wired-feature .homepage-article-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);color:#101418}
+.target-theme-wired-feature .metric-item span,.target-theme-wired-feature .chart-row span,.target-theme-wired-feature .homepage-article-card p,.target-theme-wired-feature .feature-item p{color:#5a636d}
+.target-theme-wired-feature .feature-item h3 a,.target-theme-wired-feature .homepage-article-card h3 a{color:#101418}
+.target-theme-wired-feature .feature-item h3 a:hover,.target-theme-wired-feature .homepage-article-card h3 a:hover{color:#1f6feb}
+.target-theme-wired-feature .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-wired-feature .chart-bar i{background:#1f6feb}
+.target-theme-wired-feature .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-wired-feature .homepage-slide-copy a{color:#101418}
 .target-theme-wired-feature .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-wired-feature .list{gap:0}
 .target-theme-wired-feature header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-wired-feature .brand{color:#101418}

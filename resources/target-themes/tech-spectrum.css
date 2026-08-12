@@ -17,6 +17,14 @@ body.target-theme-tech-spectrum{background:#0f0f14;color:#f2f2f7;font-family:-ap
 .target-theme-tech-spectrum .homepage-module{background:#1a1a22;border:1px solid rgba(255,255,255,.14);border-radius:14px}
 .target-theme-tech-spectrum .module-action{background:#ff0080;border-radius:14px}
 .target-theme-tech-spectrum .module-kicker{color:#ff0080}
+.target-theme-tech-spectrum .metric-item,.target-theme-tech-spectrum .feature-item,.target-theme-tech-spectrum .chart-row,.target-theme-tech-spectrum .homepage-article-card{background:#1a1a22;border:1px solid rgba(255,255,255,.14);color:#f2f2f7}
+.target-theme-tech-spectrum .metric-item span,.target-theme-tech-spectrum .chart-row span,.target-theme-tech-spectrum .homepage-article-card p,.target-theme-tech-spectrum .feature-item p{color:#9a9aa8}
+.target-theme-tech-spectrum .feature-item h3 a,.target-theme-tech-spectrum .homepage-article-card h3 a{color:#f2f2f7}
+.target-theme-tech-spectrum .feature-item h3 a:hover,.target-theme-tech-spectrum .homepage-article-card h3 a:hover{color:#ff0080}
+.target-theme-tech-spectrum .chart-bar{background:rgba(255,255,255,.14)}
+.target-theme-tech-spectrum .chart-bar i{background:#ff0080}
+.target-theme-tech-spectrum .homepage-slide{background:#1a1a22;border:1px solid rgba(255,255,255,.14)}
+.target-theme-tech-spectrum .homepage-slide-copy a{color:#f2f2f7}
 .target-theme-tech-spectrum .card{background:#1a1a22;border:0;border-radius:14px;box-shadow:0 4px 20px rgba(15,23,42,.08)}
 .target-theme-tech-spectrum header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-tech-spectrum .brand{color:#f2f2f7}
 .target-theme-tech-spectrum .content pre{background:#000;color:#e6e6ef}

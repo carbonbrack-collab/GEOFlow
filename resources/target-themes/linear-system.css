@@ -17,5 +17,13 @@ body.target-theme-linear-system{background:#f7f8fa;color:#16181d;font-family:-ap
 .target-theme-linear-system .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:8px}
 .target-theme-linear-system .module-action{background:#5e6ad2;border-radius:8px}
 .target-theme-linear-system .module-kicker{color:#5e6ad2}
+.target-theme-linear-system .metric-item,.target-theme-linear-system .feature-item,.target-theme-linear-system .chart-row,.target-theme-linear-system .homepage-article-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);color:#16181d}
+.target-theme-linear-system .metric-item span,.target-theme-linear-system .chart-row span,.target-theme-linear-system .homepage-article-card p,.target-theme-linear-system .feature-item p{color:#61656d}
+.target-theme-linear-system .feature-item h3 a,.target-theme-linear-system .homepage-article-card h3 a{color:#16181d}
+.target-theme-linear-system .feature-item h3 a:hover,.target-theme-linear-system .homepage-article-card h3 a:hover{color:#5e6ad2}
+.target-theme-linear-system .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-linear-system .chart-bar i{background:#5e6ad2}
+.target-theme-linear-system .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-linear-system .homepage-slide-copy a{color:#16181d}
 .target-theme-linear-system .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:8px;box-shadow:none}
 .target-theme-linear-system header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-linear-system .brand{color:#16181d}

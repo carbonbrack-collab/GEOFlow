@@ -17,5 +17,13 @@ body.target-theme-reading-medium{background:#ffffff;color:#191919;font-family:Ge
 .target-theme-reading-medium .homepage-module{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
 .target-theme-reading-medium .module-action{background:#1a8917;border-radius:4px}
 .target-theme-reading-medium .module-kicker{color:#1a8917}
+.target-theme-reading-medium .metric-item,.target-theme-reading-medium .feature-item,.target-theme-reading-medium .chart-row,.target-theme-reading-medium .homepage-article-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);color:#191919}
+.target-theme-reading-medium .metric-item span,.target-theme-reading-medium .chart-row span,.target-theme-reading-medium .homepage-article-card p,.target-theme-reading-medium .feature-item p{color:#6b6b6b}
+.target-theme-reading-medium .feature-item h3 a,.target-theme-reading-medium .homepage-article-card h3 a{color:#191919}
+.target-theme-reading-medium .feature-item h3 a:hover,.target-theme-reading-medium .homepage-article-card h3 a:hover{color:#1a8917}
+.target-theme-reading-medium .chart-bar{background:rgba(0,0,0,.12)}
+.target-theme-reading-medium .chart-bar i{background:#1a8917}
+.target-theme-reading-medium .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-reading-medium .homepage-slide-copy a{color:#191919}
 .target-theme-reading-medium .card{background:#ffffff;border:0;border-radius:0px;box-shadow:none}
 .target-theme-reading-medium header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-reading-medium .brand{color:#191919}
