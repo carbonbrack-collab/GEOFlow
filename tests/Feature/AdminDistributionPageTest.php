@@ -2783,11 +2783,12 @@ class AdminDistributionPageTest extends TestCase
 
         $staticIndex = (string) $zip->getFromName('index.html');
         $this->assertStringContainsString('远程门户', $staticIndex);
-        $this->assertStringContainsString('<title>首页 - 远程门户</title>', $staticIndex);
+        $this->assertStringContainsString('<title>Home - 远程门户</title>', $staticIndex);
+        $this->assertStringContainsString('<html lang="en">', $staticIndex);
         $this->assertStringContainsString('<meta name="description" content="远程站点描述 - 远程门户">', $staticIndex);
         $this->assertStringContainsString('<meta name="keywords" content="geo,remote">', $staticIndex);
         $this->assertStringContainsString('<link rel="canonical" href="https://example.com/">', $staticIndex);
-        $this->assertStringContainsString('<meta property="og:title" content="首页 - 远程门户">', $staticIndex);
+        $this->assertStringContainsString('<meta property="og:title" content="Home - 远程门户">', $staticIndex);
         $this->assertStringContainsString('<meta property="og:description" content="远程站点描述 - 远程门户">', $staticIndex);
         $this->assertStringContainsString('<meta property="og:type" content="website">', $staticIndex);
         $this->assertStringContainsString('<meta property="og:url" content="https://example.com/">', $staticIndex);
@@ -2816,7 +2817,9 @@ class AdminDistributionPageTest extends TestCase
         $this->assertStringContainsString('Remote CTA Band', $staticIndex);
         $this->assertStringContainsString('homepage-custom_html', $staticIndex);
         $this->assertStringContainsString('Remote custom heading', $staticIndex);
-        $this->assertStringContainsString('暂无文章', $staticIndex);
+        // 目标站点面向英文市场，界面文案为英文。
+        $this->assertStringContainsString('No articles yet.', $staticIndex);
+        $this->assertDoesNotMatchRegularExpression('/[\x{4e00}-\x{9fa5}]/u', preg_replace('/远程门户|远程站点描述/u', '', $staticIndex));
         $this->assertStringContainsString('assets/css/site.css', $staticIndex);
         $this->assertStringContainsString('class="target-theme-toutiao"', $staticIndex);
         $this->assertStringNotContainsString('<style>', $staticIndex);

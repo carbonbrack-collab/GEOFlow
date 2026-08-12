@@ -115,22 +115,43 @@ class TitleAiGenerationService
         $driver = OpenAiRuntimeProvider::resolveChatDriver($providerUrl, (string) ($aiModel->model_id ?? ''));
         $providerName = OpenAiRuntimeProvider::registerProvider('title_ai', $driver, $providerUrl, $apiKey);
 
-        $styleMap = [
-            'professional' => '专业严谨的',
-            'attractive' => '吸引眼球的',
-            'seo' => 'SEO优化的',
-            'creative' => '创意新颖的',
-            'question' => '疑问式的',
-        ];
-        $styleDescription = $styleMap[$style] ?? '专业严谨的';
-        $keywordsText = implode('、', $keywords);
+        // 关键词是哪种语言，标题就用哪种语言：整套提示词随之切换，
+        // 比只在末尾加一句「保持一致」可靠得多。
+        if ($this->keywordsAreEnglish($keywords)) {
+            $styleMap = [
+                'professional' => 'professional and precise',
+                'attractive' => 'eye-catching',
+                'seo' => 'SEO-optimised',
+                'creative' => 'creative and fresh',
+                'question' => 'question-style',
+            ];
+            $styleDescription = $styleMap[$style] ?? 'professional and precise';
+            $keywordsText = implode(', ', $keywords);
 
-        $systemPrompt = "你是一个专业的内容标题生成专家。请根据提供的关键词生成{$styleDescription}文章标题。";
-        $userPrompt = "请基于以下关键词生成 {$count} 个{$styleDescription}文章标题：\n\n关键词：{$keywordsText}\n\n";
-        if ($customPrompt !== '') {
-            $userPrompt .= "额外要求：{$customPrompt}\n\n";
+            $systemPrompt = "You write article headlines. Produce {$styleDescription} headlines from the given keywords.";
+            $userPrompt = "Write {$count} {$styleDescription} article headlines for these keywords:\n\n{$keywordsText}\n\n";
+            if ($customPrompt !== '') {
+                $userPrompt .= "Additional requirements: {$customPrompt}\n\n";
+            }
+            $userPrompt .= "Rules:\n1. One headline per line\n2. Make them readable and compelling\n3. Suitable for search engines\n4. No numbering or bullet marks\n5. Output the headlines only\n6. Write every headline in English — never mix in another language";
+        } else {
+            $styleMap = [
+                'professional' => '专业严谨的',
+                'attractive' => '吸引眼球的',
+                'seo' => 'SEO优化的',
+                'creative' => '创意新颖的',
+                'question' => '疑问式的',
+            ];
+            $styleDescription = $styleMap[$style] ?? '专业严谨的';
+            $keywordsText = implode('、', $keywords);
+
+            $systemPrompt = "你是一个专业的内容标题生成专家。请根据提供的关键词生成{$styleDescription}文章标题。";
+            $userPrompt = "请基于以下关键词生成 {$count} 个{$styleDescription}文章标题：\n\n关键词：{$keywordsText}\n\n";
+            if ($customPrompt !== '') {
+                $userPrompt .= "额外要求：{$customPrompt}\n\n";
+            }
+            $userPrompt .= "要求：\n1. 每个标题独占一行\n2. 标题要有吸引力和可读性\n3. 适合搜索引擎优化\n4. 不要添加序号或其他标记\n5. 直接输出标题内容\n6. 标题必须与关键词使用同一种语言，不要中英混排";
         }
-        $userPrompt .= "要求：\n1. 每个标题独占一行\n2. 标题要有吸引力和可读性\n3. 适合搜索引擎优化\n4. 不要添加序号或其他标记\n5. 直接输出标题内容";
 
         try {
             $response = agent($systemPrompt)->prompt(
@@ -188,6 +209,16 @@ class TitleAiGenerationService
     /**
      * @return list<string>
      */
+    /** 关键词整体是否为英文：无汉字且含足够拉丁字母。 */
+    private function keywordsAreEnglish(array $keywords): bool
+    {
+        $text = implode(' ', array_map(static fn ($k): string => (string) $k, $keywords));
+        preg_match_all('/\p{Han}/u', $text, $cjk);
+        preg_match_all('/[A-Za-z]/', $text, $latin);
+
+        return count($cjk[0] ?? []) === 0 && count($latin[0] ?? []) >= 3;
+    }
+
     private function generateMockTitles(array $keywords, int $count, string $style): array
     {
         $styleTemplates = [

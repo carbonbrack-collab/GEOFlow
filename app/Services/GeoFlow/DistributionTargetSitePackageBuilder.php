@@ -73,6 +73,7 @@ class DistributionTargetSitePackageBuilder
             'frontend_experience_mode' => method_exists($channel, 'frontendExperienceMode') ? $channel->frontendExperienceMode() : 'custom',
             'article_text_ads' => method_exists($channel, 'effectiveArticleTextAds') ? $channel->effectiveArticleTextAds() : [],
             'active_theme' => (string) ($channel->template_key ?? ''),
+            'site_locale' => (string) (config('geoflow.target_site_locale', 'en')),
             'theme_map' => TargetThemeRegistry::matchMap(),
             'front_mode' => $frontMode,
             'package_version' => (string) config('geoflow.app_version', ''),
@@ -106,6 +107,7 @@ class DistributionTargetSitePackageBuilder
             ."    'frontend_experience_mode' => ".var_export($config['frontend_experience_mode'], true).",\n"
             ."    'article_text_ads' => ".var_export($config['article_text_ads'], true).",\n"
             ."    'active_theme' => ".var_export($config['active_theme'], true).",\n"
+            ."    'site_locale' => ".var_export($config['site_locale'], true).",\n"
             ."    'theme_map' => ".var_export($config['theme_map'], true).",\n"
             ."    'front_mode' => ".var_export($config['front_mode'], true).",\n"
             ."    'package_version' => ".var_export($config['package_version'], true).",\n"
@@ -120,7 +122,7 @@ class DistributionTargetSitePackageBuilder
             ."    'max_asset_bytes' => ".$config['max_asset_bytes'].",\n"
             ."    'clock_skew_seconds' => ".$config['clock_skew_seconds'].",\n"
             ."    'categories' => [\n"
-            ."        ['name' => '默认分类', 'slug' => 'default'],\n"
+            ."        ['name' => 'General', 'slug' => 'default'],\n"
             ."    ],\n"
             ."];\n";
     }
@@ -168,9 +170,9 @@ HTACCESS;
         $settings['active_theme'] = (string) ($channel->template_key ?? '');
         $themeClass = $this->targetThemeClass($settings);
         $assetVersion = $this->targetAssetVersion($channel);
-        $seo = $this->initialSeoPayload($channel, $settings, '首页');
+        $seo = $this->initialSeoPayload($channel, $settings, 'Home');
 
-        $head = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        $head = '<!DOCTYPE html><html lang="'.$this->h((string) config('geoflow.target_site_locale', 'en')).'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             .'<title>'.$this->h($seo['page_title']).'</title>'
             .'<meta name="description" content="'.$this->h($seo['description']).'">';
         if ($seo['keywords'] !== '') {
@@ -200,7 +202,7 @@ HTACCESS;
             .'<link rel="stylesheet" href="assets/css/site.css?v='.$assetVersion.'"><script defer src="assets/js/site.js?v='.$assetVersion.'"></script>'
             .'</head><body class="'.$this->h($themeClass).'"><header><div class="wrap bar"><div class="brand">'.$this->h($siteName).'</div></div></header><main class="wrap">'
             .$experienceHtml
-            .'<div class="empty">暂无文章。请先发布一篇绑定此渠道的文章。</div></main>'
+            .'<div class="empty">No articles yet.</div></main>'
             .'<footer><div class="wrap">'.$this->h($copyright).'</div></footer></body></html>';
     }
 
@@ -593,7 +595,7 @@ document.addEventListener('click', function (event) {
   navigator.clipboard.writeText(target.textContent || target.value || '');
 });
 
-/* 访问统计信标：把本次浏览上报到本站，由中心定时拉取。 */
+/* Page-view beacon: reports this view to the site itself. */
 (function () {
   var MARK = '/assets/js/site.js';
 
@@ -631,10 +633,10 @@ document.addEventListener('click', function (event) {
         navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
         return;
       }
-    } catch (error) { /* 回落到 fetch */ }
+    } catch (error) { /* fall through to fetch */ }
     try {
       fetch(url, { method: 'POST', body: payload, keepalive: true, headers: { 'Content-Type': 'application/json' } });
-    } catch (error) { /* 统计失败不影响页面 */ }
+    } catch (error) { /* analytics must never break the page */ }
   }
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -1110,15 +1112,15 @@ function normalizeHomeCarouselSlides(mixed $slides): array
 
 function normalizeSiteSettings(array $settings, array $config = []): array
 {
-    $siteName = trim((string) ($settings['site_name'] ?? $config['site_name'] ?? '目标站点'));
-    $siteName = $siteName !== '' ? $siteName : '目标站点';
+    $siteName = trim((string) ($settings['site_name'] ?? $config['site_name'] ?? 'Site'));
+    $siteName = $siteName !== '' ? $siteName : 'Site';
     $frontMode = (string) ($settings['front_mode'] ?? $config['front_mode'] ?? 'static');
     $frontMode = in_array($frontMode, ['static', 'rewrite'], true) ? $frontMode : 'static';
 
     return [
         'site_name' => $siteName,
         'site_subtitle' => trim((string) ($settings['site_subtitle'] ?? $config['site_subtitle'] ?? '')),
-        'site_description' => trim((string) ($settings['site_description'] ?? $config['site_description'] ?? '自动分发和管理的内容站点。')),
+        'site_description' => trim((string) ($settings['site_description'] ?? $config['site_description'] ?? 'An automatically published content site.')),
         'site_keywords' => trim((string) ($settings['site_keywords'] ?? $config['site_keywords'] ?? '')),
         'copyright_info' => trim((string) ($settings['copyright_info'] ?? $config['copyright_info'] ?? '© '.date('Y').' '.$siteName)),
         'site_logo' => trim((string) ($settings['site_logo'] ?? $config['site_logo'] ?? '')),
@@ -2142,7 +2144,7 @@ function pageHeader(array $config, string $title, array $pageMeta = []): void
     }
     $seo = pageSeoPayload($settings, $title, $pageMeta);
     $homeUrl = frontSitePath($config, '/');
-    echo '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+    echo '<!DOCTYPE html><html lang="'.h((string) ($config['site_locale'] ?? 'en')).'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>'.h((string) $seo['page_title']).'</title><meta name="description" content="'.h((string) $seo['description']).'">';
     $keywords = (string) $seo['keywords'];
     if ($keywords !== '') {
@@ -2161,7 +2163,7 @@ function pageHeader(array $config, string $title, array $pageMeta = []): void
     }
     echo '<link rel="stylesheet" href="'.h(frontVersionedAssetPath($config, '/assets/css/site.css')).'">';
     echo '<script defer src="'.h(frontVersionedAssetPath($config, '/assets/js/site.js')).'"></script>';
-    echo '</head><body class="'.h($themeClass).'"><header><div class="wrap bar"><a class="brand" href="'.h($homeUrl).'">'.h($siteName).'</a><nav><a href="'.h($homeUrl).'">首页</a></nav></div></header><main class="wrap">';
+    echo '</head><body class="'.h($themeClass).'"><header><div class="wrap bar"><a class="brand" href="'.h($homeUrl).'">'.h($siteName).'</a><nav><a href="'.h($homeUrl).'">Home</a></nav></div></header><main class="wrap">';
 }
 
 function pageFooter(array $config): void
@@ -2471,7 +2473,7 @@ function renderHomePage(array $config): void
 
     $siteName = (string) $settings['site_name'];
     $articles = array_slice(loadArticles($config), 0, (int) $settings['per_page']);
-    pageHeader($config, '首页');
+    pageHeader($config, 'Home');
     echo jsonLdScript([
         "@context"=>"https://schema.org",
         "@type"=>"WebSite",
@@ -2485,7 +2487,7 @@ function renderHomePage(array $config): void
         echo '<section class="hero"><h1>'.h($siteName).'</h1><p>'.h((string) $settings['site_description']).'</p></section>';
     }
     if ($articles === []) {
-        echo '<div class="card empty">暂无文章。请先发布一篇绑定此渠道的文章。</div>';
+        echo '<div class="card empty">No articles yet.</div>';
         pageFooter($config);
         return;
     }
@@ -2493,15 +2495,15 @@ function renderHomePage(array $config): void
     echo '<section class="list">';
     foreach ($articles as $article) {
         $slug = (string) ($article['slug'] ?? '');
-        $title = (string) ($article['title'] ?? '未命名文章');
-        $category = is_array($article['category'] ?? null) ? (string) ($article['category']['name'] ?? '默认分类') : '默认分类';
+        $title = (string) ($article['title'] ?? 'Untitled');
+        $category = is_array($article['category'] ?? null) ? (string) ($article['category']['name'] ?? 'General') : 'General';
         $publishedAt = substr((string) ($article['published_at'] ?? $article['updated_at'] ?? ''), 0, 10);
         $summary = (string) ($article['excerpt'] ?? $article['meta_description'] ?? '');
         $articleUrl = frontSitePath($config, '/article/'.rawurlencode($slug));
         echo '<article class="card"><div class="meta"><span class="chip">'.h($category).'</span><span>'.h($publishedAt).'</span></div>';
         echo '<h2><a href="'.h($articleUrl).'">'.h($title).'</a></h2>';
         echo '<p class="summary">'.h($summary !== '' ? $summary : mb_substr(strip_tags((string) ($article['content'] ?? '')), 0, 160)).'</p>';
-        echo '<a class="read" href="'.h($articleUrl).'">阅读全文</a></article>';
+        echo '<a class="read" href="'.h($articleUrl).'">Read more</a></article>';
     }
     echo '</section>';
     pageFooter($config);
@@ -2613,7 +2615,7 @@ function renderFashionHomePage(array $config, array $settings): void
     $featured = array_slice($articles, 0, min(3, count($articles)));
     $latest = array_slice($articles, 0);
 
-    pageHeader($config, '首页');
+    pageHeader($config, 'Home');
     echo jsonLdScript([
         "@context"=>"https://schema.org",
         "@type"=>"WebSite",
@@ -2696,14 +2698,14 @@ function renderArticlePage(array $config, string $slug): void
     $article = findArticle($config, $slug);
     if (! $article) {
         http_response_code(404);
-        pageHeader($config, '文章不存在');
-        echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">返回首页</a><div class="card empty">文章不存在。</div>';
+        pageHeader($config, 'Not found');
+        echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">Back to home</a><div class="card empty">Article not found.</div>';
         pageFooter($config);
         return;
     }
 
-    $title = (string) ($article['title'] ?? '未命名文章');
-    $category = is_array($article['category'] ?? null) ? (string) ($article['category']['name'] ?? '默认分类') : '默认分类';
+    $title = (string) ($article['title'] ?? 'Untitled');
+    $category = is_array($article['category'] ?? null) ? (string) ($article['category']['name'] ?? 'General') : 'General';
     $publishedAt = substr((string) ($article['published_at'] ?? $article['updated_at'] ?? ''), 0, 10);
     $settings = siteSettings($config);
     $articleUrl = frontSiteUrl($config, '/article/'.rawurlencode($slug));
@@ -2735,7 +2737,7 @@ function renderArticlePage(array $config, string $slug): void
         "@context"=>"https://schema.org",
         "@type"=>"BreadcrumbList",
         "itemListElement"=>[
-            ["@type"=>"ListItem", "position"=>1, "name"=>"首页", "item"=>frontSiteUrl($config, '/')],
+            ["@type"=>"ListItem", "position"=>1, "name"=>"Home", "item"=>frontSiteUrl($config, '/')],
             ["@type"=>"ListItem", "position"=>2, "name"=>$title, "item"=>frontSiteUrl($config, '/article/'.rawurlencode($slug))],
         ],
     ]);
@@ -2743,7 +2745,7 @@ function renderArticlePage(array $config, string $slug): void
     $isFashion = $themeClass === 'target-theme-fashion';
     $isApparel = $themeClass === 'target-theme-apparel';
     echo $isApparel ? '<div class="asi-shell asi-article-layout"><main class="asi-article-column"><nav class="asi-breadcrumb"><a href="'.h(frontSitePath($config, '/')).'">Latest</a><span>/</span><span>'.h($category).'</span></nav>' : '';
-    echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">'.($isFashion || $isApparel ? 'Back to Reports' : '返回首页').'</a><article class="'.($isApparel ? 'asi-article' : 'card detail').'">';
+    echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">'.($isFashion || $isApparel ? 'Back to Reports' : 'Back to home').'</a><article class="'.($isApparel ? 'asi-article' : 'card detail').'">';
     if ($isFashion) {
         echo '<div class="fashion-article-kicker"><span>'.h($category).'</span><time>'.h($publishedAt).'</time></div>';
     } elseif ($isApparel) {
@@ -2799,7 +2801,7 @@ function renderLlmsText(array $config): string
     $siteName = textMapLine((string) $settings['site_name']);
     $description = textMapLine((string) $settings['site_description']);
     $lines = [
-        '# '.($siteName !== '' ? $siteName : '目标站点'),
+        '# '.($siteName !== '' ? $siteName : 'Site'),
         '',
     ];
     if ($description !== '') {
@@ -3025,7 +3027,7 @@ function viewsCursorFile(array $config): string
     return viewsDir($config).'/cursor.json';
 }
 
-/** 追加一条访问记录；单文件按天切分，超限则丢弃以免磁盘被打满。 */
+/** Append one page view; files rotate daily and are capped to protect disk space. */
 function recordPageView(array $config, array $payload): void
 {
     $dir = viewsDir($config);
@@ -3054,7 +3056,7 @@ function recordPageView(array $config, array $payload): void
     @file_put_contents($file, $line."\n", FILE_APPEND | LOCK_EX);
 }
 
-/** 浏览器信标入口：公开、无签名，只接受本站发来的浏览记录。 */
+/** Public beacon endpoint: unsigned, accepts page views from this site only. */
 function handleViewBeacon(array $config, string $method, string $body): void
 {
     if ($method !== 'POST') {
@@ -3077,7 +3079,7 @@ function handleViewBeacon(array $config, string $method, string $body): void
     exit;
 }
 
-/** 中心拉取访问日志：需签名。commit 用于确认上一批已入库，之后才推进游标。 */
+/** Signed pull endpoint. `commit` acknowledges the previous batch before the cursor advances. */
 function handleViewsPull(array $config, string $method, string $path, string $body): void
 {
     $verified = verifySignedRequest($config, $method, $path, $body);
@@ -3101,7 +3103,7 @@ function handleViewsPull(array $config, string $method, string $path, string $bo
         $cursor = is_array($decoded) ? $decoded : [];
     }
 
-    // 确认上一批：推进游标，整文件读完就删掉。
+    // Acknowledge the previous batch: advance the cursor, drop fully consumed files.
     $commit = $payload['commit'] ?? null;
     if (is_array($commit) && isset($commit['file'], $commit['offset'])) {
         $commitFile = basename((string) $commit['file']);

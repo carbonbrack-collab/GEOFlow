@@ -32,6 +32,8 @@ return [
     // SEO 关键词（逗号分隔等，依前端使用方式）
     'site_keywords' => env('SITE_KEYWORDS', ''),
 
+    // 目标站点 HTML lang 属性；卫星站面向英文市场，默认 en
+    'target_site_locale' => trim((string) env('GEOFLOW_TARGET_SITE_LOCALE', 'en')) ?: 'en',
     // 后台品牌名；留空则跟随 SITE_NAME
     'admin_brand_name' => trim((string) env('GEOFLOW_ADMIN_BRAND_NAME', '')),
     // 后台入口路径前缀，如 /geo_admin（勿与前台路由冲突）
