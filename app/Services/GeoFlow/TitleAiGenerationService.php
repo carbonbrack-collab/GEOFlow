@@ -233,8 +233,9 @@ class TitleAiGenerationService
             $title = $m[1];
         }
 
-        // 包裹用的引号、星号
-        $title = trim($title, " \t\n\r\0\x0B\"'`*《》“”‘’");
+        // 包裹用的引号与星号。必须用带 u 标志的正则：trim() 的字符集按字节
+        // 处理，中文引号会被拆成单字节，进而削坏相邻汉字。
+        $title = (string) preg_replace('/^[\s"\'`*《》“”‘’]+|[\s"\'`*《》“”‘’]+$/u', '', $title);
 
         return trim($title);
     }
@@ -242,7 +243,8 @@ class TitleAiGenerationService
     /** 模型常在标题之间插入解说，这些不是标题。 */
     private function looksLikeCommentary(string $title): bool
     {
-        if (mb_strlen($title) < 8 || mb_strlen($title) > 200) {
+        // 阈值放宽：中文标题天然短，过滤靠标签与解说特征而非长度。
+        if (mb_strlen($title) < 4 || mb_strlen($title) > 200) {
             return true;
         }
 

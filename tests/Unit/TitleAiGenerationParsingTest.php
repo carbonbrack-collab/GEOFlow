@@ -70,6 +70,14 @@ TXT);
         ], $titles);
     }
 
+    public function test_multibyte_titles_are_not_corrupted(): void
+    {
+        // trim() 的字符集按字节处理，中文引号会削坏相邻汉字，必须用带 u 的正则。
+        $titles = $this->parse("“印度拉米怎么玩”\nGEO 标题一\nRummy 提现要多久？");
+
+        $this->assertSame(['印度拉米怎么玩', 'GEO 标题一', 'Rummy 提现要多久？'], $titles);
+    }
+
     public function test_plain_output_is_untouched(): void
     {
         $titles = $this->parse("How to Play Indian Rummy\nRummy Rules for Beginners");
