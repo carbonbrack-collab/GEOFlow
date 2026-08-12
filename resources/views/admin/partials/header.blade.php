@@ -13,9 +13,6 @@
     $updateSummary = (string) ($localeForChangelog === 'en'
         ? ($updatePayload['summary_en'] ?? '')
         : ($updatePayload['summary_zh'] ?? ''));
-    $changelogLinks = is_array($updateLinks['changelog'] ?? null) ? $updateLinks['changelog'] : [];
-    $notificationChangelogUrl = (string) ($changelogLinks[$localeForChangelog] ?? $changelogLinks['zh-CN'] ?? 'https://github.com/yaojingang/GEOFlow/blob/main/docs/CHANGELOG.md');
-    $notificationGithubUrl = (string) ($updateLinks['github'] ?? 'https://github.com/yaojingang/GEOFlow');
     $notificationUpdateCenterUrl = $isUpdateCenterEnabled && $isSuperAdmin ? \App\Support\AdminWeb::routePath('admin.system-updates.index') : '';
     $notificationStatus = (string) ($updateState['status'] ?? 'disabled');
     $menu = [
@@ -193,12 +190,6 @@
                                         {{ __('admin.header.notifications.open_update_center') }}
                                     </a>
                                 @endif
-                                <a href="{{ $notificationChangelogUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white hover:bg-blue-700">
-                                    {{ __('admin.header.notifications.view_changelog') }}
-                                </a>
-                                <a href="{{ $notificationGithubUrl }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50">
-                                    {{ __('admin.header.notifications.open_github') }}
-                                </a>
                             </div>
                         </div>
                     </div>

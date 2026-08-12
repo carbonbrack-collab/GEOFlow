@@ -95,7 +95,7 @@ class EnterpriseSignatureThemeTest extends TestCase
         $this->get(route('site.home'))
             ->assertOk()
             ->assertSee('themes/'.self::THEME_ID.'/theme.css', false)
-            ->assertSee('GEOFlow Control Plane')
+            ->assertSee('内容控制台')
             ->assertSee('让全球知识')
             ->assertSee('成为')
             ->assertSee('可信答案')
@@ -131,7 +131,7 @@ class EnterpriseSignatureThemeTest extends TestCase
         $response = $this->get(route('site.home'))
             ->assertOk()
             ->assertSee('已连接后台表单')
-            ->assertSee('提交内容会安全进入 GEOFlow 增长中心。')
+            ->assertSee('提交内容会安全进入增长中心。')
             ->assertSee(
                 'action="'.route('site.lead-forms.submit', ['slug' => $leadForm->slug]).'"',
                 false
@@ -157,7 +157,7 @@ class EnterpriseSignatureThemeTest extends TestCase
             ->assertOk()
             ->assertSee($article->title)
             ->assertSee('Search results')
-            ->assertDontSee('GEOFlow Control Plane')
+            ->assertDontSee('内容控制台')
             ->assertDontSee('NORTHSTAR INDUSTRIAL');
     }
 
@@ -210,7 +210,7 @@ class EnterpriseSignatureThemeTest extends TestCase
             ->assertOk()
             ->assertSee('演示表单 · 请在首页模块指定表单')
             ->assertSee('请在后台首页模块中添加线索表单模块')
-            ->assertSee('在后台启用并指定表单后，提交内容会进入 GEOFlow 增长中心。')
+            ->assertSee('在后台启用并指定表单后，提交内容会进入增长中心。')
             ->assertDontSee('action="'.route('site.lead-forms.submit', ['slug' => 'enterprise-geo']).'"', false);
     }
 
@@ -243,16 +243,13 @@ class EnterpriseSignatureThemeTest extends TestCase
 
         $this->get(route('site.about'))
             ->assertOk()
-            ->assertSee('关于 GEOFlow')
-            ->assertSee('让可信知识进入 AI 答案')
-            ->assertSee('一条完整的内容工作流')
-            ->assertSee('GEOFlow 包含的核心能力')
-            ->assertSee('开放、可部署的技术基础')
-            ->assertSee('从开源仓库开始')
+            ->assertSee('关于')
+            ->assertSee('我们是谁')
+            ->assertSee('我们做什么')
             ->assertSee('data-ent-article-toc', false)
             ->assertSee('data-ent-article-content', false)
             ->assertSee('AboutPage')
-            ->assertSee('https://github.com/yaojingang/GEOFlow');
+            ->assertDontSee('github.com');
 
         $this->get(route('site.archive'))
             ->assertOk()
@@ -278,9 +275,9 @@ class EnterpriseSignatureThemeTest extends TestCase
         $this->get(route('site.about'))
             ->assertOk()
             ->assertSee('article-detail-shell', false)
-            ->assertSee('关于 GEOFlow')
-            ->assertSee('一条完整的内容工作流')
-            ->assertSee('https://github.com/yaojingang/GEOFlow');
+            ->assertSee('关于')
+            ->assertSee('我们是谁')
+            ->assertDontSee('github.com');
     }
 
     public function test_article_related_heading_and_footer_use_the_compact_copy(): void

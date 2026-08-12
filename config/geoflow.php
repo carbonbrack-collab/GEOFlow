@@ -32,6 +32,8 @@ return [
     // SEO 关键词（逗号分隔等，依前端使用方式）
     'site_keywords' => env('SITE_KEYWORDS', ''),
 
+    // 后台品牌名；留空则跟随 SITE_NAME
+    'admin_brand_name' => trim((string) env('GEOFLOW_ADMIN_BRAND_NAME', '')),
     // 后台入口路径前缀，如 /geo_admin（勿与前台路由冲突）
     'admin_base_path' => '/'.$adminBasePath,
 

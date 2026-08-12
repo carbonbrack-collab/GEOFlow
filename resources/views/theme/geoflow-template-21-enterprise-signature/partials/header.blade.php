@@ -1,7 +1,6 @@
 @php
     $currentPath = request()->path();
     $isHome = $currentPath === '' || $currentPath === '/';
-    $repositoryUrl = 'https://github.com/yaojingang/GEOFlow';
 @endphp
 
 <header class="ent-header" data-ent-header>
@@ -47,10 +46,6 @@
             >
                 <i data-lucide="search" aria-hidden="true"></i>
             </button>
-            <a href="{{ $repositoryUrl }}" class="ent-header__repository" target="_blank" rel="noopener noreferrer">
-                <i data-lucide="code-2" aria-hidden="true"></i>
-                <span>开源仓库</span>
-            </a>
             <button
                 type="button"
                 class="ent-menu-trigger"
@@ -87,8 +82,7 @@
                 <a href="{{ route('site.category', $categoryItem->slug) }}" class="{{ request()->is('category/'.$categoryItem->slug) ? 'is-active' : '' }}">{{ $categoryItem->name }}</a>
             @endforeach
             <a href="{{ route('site.archive') }}">洞察归档</a>
-            <a href="{{ route('site.about') }}" class="{{ request()->routeIs('site.about') ? 'is-active' : '' }}">关于 GEOFlow</a>
-            <a href="{{ $repositoryUrl }}" target="_blank" rel="noopener noreferrer">GitHub 开源仓库</a>
+            <a href="{{ route('site.about') }}" class="{{ request()->routeIs('site.about') ? 'is-active' : '' }}">关于</a>
         </div>
     </nav>
 </header>

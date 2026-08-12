@@ -21,9 +21,20 @@ final class AdminWeb
         return $text;
     }
 
+    /**
+     * 后台品牌名。默认跟随站点名称（SITE_NAME），
+     * 需要单独命名时设置 GEOFLOW_ADMIN_BRAND_NAME。
+     */
     public static function siteName(): string
     {
-        return 'GEOFlow';
+        $brand = trim((string) config('geoflow.admin_brand_name', ''));
+        if ($brand !== '') {
+            return $brand;
+        }
+
+        $siteName = trim((string) config('geoflow.site_name', ''));
+
+        return $siteName !== '' ? $siteName : '后台管理';
     }
 
     public static function basePath(): string

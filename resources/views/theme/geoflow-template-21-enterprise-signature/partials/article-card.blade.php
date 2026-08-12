@@ -47,7 +47,7 @@
     <article class="ent-article-card">
         <a href="{{ route('site.article', $article->slug) }}" class="ent-article-card__visual" aria-hidden="true" tabindex="-1">
             <span>{{ $categoryInitial }}</span>
-            <small>GEOFlow Insight</small>
+            <small>Insight</small>
         </a>
         <div class="ent-article-card__body">
             <div class="ent-card-meta">
