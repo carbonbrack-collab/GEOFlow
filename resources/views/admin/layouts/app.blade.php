@@ -21,13 +21,18 @@
     @stack('styles')
 </head>
 <body class="bg-gray-50">
+@include('admin.partials.sidebar', [
+    'adminBrandName' => $adminBrandName,
+    'activeMenu' => $activeMenu ?? '',
+])
+<div class="lg:pl-60">
 @include('admin.partials.header', [
     'adminBrandName' => $adminBrandName,
     'adminSiteName' => $adminSiteName ?? $adminBrandName,
     'pageTitle' => $pageTitle ?? '',
     'activeMenu' => $activeMenu ?? '',
 ])
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         @if (session('message'))
             <div class="admin-flash-alert mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
                 <span class="block sm:inline">{{ session('message') }}</span>
@@ -43,6 +48,7 @@
         @yield('content')
     </main>
 @include('admin.partials.footer')
+</div>
 {{-- 项目说明弹窗已停用：属于 GEOFlow 品牌文案，且内含外链。 --}}
 {{-- 匿名统计信标已移除：本系统不向任何第三方发送数据。 --}}
 @vite('resources/js/app.js')

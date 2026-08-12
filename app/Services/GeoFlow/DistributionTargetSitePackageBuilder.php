@@ -2761,9 +2761,15 @@ function renderArticlePage(array $config, string $slug): void
         }
         echo '</div>';
     }
+    // 摘要通常就是正文开头的截断，详情页再渲染一次等于重复内容；
+    // 只有当它明显不同于正文开头时才展示。
     $excerpt = (string) ($article['excerpt'] ?? '');
     if ($excerpt !== '') {
-        echo '<p class="summary">'.h($excerpt).'</p>';
+        $bodyHead = trim(mb_substr(strip_tags((string) ($article['content'] ?? '')), 0, 200));
+        $excerptHead = trim(mb_substr(rtrim($excerpt, '…'), 0, 60));
+        if ($excerptHead === '' || ! str_contains($bodyHead, $excerptHead)) {
+            echo '<p class="summary">'.h($excerpt).'</p>';
+        }
     }
     if ($isApparel) {
         echo '</header>';

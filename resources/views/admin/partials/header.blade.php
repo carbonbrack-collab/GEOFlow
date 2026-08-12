@@ -15,126 +15,23 @@
         : ($updatePayload['summary_zh'] ?? ''));
     $notificationUpdateCenterUrl = $isUpdateCenterEnabled && $isSuperAdmin ? \App\Support\AdminWeb::routePath('admin.system-updates.index') : '';
     $notificationStatus = (string) ($updateState['status'] ?? 'disabled');
-    $menu = [
-        'dashboard' => ['route' => 'admin.dashboard', 'name' => __('admin.nav.dashboard')],
-        'analytics' => ['route' => 'admin.analytics', 'name' => __('admin.nav.analytics')],
-        'tasks' => ['route' => 'admin.tasks.index', 'name' => __('admin.nav.tasks')],
-        'distribution' => ['route' => 'admin.distribution.index', 'name' => __('admin.nav.distribution')],
-        'articles' => ['route' => 'admin.articles.index', 'name' => __('admin.nav.articles')],
-        'materials' => ['route' => 'admin.materials.index', 'name' => __('admin.nav.materials')],
-        'ai_config' => ['route' => 'admin.ai.configurator', 'name' => __('admin.nav.ai_config')],
-        'site_settings' => ['route' => 'admin.site-settings.index', 'name' => __('admin.nav.site_settings')],
-    ];
-    if (!$isSuperAdmin) {
-        unset($menu['distribution']);
-    }
-    if ($isSuperAdmin) {
-        $menu['admin_users'] = ['route' => 'admin.admin-users.index', 'name' => __('admin.nav.admin_users')];
-    }
-    $subMap = [
-        'admin.analytics' => 'analytics',
-        'admin.analytics.content' => 'analytics',
-        'admin.analytics.traffic' => 'analytics',
-        'admin.analytics.ai-visibility' => 'analytics',
-        'admin.analytics.leads' => 'analytics',
-        'admin.analytics.distribution' => 'analytics',
-        'admin.system-updates.index' => 'dashboard',
-        'admin.system-updates.check' => 'dashboard',
-        'admin.system-updates.plan' => 'dashboard',
-        'admin.system-updates.backup' => 'dashboard',
-        'admin.tasks.create' => 'tasks',
-        'admin.tasks.edit' => 'tasks',
-        'admin.distribution.index' => 'distribution',
-        'admin.distribution.create' => 'distribution',
-        'admin.distribution.store' => 'distribution',
-        'admin.distribution.edit' => 'distribution',
-        'admin.distribution.update' => 'distribution',
-        'admin.distribution.show' => 'distribution',
-        'admin.distribution.jobs' => 'distribution',
-        'admin.distribution.retry' => 'distribution',
-        'admin.distribution.health' => 'distribution',
-        'admin.distribution.pause' => 'distribution',
-        'admin.distribution.activate' => 'distribution',
-        'admin.distribution.rotate-secret' => 'distribution',
-        'admin.articles.create' => 'articles',
-        'admin.articles.edit' => 'articles',
-        'admin.manual-publications.index' => 'articles',
-        'admin.manual-publications.create' => 'articles',
-        'admin.manual-publications.show' => 'articles',
-        'admin.manual-publications.edit' => 'articles',
-        'admin.manual-publications.settings.index' => 'articles',
-        'admin.categories.index' => 'materials',
-        'admin.categories.create' => 'materials',
-        'admin.categories.edit' => 'materials',
-        'admin.authors.index' => 'materials',
-        'admin.authors.create' => 'materials',
-        'admin.authors.edit' => 'materials',
-        'admin.authors.detail' => 'materials',
-        'admin.keyword-libraries.index' => 'materials',
-        'admin.keyword-libraries.create' => 'materials',
-        'admin.keyword-libraries.edit' => 'materials',
-        'admin.keyword-libraries.detail' => 'materials',
-        'admin.keyword-libraries.detail.update' => 'materials',
-        'admin.keyword-libraries.keywords.store' => 'materials',
-        'admin.keyword-libraries.keywords.delete' => 'materials',
-        'admin.keyword-libraries.import' => 'materials',
-        'admin.title-libraries.index' => 'materials',
-        'admin.title-libraries.create' => 'materials',
-        'admin.title-libraries.edit' => 'materials',
-        'admin.title-libraries.detail' => 'materials',
-        'admin.title-libraries.titles.store' => 'materials',
-        'admin.title-libraries.titles.delete' => 'materials',
-        'admin.title-libraries.import' => 'materials',
-        'admin.title-libraries.ai-generate' => 'materials',
-        'admin.title-libraries.ai-generate.submit' => 'materials',
-        'admin.image-libraries.index' => 'materials',
-        'admin.image-libraries.create' => 'materials',
-        'admin.image-libraries.edit' => 'materials',
-        'admin.image-libraries.detail' => 'materials',
-        'admin.image-libraries.images.upload' => 'materials',
-        'admin.image-libraries.images.delete' => 'materials',
-        'admin.image-libraries.detail.update' => 'materials',
-        'admin.knowledge-bases.index' => 'materials',
-        'admin.knowledge-bases.create' => 'materials',
-        'admin.knowledge-bases.edit' => 'materials',
-        'admin.knowledge-bases.detail' => 'materials',
-        'admin.knowledge-bases.upload' => 'materials',
-        'admin.knowledge-bases.detail.update' => 'materials',
-        'admin.url-import' => 'materials',
-        'admin.ai-models.index' => 'ai_config',
-        'admin.ai-source-providers.index' => 'ai_config',
-        'admin.ai-prompts' => 'ai_config',
-        'admin.site-settings.sensitive-words' => 'site_settings',
-        'admin.site-settings.sensitive-words.store' => 'site_settings',
-        'admin.site-settings.sensitive-words.delete' => 'site_settings',
-        'admin.security-settings.index' => 'site_settings',
-        'admin.security-settings.words.store' => 'site_settings',
-        'admin.security-settings.words.delete' => 'site_settings',
-        'admin.api-tokens.index' => 'admin_users',
-        'admin.api-tokens.store' => 'admin_users',
-        'admin.api-tokens.revoke' => 'admin_users',
-        'admin.admin-activity-logs' => 'admin_users',
-    ];
-    $routeName = request()->route()?->getName();
-    $resolvedActive = $activeMenu;
-    if ($resolvedActive === '' && $routeName && isset($subMap[$routeName])) {
-        $resolvedActive = $subMap[$routeName];
-    }
+    $menu = \App\Support\Admin\AdminNavigation::items($currentAdmin);
+    $resolvedActive = \App\Support\Admin\AdminNavigation::resolveActive(
+        $activeMenu,
+        request()->route()?->getName(),
+    );
 @endphp
-<nav class="bg-white shadow-sm border-b">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center gap-3 lg:gap-4 min-w-0">
-            <a href="{{ route('admin.dashboard') }}" class="shrink-0 text-lg sm:text-xl font-semibold text-gray-900">{{ $adminBrandName }}</a>
-            <nav class="hidden md:flex flex-1 min-w-0 items-center">
-                <div class="flex w-full min-w-0 items-center gap-3 lg:gap-5 overflow-x-auto overscroll-x-contain py-2 -my-2 [scrollbar-width:thin]">
-                    @foreach ($menu as $key => $item)
-                        <a href="{{ route($item['route']) }}"
-                           class="@if($resolvedActive === $key) text-blue-600 font-medium @else text-gray-500 hover:text-gray-700 @endif shrink-0 whitespace-nowrap text-[15px] transition-colors duration-200">
-                            {{ $item['name'] }}
-                        </a>
-                    @endforeach
-                </div>
-            </nav>
+<header class="sticky top-0 z-20 border-b border-gray-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 min-w-0 items-center gap-3">
+            <button type="button" onclick="toggleAdminSidebar()"
+                    class="-ml-1 rounded-md p-2 text-gray-500 hover:bg-gray-100 lg:hidden"
+                    aria-label="{{ __('admin.nav.dashboard') }}">
+                <i data-lucide="menu" class="h-5 w-5"></i>
+            </button>
+            <div class="min-w-0 flex-1 truncate text-base font-medium text-gray-900">
+                {{ $pageTitle ?? '' }}
+            </div>
             <div class="flex shrink-0 items-center gap-2 sm:gap-3 ml-auto">
                 <div class="relative">
                     <button onclick="toggleAdminNotifications()" class="relative rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors duration-200" type="button" aria-label="{{ __('admin.header.notifications.label') }}" title="{{ __('admin.header.notifications.label') }}">
@@ -258,23 +155,7 @@
             </div>
         </div>
     </div>
-
-    <div id="mobile-menu" class="hidden md:hidden">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 border-t">
-            @foreach ($menu as $key => $item)
-                <a href="{{ route($item['route']) }}"
-                   class="@if($resolvedActive === $key) bg-blue-100 text-blue-600 @else text-gray-600 hover:bg-gray-100 @endif block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
-                    {{ $item['name'] }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-</nav>
-<div class="md:hidden fixed top-4 right-4 z-50">
-    <button onclick="toggleMobileMenu()" class="bg-white p-2 rounded-md shadow-md" type="button">
-        <i data-lucide="menu" class="w-5 h-5 text-gray-600"></i>
-    </button>
-</div>
+</header>
 
 <style>
     .admin-locale-select {
@@ -300,25 +181,15 @@
         }
     }
 
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        if (menu) {
-            menu.classList.toggle('hidden');
-        }
-    }
 
     document.addEventListener('click', function (event) {
         const userMenu = document.getElementById('user-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
         const notificationMenu = document.getElementById('admin-notification-menu');
         if (userMenu && !event.target.closest('[onclick="toggleUserMenu()"]') && !userMenu.contains(event.target)) {
             userMenu.classList.add('hidden');
         }
         if (notificationMenu && !event.target.closest('[onclick="toggleAdminNotifications()"]') && !notificationMenu.contains(event.target)) {
             notificationMenu.classList.add('hidden');
-        }
-        if (mobileMenu && !event.target.closest('[onclick="toggleMobileMenu()"]') && !mobileMenu.contains(event.target)) {
-            mobileMenu.classList.add('hidden');
         }
     });
 </script>

@@ -886,10 +886,28 @@ class WorkerExecutionService
         $plain = preg_replace('/\s+/u', ' ', $plain) ?: $plain;
         $plain = trim($plain);
         if ($plain === '') {
-            return 'AI 生成内容摘要';
+            // 不能返回中文兜底：目标站点面向英文市场，会直接显示给访客。
+            return '';
         }
 
-        return mb_substr($plain, 0, 180);
+        $limit = 180;
+        if (mb_strlen($plain) <= $limit) {
+            return $plain;
+        }
+
+        $slice = mb_substr($plain, 0, $limit);
+
+        // 优先断在句末，其次断在词边界，避免出现「whether any ac」这种残缺尾巴。
+        if (preg_match('/^(.*[.!?。！？])[^.!?。！？]*$/u', $slice, $m) === 1 && mb_strlen($m[1]) >= 60) {
+            return trim($m[1]);
+        }
+
+        $lastSpace = mb_strrpos($slice, ' ');
+        if ($lastSpace !== false && $lastSpace >= 60) {
+            $slice = mb_substr($slice, 0, $lastSpace);
+        }
+
+        return rtrim($slice, " ,;:-").'…';
     }
 
     /**
