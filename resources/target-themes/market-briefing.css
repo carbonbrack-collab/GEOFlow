@@ -24,6 +24,16 @@ body.target-theme-market-briefing{background:#fffdf7;color:#1c1a15;font-family:-
 .target-theme-market-briefing .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-market-briefing .chart-bar i{background:#b8860b}
 .target-theme-market-briefing .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-market-briefing .crumbs,.target-theme-market-briefing .crumbs a{color:#6c6558}
+.target-theme-market-briefing .crumbs a:hover{color:#b8860b}
+.target-theme-market-briefing .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-market-briefing .pager-link{color:#b8860b}
+.target-theme-market-briefing .pager-status{color:#6c6558}
+.target-theme-market-briefing .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1c1a15}
+.target-theme-market-briefing .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-market-briefing .related-card:hover{border-color:#b8860b}
+.target-theme-market-briefing .related-card-title{color:#1c1a15}
+.target-theme-market-briefing .related-card-summary{color:#6c6558}
 .target-theme-market-briefing .homepage-slide-copy a{color:#1c1a15}
 .target-theme-market-briefing .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:2px;box-shadow:none}
 .target-theme-market-briefing header{background:#b8860b;border-bottom:0}.target-theme-market-briefing .brand{color:#fff}.target-theme-market-briefing nav a{color:rgba(255,255,255,.86)}

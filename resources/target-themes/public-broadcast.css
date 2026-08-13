@@ -24,6 +24,16 @@ body.target-theme-public-broadcast{background:#f4f4f4;color:#141414;font-family:
 .target-theme-public-broadcast .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-public-broadcast .chart-bar i{background:#bb1919}
 .target-theme-public-broadcast .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-public-broadcast .crumbs,.target-theme-public-broadcast .crumbs a{color:#5a5a5a}
+.target-theme-public-broadcast .crumbs a:hover{color:#bb1919}
+.target-theme-public-broadcast .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-public-broadcast .pager-link{color:#bb1919}
+.target-theme-public-broadcast .pager-status{color:#5a5a5a}
+.target-theme-public-broadcast .related-title{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#141414}
+.target-theme-public-broadcast .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-public-broadcast .related-card:hover{border-color:#bb1919}
+.target-theme-public-broadcast .related-card-title{color:#141414}
+.target-theme-public-broadcast .related-card-summary{color:#5a5a5a}
 .target-theme-public-broadcast .homepage-slide-copy a{color:#141414}
 .target-theme-public-broadcast .card{background:#ffffff;border:0;border-radius:0px;box-shadow:none}
 .target-theme-public-broadcast header{background:#bb1919;border-bottom:0}.target-theme-public-broadcast .brand{color:#fff}.target-theme-public-broadcast nav a{color:rgba(255,255,255,.86)}

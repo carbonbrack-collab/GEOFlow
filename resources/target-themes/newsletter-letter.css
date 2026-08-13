@@ -24,6 +24,16 @@ body.target-theme-newsletter-letter{background:#fffaf5;color:#1a1613;font-family
 .target-theme-newsletter-letter .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-newsletter-letter .chart-bar i{background:#ff6719}
 .target-theme-newsletter-letter .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-newsletter-letter .crumbs,.target-theme-newsletter-letter .crumbs a{color:#6f645c}
+.target-theme-newsletter-letter .crumbs a:hover{color:#ff6719}
+.target-theme-newsletter-letter .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-newsletter-letter .pager-link{color:#ff6719}
+.target-theme-newsletter-letter .pager-status{color:#6f645c}
+.target-theme-newsletter-letter .related-title{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1a1613}
+.target-theme-newsletter-letter .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:6px}
+.target-theme-newsletter-letter .related-card:hover{border-color:#ff6719}
+.target-theme-newsletter-letter .related-card-title{color:#1a1613}
+.target-theme-newsletter-letter .related-card-summary{color:#6f645c}
 .target-theme-newsletter-letter .homepage-slide-copy a{color:#1a1613}
 .target-theme-newsletter-letter .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:6px;box-shadow:none}
 .target-theme-newsletter-letter header{background:#ffffff;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-newsletter-letter .brand{color:#1a1613}

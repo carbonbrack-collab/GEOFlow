@@ -24,6 +24,16 @@ body.target-theme-executive-review{background:#f9f7f4;color:#17141a;font-family:
 .target-theme-executive-review .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-executive-review .chart-bar i{background:#a41034}
 .target-theme-executive-review .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-executive-review .crumbs,.target-theme-executive-review .crumbs a{color:#635c66}
+.target-theme-executive-review .crumbs a:hover{color:#a41034}
+.target-theme-executive-review .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-executive-review .pager-link{color:#a41034}
+.target-theme-executive-review .pager-status{color:#635c66}
+.target-theme-executive-review .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#17141a}
+.target-theme-executive-review .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-executive-review .related-card:hover{border-color:#a41034}
+.target-theme-executive-review .related-card-title{color:#17141a}
+.target-theme-executive-review .related-card-summary{color:#635c66}
 .target-theme-executive-review .homepage-slide-copy a{color:#17141a}
 .target-theme-executive-review .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-executive-review .list{gap:0}
 .target-theme-executive-review header{background:#a41034;border-bottom:0}.target-theme-executive-review .brand{color:#fff}.target-theme-executive-review nav a{color:rgba(255,255,255,.86)}

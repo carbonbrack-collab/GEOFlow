@@ -24,6 +24,16 @@ body.target-theme-section-blue{background:#fdfaf6;color:#121212;font-family:Geor
 .target-theme-section-blue .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-section-blue .chart-bar i{background:#052962}
 .target-theme-section-blue .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-section-blue .crumbs,.target-theme-section-blue .crumbs a{color:#5c5c5c}
+.target-theme-section-blue .crumbs a:hover{color:#052962}
+.target-theme-section-blue .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-section-blue .pager-link{color:#052962}
+.target-theme-section-blue .pager-status{color:#5c5c5c}
+.target-theme-section-blue .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#121212}
+.target-theme-section-blue .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-section-blue .related-card:hover{border-color:#052962}
+.target-theme-section-blue .related-card-title{color:#121212}
+.target-theme-section-blue .related-card-summary{color:#5c5c5c}
 .target-theme-section-blue .homepage-slide-copy a{color:#121212}
 .target-theme-section-blue .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-section-blue .list{gap:0}
 .target-theme-section-blue header{background:#052962;border-bottom:0}.target-theme-section-blue .brand{color:#fff}.target-theme-section-blue nav a{color:rgba(255,255,255,.86)}

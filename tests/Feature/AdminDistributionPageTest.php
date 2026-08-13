@@ -2822,6 +2822,19 @@ class AdminDistributionPageTest extends TestCase
         // 主题必须真正落到 body 上：normalizeSiteSettings 曾把 theme_map 过滤掉，
         // 导致所有目标站点无论选哪套模板都回落 target-theme-default。
         $this->assertStringContainsString('target-theme-toutiao', $staticIndex);
+        // 目标站点的版式能力：分类页、分页、相关文章与面包屑。
+        $frontControllerCode = (string) $zip->getFromName('public/index.php');
+        foreach ([
+            'function renderCategoryPage',
+            'function renderBreadcrumbs',
+            'function relatedArticles',
+            'function paginateArticles',
+            'function categoryNavLinks',
+        ] as $needle) {
+            $this->assertStringContainsString($needle, $frontControllerCode);
+        }
+        // 面包屑结构化数据全站只能有一份，重复会让搜索引擎两个都不采信。
+        $this->assertSame(1, substr_count($frontControllerCode, '\'@type\' => \'BreadcrumbList\''));
         $this->assertStringContainsString("'theme_map' =>", (string) $zip->getFromName('config.php'));
         $this->assertDoesNotMatchRegularExpression('/[\x{4e00}-\x{9fa5}]/u', preg_replace('/远程门户|远程站点描述/u', '', $staticIndex));
         $this->assertStringContainsString('assets/css/site.css', $staticIndex);

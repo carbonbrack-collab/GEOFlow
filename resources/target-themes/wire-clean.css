@@ -24,6 +24,16 @@ body.target-theme-wire-clean{background:#fcfcfa;color:#1b1b1a;font-family:-apple
 .target-theme-wire-clean .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-wire-clean .chart-bar i{background:#ff8000}
 .target-theme-wire-clean .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-wire-clean .crumbs,.target-theme-wire-clean .crumbs a{color:#6d6d68}
+.target-theme-wire-clean .crumbs a:hover{color:#ff8000}
+.target-theme-wire-clean .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-wire-clean .pager-link{color:#ff8000}
+.target-theme-wire-clean .pager-status{color:#6d6d68}
+.target-theme-wire-clean .related-title{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:#1b1b1a}
+.target-theme-wire-clean .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:4px}
+.target-theme-wire-clean .related-card:hover{border-color:#ff8000}
+.target-theme-wire-clean .related-card-title{color:#1b1b1a}
+.target-theme-wire-clean .related-card-summary{color:#6d6d68}
 .target-theme-wire-clean .homepage-slide-copy a{color:#1b1b1a}
 .target-theme-wire-clean .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:4px;box-shadow:none}
 .target-theme-wire-clean header{background:transparent;border-bottom:1px solid rgba(128,128,128,.22);backdrop-filter:none}.target-theme-wire-clean .brand{color:#1b1b1a}

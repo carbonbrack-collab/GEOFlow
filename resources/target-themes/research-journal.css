@@ -24,6 +24,16 @@ body.target-theme-research-journal{background:#fbfbf8;color:#151a19;font-family:
 .target-theme-research-journal .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-research-journal .chart-bar i{background:#14625c}
 .target-theme-research-journal .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-research-journal .crumbs,.target-theme-research-journal .crumbs a{color:#5f6866}
+.target-theme-research-journal .crumbs a:hover{color:#14625c}
+.target-theme-research-journal .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-research-journal .pager-link{color:#14625c}
+.target-theme-research-journal .pager-status{color:#5f6866}
+.target-theme-research-journal .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#151a19}
+.target-theme-research-journal .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-research-journal .related-card:hover{border-color:#14625c}
+.target-theme-research-journal .related-card-title{color:#151a19}
+.target-theme-research-journal .related-card-summary{color:#5f6866}
 .target-theme-research-journal .homepage-slide-copy a{color:#151a19}
 .target-theme-research-journal .card{background:#ffffff;border:1px solid rgba(0,0,0,.10);border-radius:0px;box-shadow:none}
 .target-theme-research-journal header{background:#ffffff;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-research-journal .brand{color:#151a19}

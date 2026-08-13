@@ -24,6 +24,16 @@ body.target-theme-knowledge-paper{background:#f7f5ee;color:#1d2119;font-family:"
 .target-theme-knowledge-paper .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-knowledge-paper .chart-bar i{background:#2f6f4e}
 .target-theme-knowledge-paper .homepage-slide{background:#fffefb;border:1px solid rgba(0,0,0,.12)}
+.target-theme-knowledge-paper .crumbs,.target-theme-knowledge-paper .crumbs a{color:#63695c}
+.target-theme-knowledge-paper .crumbs a:hover{color:#2f6f4e}
+.target-theme-knowledge-paper .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-knowledge-paper .pager-link{color:#2f6f4e}
+.target-theme-knowledge-paper .pager-status{color:#63695c}
+.target-theme-knowledge-paper .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1d2119}
+.target-theme-knowledge-paper .related-card{background:#fffefb;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-knowledge-paper .related-card:hover{border-color:#2f6f4e}
+.target-theme-knowledge-paper .related-card-title{color:#1d2119}
+.target-theme-knowledge-paper .related-card-summary{color:#63695c}
 .target-theme-knowledge-paper .homepage-slide-copy a{color:#1d2119}
 .target-theme-knowledge-paper .card{background:#fffefb;border:1px solid rgba(0,0,0,.10);border-radius:2px;box-shadow:none}
 .target-theme-knowledge-paper header{background:#fffefb;border-bottom:1px solid rgba(128,128,128,.20)}.target-theme-knowledge-paper .brand{color:#1d2119}

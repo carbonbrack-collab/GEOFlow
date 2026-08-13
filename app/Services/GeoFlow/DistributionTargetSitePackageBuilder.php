@@ -572,6 +572,10 @@ h2{font-size:22px;margin:0 0 10px}h2 a{color:#111827;text-decoration:none}h2 a:h
 .content .article-table-wrap{overflow-x:auto;margin:1.4em 0;border:1px solid #e5e7eb;border-radius:8px}.content .article-table{width:100%;border-collapse:collapse;background:#fff}.content .article-table th,.content .article-table td{border-bottom:1px solid #e5e7eb;padding:10px 12px;text-align:left;vertical-align:top}.content .article-table th{background:#f9fafb;color:#111827;font-weight:700}
 .article-text-ads{display:grid;gap:10px;margin:18px 0;padding:12px 0;border-top:1px solid rgba(148,163,184,.26);border-bottom:1px solid rgba(148,163,184,.26);background:transparent;font:inherit}.article-text-ads--content-top{margin-top:0;margin-bottom:22px}.article-text-ads--content-bottom{margin-top:26px;margin-bottom:0}.article-text-ad-module{display:flex;flex-direction:column;gap:6px;background:transparent}.article-text-ad-link{display:inline-flex;align-items:center;width:max-content;max-width:100%;color:var(--article-text-ad-color,#2563eb);font:inherit;font-weight:700;line-height:1.65;text-decoration:none}.article-text-ad-link:hover{text-decoration:underline;text-underline-offset:4px}.article-text-ad-text{overflow-wrap:anywhere}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding-top:22px;border-top:1px solid #e5e7eb}.tags span{display:inline-flex;border:1px solid #e5e7eb;background:#f9fafb;color:#4b5563;border-radius:999px;padding:5px 10px;font-size:13px}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:22px 0 6px;color:#6b7280;font-size:13px}.crumbs a{color:#6b7280;text-decoration:none}.crumbs a:hover{color:#2563eb}.crumbs-sep{color:#cbd5e1}
+.pager{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 0 44px;font-size:14px}.pager-link{color:#2563eb;text-decoration:none;font-weight:600}.pager-status{color:#6b7280}
+.related{padding:8px 0 44px}.related-title{font-size:20px;margin:0 0 14px}.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.related-card{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;text-decoration:none}.related-card:hover{border-color:#2563eb}.related-card-title{font-weight:650;line-height:1.35;color:#111827}.related-card-summary{font-size:13px;line-height:1.6;color:#6b7280}
+a.chip{text-decoration:none}
 .empty{padding:52px;text-align:center;color:#6b7280}.back{display:inline-block;margin:28px 0 18px;color:#4b5563;text-decoration:none}
 .homepage-carousel{padding:32px 0 4px}.homepage-carousel-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.homepage-slide{position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.24);border-radius:var(--homepage-radius,8px);background:var(--homepage-surface,#fff);color:var(--homepage-text,#111827)}.homepage-slide-media{display:block;aspect-ratio:16/9;background:#e5e7eb}.homepage-slide-media img{display:block;width:100%;height:100%;object-fit:cover}.homepage-slide-copy{padding:14px 16px;font-weight:800;line-height:1.35;overflow-wrap:anywhere}.homepage-slide-copy a{color:var(--homepage-text,#111827);text-decoration:none}.homepage-slide-copy a:hover{color:var(--homepage-accent,#2563eb)}
 .homepage-modules{display:grid;gap:22px;padding:32px 0}.homepage-module{border-radius:var(--homepage-radius,8px);background:var(--module-surface,var(--homepage-surface,#fff));color:var(--module-text,var(--homepage-text,#111827));border:1px solid rgba(148,163,184,.24);overflow:hidden}.homepage-module-inner{padding:28px}.homepage-module h1,.homepage-module h2{letter-spacing:0;margin:0 0 10px;overflow-wrap:anywhere}.homepage-module p{color:var(--module-muted,var(--homepage-muted,#6b7280));line-height:1.7;margin:0 0 16px}.homepage-module a{color:var(--module-accent,var(--homepage-accent,#2563eb))}.homepage-module .module-kicker{color:var(--module-accent,var(--homepage-accent,#2563eb));font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.homepage-module .module-action{display:inline-flex;align-items:center;border-radius:999px;background:var(--module-accent,var(--homepage-accent,#2563eb));color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:9px 15px}.homepage-module.align-center{text-align:center}.homepage-hero h1{font-size:clamp(34px,6vw,68px);line-height:1.02}.homepage-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:24px;align-items:center}.homepage-media img,.homepage-image-band img{display:block;width:100%;height:auto;border-radius:calc(var(--homepage-radius,8px) - 2px)}.homepage-image-band .homepage-module-inner{padding:0}.homepage-image-band .module-copy{padding:24px}.homepage-metrics,.homepage-features,.homepage-chart-bars,.homepage-article-grid{display:grid;gap:14px}.homepage-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.metric-item,.feature-item,.chart-row,.homepage-article-card{border:1px solid rgba(148,163,184,.22);border-radius:calc(var(--homepage-radius,8px) - 2px);background:rgba(255,255,255,.72);padding:16px}.metric-item strong{display:block;font-size:28px;line-height:1.1}.metric-item span,.chart-row span{display:block;color:var(--module-muted,var(--homepage-muted,#6b7280));font-size:13px}.homepage-features,.homepage-article-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.feature-item h3,.homepage-article-card h3{margin:0 0 8px;font-size:18px;line-height:1.25}.chart-row strong{display:block;margin-bottom:8px}.chart-bar{height:10px;border-radius:999px;background:rgba(37,99,235,.14);overflow:hidden}.chart-bar i{display:block;height:100%;width:var(--bar-width,0%);background:var(--module-accent,var(--homepage-accent,#2563eb))}.homepage-custom-html :first-child{margin-top:0}.homepage-custom-html :last-child{margin-bottom:0}
@@ -1750,10 +1754,10 @@ function frontSiteUrl(array $config, string $path): string
     return $origin.frontSitePath($config, $path);
 }
 
-function renderHomePageHtml(array $config): string
+function renderHomePageHtml(array $config, int $page = 1): string
 {
     ob_start();
-    renderHomePage($config);
+    renderHomePage($config, $page);
 
     return (string) ob_get_clean();
 }
@@ -1886,6 +1890,22 @@ function rebuildStaticSite(array $config): array
     writeStaticFile($config, 'index.html', renderHomePageHtml($config));
     writeStaticFile($config, 'llms.txt', renderLlmsText($config));
     writeStaticFile($config, 'sitemap.txt', renderSitemapText($config));
+
+    // 首页分页与分类页也要落成静态文件，否则静态模式下这些 URL 会 404。
+    $settingsForStatic = siteSettings($config);
+    $perPage = (int) $settingsForStatic['per_page'];
+    $homePaged = paginateArticles(loadArticles($config), 1, $perPage);
+    for ($p = 2; $p <= $homePaged['pages']; $p++) {
+        writeStaticFile($config, 'page/'.$p.'/index.html', renderHomePageHtml($config, $p));
+    }
+    foreach (siteCategories($config) as $category) {
+        $categorySlug = (string) $category['slug'];
+        $categoryPaged = paginateArticles(articlesInCategory($config, $categorySlug), 1, $perPage);
+        writeStaticFile($config, 'category/'.safeFileName($categorySlug).'/index.html', renderCategoryPageHtml($config, $categorySlug));
+        for ($p = 2; $p <= $categoryPaged['pages']; $p++) {
+            writeStaticFile($config, 'category/'.safeFileName($categorySlug).'/page/'.$p.'/index.html', renderCategoryPageHtml($config, $categorySlug, $p));
+        }
+    }
 
     $count = 0;
     $activeSlugs = [];
@@ -2167,7 +2187,7 @@ function pageHeader(array $config, string $title, array $pageMeta = []): void
     }
     echo '<link rel="stylesheet" href="'.h(frontVersionedAssetPath($config, '/assets/css/site.css')).'">';
     echo '<script defer src="'.h(frontVersionedAssetPath($config, '/assets/js/site.js')).'"></script>';
-    echo '</head><body class="'.h($themeClass).'"><header><div class="wrap bar"><a class="brand" href="'.h($homeUrl).'">'.h($siteName).'</a><nav><a href="'.h($homeUrl).'">Home</a></nav></div></header><main class="wrap">';
+    echo '</head><body class="'.h($themeClass).'"><header><div class="wrap bar"><a class="brand" href="'.h($homeUrl).'">'.h($siteName).'</a><nav><a href="'.h($homeUrl).'">Home</a>'.categoryNavLinks($config).'</nav></div></header><main class="wrap">';
 }
 
 function pageFooter(array $config): void
@@ -2460,7 +2480,244 @@ function hasHomepageExperience(array $settings): bool
     return $slides !== [] || normalizeHomepageModules($settings['homepage_modules'] ?? [], true) !== [];
 }
 
-function renderHomePage(array $config): void
+function categoryNavLinks(array $config, int $limit = 5): string
+{
+    $html = '';
+    foreach (array_slice(siteCategories($config), 0, max(1, $limit)) as $category) {
+        $html .= '<a href="'.h(frontSitePath($config, '/category/'.rawurlencode((string) $category['slug']))).'">'
+            .h((string) $category['name']).'</a>';
+    }
+
+    return $html;
+}
+
+function siteCategories(array $config): array
+{
+    $map = [];
+    foreach (loadArticles($config) as $article) {
+        $category = is_array($article['category'] ?? null) ? $article['category'] : null;
+        $slug = $category ? trim((string) ($category['slug'] ?? '')) : '';
+        if ($slug === '') {
+            continue;
+        }
+        if (! isset($map[$slug])) {
+            $map[$slug] = [
+                'slug' => $slug,
+                'name' => trim((string) ($category['name'] ?? $slug)) ?: $slug,
+                'count' => 0,
+            ];
+        }
+        $map[$slug]['count']++;
+    }
+
+    uasort($map, static fn (array $a, array $b): int => $b['count'] <=> $a['count'] ?: strcmp($a['name'], $b['name']));
+
+    return $map;
+}
+
+function articlesInCategory(array $config, string $categorySlug): array
+{
+    $matched = [];
+    foreach (loadArticles($config) as $article) {
+        $category = is_array($article['category'] ?? null) ? $article['category'] : null;
+        if ($category && (string) ($category['slug'] ?? '') === $categorySlug) {
+            $matched[] = $article;
+        }
+    }
+
+    return $matched;
+}
+
+/** 同分类优先，不足时用最新文章补齐，始终排除当前文章。 */
+function relatedArticles(array $config, array $article, int $limit = 4): array
+{
+    $slug = (string) ($article['slug'] ?? '');
+    $categorySlug = is_array($article['category'] ?? null) ? (string) ($article['category']['slug'] ?? '') : '';
+
+    $picked = [];
+    $seen = [$slug => true];
+
+    if ($categorySlug !== '') {
+        foreach (articlesInCategory($config, $categorySlug) as $candidate) {
+            $candidateSlug = (string) ($candidate['slug'] ?? '');
+            if ($candidateSlug === '' || isset($seen[$candidateSlug])) {
+                continue;
+            }
+            $seen[$candidateSlug] = true;
+            $picked[] = $candidate;
+            if (count($picked) >= $limit) {
+                return $picked;
+            }
+        }
+    }
+
+    foreach (loadArticles($config) as $candidate) {
+        $candidateSlug = (string) ($candidate['slug'] ?? '');
+        if ($candidateSlug === '' || isset($seen[$candidateSlug])) {
+            continue;
+        }
+        $seen[$candidateSlug] = true;
+        $picked[] = $candidate;
+        if (count($picked) >= $limit) {
+            break;
+        }
+    }
+
+    return $picked;
+}
+
+function paginateArticles(array $articles, int $page, int $perPage): array
+{
+    $perPage = max(1, $perPage);
+    $total = count($articles);
+    $pages = max(1, (int) ceil($total / $perPage));
+    $page = min(max(1, $page), $pages);
+
+    return [
+        'items' => array_slice($articles, ($page - 1) * $perPage, $perPage),
+        'page' => $page,
+        'pages' => $pages,
+        'total' => $total,
+    ];
+}
+
+function pageUrl(array $config, string $basePath, int $page): string
+{
+    $basePath = rtrim($basePath, '/');
+    if ($basePath === '') {
+        $basePath = '/';
+    }
+
+    if ($page <= 1) {
+        return frontSitePath($config, $basePath);
+    }
+
+    return frontSitePath($config, ($basePath === '/' ? '' : $basePath).'/page/'.$page);
+}
+
+function renderPagination(array $config, string $basePath, int $page, int $pages): void
+{
+    if ($pages <= 1) {
+        return;
+    }
+
+    echo '<nav class="pager" aria-label="Pagination">';
+    if ($page > 1) {
+        echo '<a class="pager-link" rel="prev" href="'.h(pageUrl($config, $basePath, $page - 1)).'">Previous</a>';
+    }
+    echo '<span class="pager-status">Page '.$page.' of '.$pages.'</span>';
+    if ($page < $pages) {
+        echo '<a class="pager-link" rel="next" href="'.h(pageUrl($config, $basePath, $page + 1)).'">Next</a>';
+    }
+    echo '</nav>';
+}
+
+/**
+ * 面包屑 + BreadcrumbList 结构化数据。
+ *
+ * @param  list<array{name:string,url:string}>  $trail
+ */
+function renderBreadcrumbs(array $config, array $trail): void
+{
+    if ($trail === []) {
+        return;
+    }
+
+    echo '<nav class="crumbs" aria-label="Breadcrumb">';
+    $last = count($trail) - 1;
+    foreach ($trail as $i => $crumb) {
+        if ($i > 0) {
+            echo '<span class="crumbs-sep" aria-hidden="true">/</span>';
+        }
+        if ($i === $last || ($crumb['url'] ?? '') === '') {
+            echo '<span aria-current="page">'.h((string) $crumb['name']).'</span>';
+        } else {
+            echo '<a href="'.h((string) $crumb['url']).'">'.h((string) $crumb['name']).'</a>';
+        }
+    }
+    echo '</nav>';
+
+    $items = [];
+    foreach ($trail as $i => $crumb) {
+        $item = ['@type' => 'ListItem', 'position' => $i + 1, 'name' => (string) $crumb['name']];
+        if (($crumb['url'] ?? '') !== '') {
+            $item['item'] = (string) $crumb['url'];
+        }
+        $items[] = $item;
+    }
+    echo jsonLdScript(['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $items]);
+}
+
+function renderArticleCards(array $config, array $articles): void
+{
+    echo '<section class="list">';
+    foreach ($articles as $article) {
+        $slug = (string) ($article['slug'] ?? '');
+        $title = (string) ($article['title'] ?? 'Untitled');
+        $category = is_array($article['category'] ?? null) ? $article['category'] : null;
+        $categoryName = $category ? (string) ($category['name'] ?? 'General') : 'General';
+        $categorySlug = $category ? (string) ($category['slug'] ?? '') : '';
+        $publishedAt = substr((string) ($article['published_at'] ?? $article['updated_at'] ?? ''), 0, 10);
+        $summary = (string) ($article['excerpt'] ?? $article['meta_description'] ?? '');
+        $articleUrl = frontSitePath($config, '/article/'.rawurlencode($slug));
+        echo '<article class="card"><div class="meta">';
+        if ($categorySlug !== '') {
+            echo '<a class="chip" href="'.h(frontSitePath($config, '/category/'.rawurlencode($categorySlug))).'">'.h($categoryName).'</a>';
+        } else {
+            echo '<span class="chip">'.h($categoryName).'</span>';
+        }
+        echo '<span>'.h($publishedAt).'</span></div>';
+        echo '<h2><a href="'.h($articleUrl).'">'.h($title).'</a></h2>';
+        echo '<p class="summary">'.h($summary !== '' ? $summary : mb_substr(strip_tags((string) ($article['content'] ?? '')), 0, 160)).'</p>';
+        echo '<a class="read" href="'.h($articleUrl).'">Read more</a></article>';
+    }
+    echo '</section>';
+}
+
+function renderCategoryPage(array $config, string $categorySlug, int $page = 1): void
+{
+    $settings = siteSettings($config);
+    $categories = siteCategories($config);
+    $category = $categories[$categorySlug] ?? null;
+    if ($category === null) {
+        pageHeader($config, 'Not found');
+        echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">Back to home</a>';
+        echo '<div class="card empty">Category not found.</div>';
+        pageFooter($config);
+
+        return;
+    }
+
+    $result = paginateArticles(articlesInCategory($config, $categorySlug), $page, (int) $settings['per_page']);
+    $basePath = '/category/'.rawurlencode($categorySlug);
+    $title = (string) $category['name'];
+
+    pageHeader($config, $title.($result['page'] > 1 ? ' - Page '.$result['page'] : ''));
+    renderBreadcrumbs($config, [
+        ['name' => 'Home', 'url' => frontSiteUrl($config, '/')],
+        ['name' => $title, 'url' => ''],
+    ]);
+    echo '<section class="hero"><h1>'.h($title).'</h1><p>'.$result['total'].' article'.($result['total'] === 1 ? '' : 's').'</p></section>';
+
+    if ($result['items'] === []) {
+        echo '<div class="card empty">No articles yet.</div>';
+    } else {
+        renderArticleCards($config, $result['items']);
+        renderPagination($config, $basePath, $result['page'], $result['pages']);
+    }
+
+    pageFooter($config);
+}
+
+function renderCategoryPageHtml(array $config, string $categorySlug, int $page = 1): string
+{
+    ob_start();
+    renderCategoryPage($config, $categorySlug, $page);
+
+    return (string) ob_get_clean();
+}
+
+function renderHomePage(array $config, int $page = 1): void
 {
     $settings = siteSettings($config);
     if (! hasHomepageExperience($settings) && themeClass($settings) === 'target-theme-apparel') {
@@ -2476,8 +2733,9 @@ function renderHomePage(array $config): void
     }
 
     $siteName = (string) $settings['site_name'];
-    $articles = array_slice(loadArticles($config), 0, (int) $settings['per_page']);
-    pageHeader($config, 'Home');
+    $paged = paginateArticles(loadArticles($config), $page, (int) $settings['per_page']);
+    $articles = $paged['items'];
+    pageHeader($config, 'Home'.($paged['page'] > 1 ? ' - Page '.$paged['page'] : ''));
     echo jsonLdScript([
         "@context"=>"https://schema.org",
         "@type"=>"WebSite",
@@ -2496,20 +2754,8 @@ function renderHomePage(array $config): void
         return;
     }
 
-    echo '<section class="list">';
-    foreach ($articles as $article) {
-        $slug = (string) ($article['slug'] ?? '');
-        $title = (string) ($article['title'] ?? 'Untitled');
-        $category = is_array($article['category'] ?? null) ? (string) ($article['category']['name'] ?? 'General') : 'General';
-        $publishedAt = substr((string) ($article['published_at'] ?? $article['updated_at'] ?? ''), 0, 10);
-        $summary = (string) ($article['excerpt'] ?? $article['meta_description'] ?? '');
-        $articleUrl = frontSitePath($config, '/article/'.rawurlencode($slug));
-        echo '<article class="card"><div class="meta"><span class="chip">'.h($category).'</span><span>'.h($publishedAt).'</span></div>';
-        echo '<h2><a href="'.h($articleUrl).'">'.h($title).'</a></h2>';
-        echo '<p class="summary">'.h($summary !== '' ? $summary : mb_substr(strip_tags((string) ($article['content'] ?? '')), 0, 160)).'</p>';
-        echo '<a class="read" href="'.h($articleUrl).'">Read more</a></article>';
-    }
-    echo '</section>';
+    renderArticleCards($config, $articles);
+    renderPagination($config, '/', $paged['page'], $paged['pages']);
     pageFooter($config);
 }
 
@@ -2737,19 +2983,27 @@ function renderArticlePage(array $config, string $slug): void
             "name"=>(string) $settings['site_name'],
         ],
     ]);
-    echo jsonLdScript([
-        "@context"=>"https://schema.org",
-        "@type"=>"BreadcrumbList",
-        "itemListElement"=>[
-            ["@type"=>"ListItem", "position"=>1, "name"=>"Home", "item"=>frontSiteUrl($config, '/')],
-            ["@type"=>"ListItem", "position"=>2, "name"=>$title, "item"=>frontSiteUrl($config, '/article/'.rawurlencode($slug))],
-        ],
-    ]);
+    // 面包屑结构化数据由 renderBreadcrumbs 统一输出（含分类层级），
+    // 这里不再单独输出，避免同页出现两份 BreadcrumbList。
     $themeClass = themeClass($settings);
     $isFashion = $themeClass === 'target-theme-fashion';
     $isApparel = $themeClass === 'target-theme-apparel';
     echo $isApparel ? '<div class="asi-shell asi-article-layout"><main class="asi-article-column"><nav class="asi-breadcrumb"><a href="'.h(frontSitePath($config, '/')).'">Latest</a><span>/</span><span>'.h($category).'</span></nav>' : '';
-    echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">'.($isFashion || $isApparel ? 'Back to Reports' : 'Back to home').'</a><article class="'.($isApparel ? 'asi-article' : 'card detail').'">';
+    if ($isFashion || $isApparel) {
+        echo '<a class="back" href="'.h(frontSitePath($config, '/')).'">Back to Reports</a>';
+    } else {
+        $crumbCategory = is_array($article['category'] ?? null) ? $article['category'] : null;
+        $crumbs = [['name' => 'Home', 'url' => frontSiteUrl($config, '/')]];
+        if ($crumbCategory && (string) ($crumbCategory['slug'] ?? '') !== '') {
+            $crumbs[] = [
+                'name' => (string) ($crumbCategory['name'] ?? 'General'),
+                'url' => frontSiteUrl($config, '/category/'.rawurlencode((string) $crumbCategory['slug'])),
+            ];
+        }
+        $crumbs[] = ['name' => (string) ($article['title'] ?? 'Untitled'), 'url' => ''];
+        renderBreadcrumbs($config, $crumbs);
+    }
+    echo '<article class="'.($isApparel ? 'asi-article' : 'card detail').'">';
     if ($isFashion) {
         echo '<div class="fashion-article-kicker"><span>'.h($category).'</span><time>'.h($publishedAt).'</time></div>';
     } elseif ($isApparel) {
@@ -2789,6 +3043,23 @@ function renderArticlePage(array $config, string $slug): void
         echo '</div>';
     }
     echo '</article>';
+    if (! $isApparel) {
+        $related = relatedArticles($config, $article, 4);
+        if ($related !== []) {
+            echo '<section class="related"><h2 class="related-title">Related guides</h2><div class="related-grid">';
+            foreach ($related as $item) {
+                $relatedUrl = frontSitePath($config, '/article/'.rawurlencode((string) ($item['slug'] ?? '')));
+                echo '<a class="related-card" href="'.h($relatedUrl).'">';
+                echo '<span class="related-card-title">'.h((string) ($item['title'] ?? 'Untitled')).'</span>';
+                $relatedSummary = (string) ($item['excerpt'] ?? $item['meta_description'] ?? '');
+                if ($relatedSummary !== '') {
+                    echo '<span class="related-card-summary">'.h(mb_substr($relatedSummary, 0, 110)).'</span>';
+                }
+                echo '</a>';
+            }
+            echo '</div></section>';
+        }
+    }
     if ($isApparel) {
         echo '</main>';
         renderApparelSidebar($config, $settings, loadArticles($config));
@@ -2855,6 +3126,9 @@ function renderLlmsText(array $config): string
 function renderSitemapText(array $config): string
 {
     $urls = [frontSiteUrl($config, '/')];
+    foreach (siteCategories($config) as $category) {
+        $urls[] = frontSiteUrl($config, '/category/'.rawurlencode((string) $category['slug']));
+    }
     foreach (loadArticles($config) as $article) {
         $slug = (string) ($article['slug'] ?? '');
         if ($slug !== '') {
@@ -3221,6 +3495,18 @@ if ($method === 'POST' && $path === '/geoflow-agent/v1/views/pull') {
 }
 if ($method === 'POST' && $path === '/geoflow-agent/v1/site-settings') {
     handleSiteSettingsUpdate($config, $method, $path, $body);
+}
+if ($method === 'GET' && preg_match('#^/page/(\d+)/?$#', $path, $pageMatch) === 1) {
+    renderHomePage($config, (int) $pageMatch[1]);
+    exit;
+}
+if ($method === 'GET' && preg_match('#^/category/([^/]+)/page/(\d+)/?$#', $path, $catMatch) === 1) {
+    renderCategoryPage($config, rawurldecode($catMatch[1]), (int) $catMatch[2]);
+    exit;
+}
+if ($method === 'GET' && preg_match('#^/category/([^/]+)/?$#', $path, $catMatch) === 1) {
+    renderCategoryPage($config, rawurldecode($catMatch[1]));
+    exit;
 }
 if ($method === 'GET' && $path === '/') {
     renderHomePage($config);

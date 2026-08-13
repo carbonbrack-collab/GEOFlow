@@ -24,6 +24,16 @@ body.target-theme-ink-editorial{background:#faf8f5;color:#1a1614;font-family:Geo
 .target-theme-ink-editorial .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-ink-editorial .chart-bar i{background:#8b1e1e}
 .target-theme-ink-editorial .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-ink-editorial .crumbs,.target-theme-ink-editorial .crumbs a{color:#6b625c}
+.target-theme-ink-editorial .crumbs a:hover{color:#8b1e1e}
+.target-theme-ink-editorial .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-ink-editorial .pager-link{color:#8b1e1e}
+.target-theme-ink-editorial .pager-status{color:#6b625c}
+.target-theme-ink-editorial .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#1a1614}
+.target-theme-ink-editorial .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:0px}
+.target-theme-ink-editorial .related-card:hover{border-color:#8b1e1e}
+.target-theme-ink-editorial .related-card-title{color:#1a1614}
+.target-theme-ink-editorial .related-card-summary{color:#6b625c}
 .target-theme-ink-editorial .homepage-slide-copy a{color:#1a1614}
 .target-theme-ink-editorial .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-ink-editorial .list{gap:0}
 .target-theme-ink-editorial header{background:#ffffff;border-bottom:3px solid #8b1e1e}.target-theme-ink-editorial .brand{color:#1a1614}

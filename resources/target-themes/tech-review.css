@@ -24,6 +24,16 @@ body.target-theme-tech-review{background:#fbf9f9;color:#171314;font-family:-appl
 .target-theme-tech-review .chart-bar{background:rgba(0,0,0,.12)}
 .target-theme-tech-review .chart-bar i{background:#a31f34}
 .target-theme-tech-review .homepage-slide{background:#ffffff;border:1px solid rgba(0,0,0,.12)}
+.target-theme-tech-review .crumbs,.target-theme-tech-review .crumbs a{color:#665c5e}
+.target-theme-tech-review .crumbs a:hover{color:#a31f34}
+.target-theme-tech-review .crumbs-sep{color:rgba(0,0,0,.12)}
+.target-theme-tech-review .pager-link{color:#a31f34}
+.target-theme-tech-review .pager-status{color:#665c5e}
+.target-theme-tech-review .related-title{font-family:Georgia,"Times New Roman","Songti SC",serif;color:#171314}
+.target-theme-tech-review .related-card{background:#ffffff;border:1px solid rgba(0,0,0,.12);border-radius:2px}
+.target-theme-tech-review .related-card:hover{border-color:#a31f34}
+.target-theme-tech-review .related-card-title{color:#171314}
+.target-theme-tech-review .related-card-summary{color:#665c5e}
 .target-theme-tech-review .homepage-slide-copy a{color:#171314}
 .target-theme-tech-review .card{background:transparent;border:0;border-bottom:1px solid rgba(0,0,0,.14);border-radius:0;box-shadow:none;padding-left:0;padding-right:0}.target-theme-tech-review .list{gap:0}
 .target-theme-tech-review header{background:#ffffff;border-bottom:3px solid #a31f34}.target-theme-tech-review .brand{color:#171314}
